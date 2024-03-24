@@ -17,6 +17,12 @@ const config = {
         sans: ["var(--font-geist-sans)"],
       },
       colors: {
+        //LUO COLOR PELETTE
+        luoBlack: "#000000",
+        luoBiege: "#F0E8DD",
+        luoDarkBiege: "#8B7158",
+        luoSilver: "#C0C0C0",
+        //SHADCN CONFIG
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -19,4 +19,3 @@ export default function RootLayout({
     </html>
   );
 }
-// className={GeistSans.variable}

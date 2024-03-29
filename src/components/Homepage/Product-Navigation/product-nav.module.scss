@@ -1,0 +1,43 @@
+.container {
+  height: 60vh;
+  background-image: url("/assets/img/product-nav-banner.jpg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}
+
+.navItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: #f0e8dd;
+    transition: transform 0.2s ease-out;
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+
+  &:hover::after,
+  &:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}

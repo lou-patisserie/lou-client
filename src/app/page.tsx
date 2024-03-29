@@ -1,12 +1,20 @@
+import BottomBanner from "@/components/Homepage/BottomBanner/bottom-banner";
 import HeroBanner from "@/components/Homepage/HeroBanner/hero-banner";
-import NavHeader from "@/components/Layout/nav-head";
-import Image from "next/image";
+import ProductNav from "@/components/Homepage/Product-Navigation/product-nav";
+import Products from "@/components/Homepage/Product/products";
+import SecondBanner from "@/components/Homepage/SecondBanner/second-banner";
+import Testimonials from "@/components/Homepage/Testimony/testimonials";
+
 
 export default function Home() {
   return (
     <>
       <HeroBanner />
-      <h1 className="text-2xl">test</h1>
+      <SecondBanner />
+      <ProductNav />
+      <Products />
+      <BottomBanner />
+      <Testimonials />
     </>
   );
 }

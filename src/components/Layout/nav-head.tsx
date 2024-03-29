@@ -3,7 +3,7 @@ import { TopNavigationMenu } from "./top-nav-menu";
 
 export default function NavHeader() {
   return (
-    <div className="flex justify-between mx-10 mt-2.5">
+    <div className="flex justify-between mx-10 mt-4">
       <div className="flex items-center text-center">
         <TopLogo />
       </div>

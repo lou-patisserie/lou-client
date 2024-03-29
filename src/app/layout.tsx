@@ -4,7 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 
 import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
-import { TopNavigationMenu } from "@/components/Layout/top-nav-menu";
 import NavHeader from "@/components/Layout/nav-head";
 
 export const metadata: Metadata = {
@@ -19,11 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={cn(GeistSans.variable)}>
+      <body className={`${cn(GeistSans.variable)}`}>
         <div className="absolute inset-x-0 top-0">
           <TopSubscribe />
           <NavHeader />
-          {/* <TopNavigationMenu /> */}
         </div>
         {children}
       </body>

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/UI/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/UI/carousel";
 
 export default function Testimonials() {
-  const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+  const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   return (
     <div className="w-full flex justify-center my-12">

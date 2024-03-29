@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 
 import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
 import NavHeader from "@/components/Layout/nav-head";
+import Footer from "@/components/Layout/footer";
 
 export const metadata: Metadata = {
   title: "Luo Patisserie",
@@ -23,7 +24,10 @@ export default function RootLayout({
           <TopSubscribe />
           <NavHeader />
         </div>
-        {children}
+        <main>{children}</main>
+        <div>
+          <Footer />
+        </div>
       </body>
     </html>
   );

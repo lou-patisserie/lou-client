@@ -25,7 +25,7 @@ export default function Products() {
           <CarouselContent>
             {filteredItems.map((item) => (
               <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
-                <Image src={item.imgRef} alt={item.name} width={550} height={550} className="aspect-square object-cover" />
+                <Image src={item.imgRef} alt={item.name} width={550} height={550} className="aspect-square object-cover rounded-md shadow-sm" />
                 <h3 className="text-lg font-semibold mt-2 text-slate-700">{item.name}</h3>
                 <p className="text-sm mt-1 text-luoDarkBiege">{formatPrice(item.price)}</p>
               </CarouselItem>

@@ -7,7 +7,7 @@ export default function SecondBanner() {
       <span className="text-xs font-medium">SINCE 2019</span>
       <h1 className="font-medium">Revolutionising experiences and occasions, one cake at a time</h1>
       <div className={classes.items}>
-        <div className="">
+        <div className="" >
           <Truck size={45} strokeWidth={1.5} className="" />
           <p>Free Delivery</p>
           <span>with minimum purchase</span>

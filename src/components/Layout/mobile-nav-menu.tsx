@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownNarrowWide, CircleDot, Dot, SquareMenu, SquareX } from "lucide-react";
+import { ArrowDownNarrowWide, Dot, SquareMenu, SquareX } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 

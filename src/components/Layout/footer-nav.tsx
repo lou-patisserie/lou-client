@@ -16,7 +16,7 @@ export default function FooterNavItems() {
         </div>
         <p className="text-left pl-2 text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec vestibulum arcu, non fringilla sapien. Donec ac odio cursus, scelerisque sapien at, eleifend turpis.</p>
       </div>
-      <div className="flex flex-row grow  gap-10">
+      <div className="flex ms-3 flex-row grow  gap-10">
         <div className="flex flex-col gap-4">
           <div className="text-base font-semibold text-slate-700 tracking-wide">Product Nav</div>
           <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">

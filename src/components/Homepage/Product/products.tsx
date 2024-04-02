@@ -5,9 +5,11 @@ import { formatPrice } from "@/lib/formatters";
 import Image from "next/image";
 import ProductSelection from "./product-selection";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Products() {
   const [currentSelection, setSelection] = useState("Best Sellers");
+  const [hoveredItemId, setHoveredItemId] = useState<number | null>(null);
 
   const filteredItems = items.filter((item) => {
     if (currentSelection === "Best Sellers") return item.is_bestseller;
@@ -25,9 +27,17 @@ export default function Products() {
           <CarouselContent>
             {filteredItems.map((item) => (
               <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
-                <Image src={item.imgRef} alt={item.name} width={550} height={550} className="aspect-square object-cover rounded-md shadow-sm" />
-                <h3 className="text-lg font-semibold mt-2 text-slate-700">{item.name}</h3>
-                <p className="text-sm mt-1 text-luoDarkBiege">{formatPrice(item.price)}</p>
+                <Link href="/" className="" onMouseEnter={() => setHoveredItemId(item.id)} onMouseLeave={() => setHoveredItemId(null)}>
+                  <Image
+                    src={item.imgRef}
+                    alt={item.name}
+                    width={550}
+                    height={550}
+                    className={`aspect-square object-cover rounded-md shadow-sm cursor-pointer ${hoveredItemId === item.id ? "opacity-60 border-4 border-luoDarkBiege" : "opacity-100"}`}
+                  />
+                </Link>
+                <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{item.name}</h3>
+                <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(item.price)}</p>
               </CarouselItem>
             ))}
           </CarouselContent>

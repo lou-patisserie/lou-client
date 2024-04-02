@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
 import NavHeader from "@/components/Layout/nav-head";
 import Footer from "@/components/Layout/footer";
+import TopLayoutProvider from "@/components/Layout-Provider/top-layout-provider";
 
 export const metadata: Metadata = {
   title: "Luo Patisserie",
@@ -36,12 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`${cn(GeistSans.variable)}`}>
-        <div className="absolute inset-x-0 top-0">
-          <TopSubscribe />
-          <NavHeader />
-        </div>
-        <main>{children}</main>
+      <body className={`${cn(GeistSans.variable)} `}>
+        <TopLayoutProvider />
+        <main className="min-h-screen">{children}</main>
         <div>
           <Footer />
         </div>

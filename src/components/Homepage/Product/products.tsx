@@ -33,7 +33,7 @@ export default function Products() {
                     alt={item.name}
                     width={550}
                     height={550}
-                    className={`aspect-square object-cover rounded-md shadow-sm cursor-pointer ${hoveredItemId === item.id ? "opacity-60 border-4 border-luoDarkBiege" : "opacity-100"}`}
+                    className={`aspect-square object-cover rounded-md shadow-sm cursor-pointer ${hoveredItemId === item.id ? "opacity-60 border-2 border-luoDarkBiege" : "opacity-100"}`}
                   />
                 </Link>
                 <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{item.name}</h3>

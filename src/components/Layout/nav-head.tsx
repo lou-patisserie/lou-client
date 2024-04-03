@@ -67,7 +67,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
         </div>
       </div>
       <div>
-        <ShoppingCart />
+        <ShoppingCart className="text-luoDarkBiege" />
       </div>
     </div>
   );

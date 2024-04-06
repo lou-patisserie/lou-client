@@ -7,6 +7,7 @@ import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
 import NavHeader from "@/components/Layout/nav-head";
 import Footer from "@/components/Layout/footer";
 import TopLayoutProvider from "@/components/Layout-Provider/top-layout-provider";
+import { Toaster } from "@/components/UI/toaster";
 
 export const metadata: Metadata = {
   title: "Luo Patisserie",
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className={`${cn(GeistSans.variable)} `}>
         <TopLayoutProvider />
         <main className="min-h-screen">{children}</main>
+        <Toaster />
         <div>
           <Footer />
         </div>

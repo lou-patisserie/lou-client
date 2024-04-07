@@ -5,7 +5,7 @@ export const FormSchema = z.object({
       required_error: "Delivery Pickup Date is Required",
     }),
     deliveryTime: z.string({
-      required_error: "Please select an time to display.",
+      required_error: "Please select a time for delivery.",
     }),
     candleAndKnife: z.boolean().default(false).optional(),
     greetingCard: z.boolean().default(false).optional(),

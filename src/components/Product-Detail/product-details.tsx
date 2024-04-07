@@ -20,7 +20,7 @@ export default function ProductDetails() {
           <span className="uppercase text-xs font-semibold tracking-wide">Order before 12AM to Receive it Next Day</span>
         </div>
       </div>
-      <div className="flex flex-col h-fit items-start justify-start gap-2">
+      <div className="flex w-full flex-col h-fit items-start justify-start gap-2">
         <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
         <OrderForm />
         {/* <ProfileForm /> */}

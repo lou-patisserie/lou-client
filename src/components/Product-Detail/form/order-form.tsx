@@ -41,7 +41,7 @@ export default function OrderForm() {
           control={form.control}
           name="deliveryDate"
           render={({ field }) => (
-            <FormItem className="flex flex-col w-full">
+            <FormItem className="flex flex-col w-72 md:w-96">
               <FormLabel>Delivery/Pickup Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>

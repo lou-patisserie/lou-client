@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body className={`${cn(GeistSans.variable)} `}>
+      <body id="portal" className={`${cn(GeistSans.variable)} `}>
         <TopLayoutProvider />
         <main className="min-h-screen">{children}</main>
         <Toaster />

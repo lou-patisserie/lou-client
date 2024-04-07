@@ -7,7 +7,7 @@ export default function ProductDetailPage() {
   return (
     <>
       {/* <SubHeroBanner /> */}
-      <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 md:gap-10 h-fit ">
+      <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit ">
         <div className="flex flex-col gap-6">
           <ProductDetailImgs />
           <div className="">

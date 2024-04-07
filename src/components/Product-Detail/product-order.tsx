@@ -6,7 +6,7 @@ import { product } from "./dummy";
 
 export default function ProductOrder() {
   return (
-    <div className="w-full max-w-lg flex flex-col gap-10 mx-4 md:mx-0">
+    <div className="w-full max-w-lg flex flex-col gap-10 mx-4 lg:mx-0">
       <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege">
         <h1 className="font-bold text-xl">{product.name}</h1>
         <h2 className="font-bold text-lg tracking-wide">{formatPrice(product.price)}</h2>

@@ -40,7 +40,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function TopNavigationMenu() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="text-luoDarkBiege">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>

@@ -1,7 +1,5 @@
-import Image from "next/image";
 import classes from "./hero-banner.module.scss";
-import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
-import { TopNavigationMenu } from "@/components/Layout/top-nav-menu";
+
 
 export default function HeroBanner() {
   return (

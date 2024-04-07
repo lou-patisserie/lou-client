@@ -79,7 +79,7 @@ export default function MobileNavigationMenu({ showNav }: Props) {
         animate={isSidenavOpen ? "open" : "closed"}
         variants={sidenavVariants}
         transition={{ type: "tween", duration: 0.3 }}
-        className={`fixed left-0 z-40 w-[60%] h-screen px-4 py-2 overflow-y-auto bg-luoBiege ${showNav ? "top-0" : " -top-6"}`}
+        className={`fixed left-0 z-40 w-[60%] h-screen px-4 py-2 overflow-y-auto bg-luoBiege top-0`}
         tabIndex={-1}
       >
         <div className="flex gap-4 justify-between pt-2 px-4">

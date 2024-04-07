@@ -14,17 +14,8 @@ import { Calendar } from "@/components/UI/calendar";
 import { Button } from "@/components/UI/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/UI/select";
 import { Checkbox } from "@/components/UI/checkbox";
-
-const FormSchema = z.object({
-  deliveryDate: z.date({
-    required_error: "Delivery Pickup Date is Required",
-  }),
-  deliveryTime: z.string({
-    required_error: "Please select an time to display.",
-  }),
-  candleAndKnife: z.boolean().default(false).optional(),
-  greetingCard: z.boolean().default(false).optional(),
-});
+import { FormSchema } from "./validationSchema";
+import { Textarea } from "@/components/UI/textarea";
 
 export default function OrderForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -45,7 +36,7 @@ export default function OrderForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="deliveryDate"
@@ -55,7 +46,7 @@ export default function OrderForm() {
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
-                    <Button name="date-btn" variant={"outline"} className={cn("w-72 pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                    <Button name="date-btn" variant={"outline"} className={cn("w-72 pl-3 text-left font-normal hover:bg-luoBiege", !field.value && "text-muted-foreground")}>
                       {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
@@ -124,8 +115,22 @@ export default function OrderForm() {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="complimentaryMsg"
+          render={({ field }) => (
+            <FormItem className="flex flex-col w-72">
+              <FormLabel>Complimentary Message</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Write your message here, We do not write on the cake" className="resize-none focus-visible:ring-luoDarkBiege" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75">
-          Submit
+          Add to Cart
         </Button>
       </form>
     </Form>

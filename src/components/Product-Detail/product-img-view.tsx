@@ -36,6 +36,10 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
     }
   };
 
+  const img1 = "/assets/dummy/Lou_Croissant2.jpg";
+  const img2 = "/assets/dummy/Lou_Croissant0.jpg";
+  const img3 = "/assets/dummy/Lou_Croissant3.jpg";
+
   const content = (
     <div className={classes.modal} onClick={() => setIsOpen(false)}>
       <button className="bg-none border-none text-gray-200 text-lg absolute cursor-pointer right-2 top-2">
@@ -43,36 +47,36 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
         <Image src={currentImg} alt="product-img" width={1080} height={1080} style={{ width: "100%", height: "100%" }} />
-        <div className="p-2 flex flex-row gap-2 ">
+        <div className="p-2 flex flex-row gap-2 cursor-pointer">
           <div>
             <Image
-              src="/assets/dummy/Lou_Croissant2.jpg"
+              src={img1}
               alt="product-img"
               width={1080}
               height={1080}
-              className="aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200"
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant2.jpg")}
             />
           </div>
           <div>
             <Image
-              src="/assets/dummy/Lou_Croissant0.jpg"
+              src={img2}
               alt="product-img"
               width={1080}
               height={1080}
-              className="aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200"
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img2 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant0.jpg")}
             />
           </div>
           <div>
             <Image
-              src="/assets/dummy/Lou_Croissant3.jpg"
+              src={img3}
               alt="product-img"
               width={1080}
               height={1080}
-              className="aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200"
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img3 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant3.jpg")}
             />

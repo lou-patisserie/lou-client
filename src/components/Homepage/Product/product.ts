@@ -6,6 +6,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
+    category: "Whole Cakes",
   },
   {
     id: 2,
@@ -14,6 +15,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_2.jpg",
     is_new_arrival: false,
     is_bestseller: true,
+    category: "Whole Cakes",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
+    category: "Whole Cakes",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_36.jpg",
     is_new_arrival: true,
     is_bestseller: true,
+    category: "Whole Cakes",
   },
   {
     id: 5,
@@ -38,6 +42,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_10.jpg",
     is_new_arrival: false,
     is_bestseller: true,
+    category: "Whole Cakes",
   },
   {
     id: 6,
@@ -46,6 +51,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_51.jpg",
     is_new_arrival: false,
     is_bestseller: true,
+    category: "Petit Gâteau",
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_69.jpg",
     is_new_arrival: false,
     is_bestseller: true,
+    category: "Petit Gâteau",
   },
   {
     id: 8,
@@ -62,6 +69,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
+    category: "Petit Gâteau",
   },
   {
     id: 9,
@@ -70,6 +78,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
+    category: "Petit Gâteau",
   },
   {
     id: 10,
@@ -78,5 +87,24 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
+    category: "Petit Gâteau",
+  },
+  {
+    id: 11,
+    name: "Blueberry Cheesecake 6",
+    price: 100000,
+    imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
+    is_new_arrival: true,
+    is_bestseller: false,
+    category: "Entremet",
+  },
+  {
+    id: 12,
+    name: "Blueberry Cheesecake 6",
+    price: 100000,
+    imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
+    is_new_arrival: true,
+    is_bestseller: false,
+    category: "Entremet",
   },
 ];

@@ -1,6 +1,6 @@
 "use client";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/UI/carousel";
-import { items } from "./product";
+import { items } from "../../../product";
 import { formatPrice } from "@/lib/formatters";
 import Image from "next/image";
 import ProductSelection from "./product-selection";
@@ -27,7 +27,7 @@ export default function Products() {
           <CarouselContent>
             {filteredItems.map((item) => (
               <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
-                <Link href="/" className="" onMouseEnter={() => setHoveredItemId(item.id)} onMouseLeave={() => setHoveredItemId(null)}>
+                <Link href="/products/testasd" className="" onMouseEnter={() => setHoveredItemId(item.id)} onMouseLeave={() => setHoveredItemId(null)}>
                   <Image
                     src={item.imgRef}
                     alt={item.name}

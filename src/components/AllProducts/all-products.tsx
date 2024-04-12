@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ProductLogistics from "./product-logistics";
 import AllProductsSelection from "./selections";
-import { items } from "../Homepage/Product/product";
+import { items } from "../../product";
 
 export default function AllProducts() {
   const [selectedCategory, setSelectedCategory] = useState("Whole Cakes");

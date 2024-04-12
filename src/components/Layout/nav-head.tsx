@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { TopNavigationMenu } from "./top-nav-menu";
 import { TopLogo, TopScrolledLogo } from "./top-logo";
 import MobileNavigationMenu from "./mobile-nav-menu";
-import { ShoppingCart } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./scss/nav-head.module.scss";
+import LuoCart from "../UI/Cart/shopping-cart";
 
 type Props = {
   marginTopNotScrolled?: string;
@@ -64,8 +64,8 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
               </div>
             </div>
           </div>
-          <div>
-            <ShoppingCart className="text-luoDarkBiege" />
+          <div className="relative w-fit h-fit">
+            <LuoCart />
           </div>
         </motion.div>
       </AnimatePresence>
@@ -89,8 +89,8 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
             </div>
           </div>
         </div>
-        <div>
-          <ShoppingCart className="text-luoDarkBiege" />
+        <div className="relative w-fit h-fit">
+          <LuoCart />
         </div>
       </div>
     );

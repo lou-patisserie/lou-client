@@ -16,14 +16,38 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/UI/checkbox";
 import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
+import { useRecoilState } from "recoil";
+import { cartState } from "@/recoils/atoms/products";
 
-export default function OrderForm() {
+type Props = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export default function OrderForm({ id, name, price }: Props) {
+  const [cart, setCart] = useRecoilState(cartState);
+  console.log("Cart State", cart);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {},
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    const productToAdd = {
+      id: id,
+      name: name,
+      price: price,
+      quantity: 1,
+      deliveryDate: data.deliveryDate,
+      deliveryTime: data.deliveryTime,
+      candleAndKnife: data.candleAndKnife || false,
+      greetingCard: data.greetingCard || false,
+      complimentaryMsg: data.complimentaryMsg || "",
+    };
+    setCart([...cart, productToAdd]);
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -128,7 +152,6 @@ export default function OrderForm() {
             </FormItem>
           )}
         />
-        
 
         <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75">
           Add to Cart

@@ -1,0 +1,26 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100000000;
+  height: 100vh;
+  padding: 3rem 1rem;
+  background: rgba(17, 17, 17, 0.25);
+  overflow-y: scroll;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 968px;
+  height: fit-content;
+  border-radius: 0;
+  overflow: hidden;
+  background: #F0E8DD;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: auto;
+}

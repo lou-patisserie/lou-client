@@ -40,13 +40,13 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function TopNavigationMenu() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="text-luoDarkBiege">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
+              {/* <li className="row-span-3">
                 <NavigationMenuLink asChild>
                   <a className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md" href="/">
                     <Icons.logo className="h-6 w-6" />
@@ -54,9 +54,9 @@ export function TopNavigationMenu() {
                     <p className="text-sm leading-tight text-muted-foreground">Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.</p>
                   </a>
                 </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
+              </li> */}
+              <ListItem href="/products" title="All Products">
+                See all of our products catalog
               </ListItem>
               <ListItem href="/docs/installation" title="Installation">
                 How to install dependencies and structure your app.
@@ -95,7 +95,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
       <NavigationMenuLink asChild>
         <a
           ref={ref}
-          className={cn("block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground", className)}
+          className={cn("block select-none space-y-1 text-luoDarkBiege rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-luoBiege hover:text-luoDarkBiege focus:bg-accent focus:text-accent-foreground", className)}
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>

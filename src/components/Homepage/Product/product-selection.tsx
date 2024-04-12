@@ -8,10 +8,10 @@ type Props = {
 export default function ProductSelection({ onSelect, currentSelection }: Props) {
   return (
     <>
-      <Button onClick={() => onSelect("Best Sellers")} variant="ghost" className={`text-sm font-bold uppercase rounded-full tracking-wide ${currentSelection === "Best Sellers" ? "bg-luoDarkBiege text-white" : "text-luoDarkBiege"}`}>
+      <Button onClick={() => onSelect("Best Sellers")} variant="ghost" className={`text-sm font-bold uppercase rounded-full tracking-wide bg-slate-100 text-slate-900 transition ease-in-out duration-150 hover:bg-luoBiege ${currentSelection === "Best Sellers" ? "bg-luoBiege " : ""}`}>
         Best Sellers
       </Button>
-      <Button onClick={() => onSelect("New Arrivals")} variant="ghost" className={`text-sm font-bold uppercase rounded-full tracking-wide ${currentSelection === "New Arrivals" ? "bg-luoDarkBiege text-white" : "text-luoDarkBiege"}`}>
+      <Button onClick={() => onSelect("New Arrivals")} variant="ghost" className={`text-sm font-bold uppercase rounded-full tracking-wide bg-slate-100 text-slate-900 transition ease-in-out duration-150 hover:bg-luoBiege ${currentSelection === "New Arrivals" ? "bg-luoBiege " : ""}`}>
         New Arrivals
       </Button>
     </>

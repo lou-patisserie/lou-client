@@ -11,7 +11,7 @@ export default function ProductOrder() {
         <h2 className="font-bold text-lg tracking-wide">{formatPrice(product.price)}</h2>
         <div className="flex flex-row items-center gap-1 mt-2">
           <CalendarClock size={18} strokeWidth={1} />
-          <span className="uppercase text-xs font-semibold tracking-wide">Order before 12AM to Receive it Next Day</span>
+          <span className="uppercase text-xs font-semibold tracking-wide">receive order within 1 hour of confirmation</span>
         </div>
       </div>
       <div className="flex w-full flex-col h-fit items-start justify-start gap-4">

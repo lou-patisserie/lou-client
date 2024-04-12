@@ -25,7 +25,7 @@ export default function ProductDetailImgs() {
           onClick={() => handleImageClick("/assets/dummy/Lou_Croissant2.jpg")}
           className="flex h-fit relative items-start justify-center transition ease-in duration-150 hover:opacity-70"
         >
-          <Image src="/assets/dummy/Lou_Croissant2.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square rounded-lg shadow-lg" />
+          <Image src="/assets/dummy/Lou_Croissant2.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" />
           {isHovered && <Eye size={35} className="text-white absolute bottom-2 right-2" />}
         </div>
         <div className="flex flex-row gap-2">
@@ -35,7 +35,7 @@ export default function ProductDetailImgs() {
             onClick={() => handleImageClick("/assets/dummy/Lou_Croissant3.jpg")}
             className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 "
           >
-            <Image src="/assets/dummy/Lou_Croissant3.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square rounded-lg shadow-lg" />
+            <Image src="/assets/dummy/Lou_Croissant3.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" />
             {isHovered2 && <Eye size={25} className="text-white absolute bottom-2 right-2" />}
           </div>
           <div
@@ -44,7 +44,7 @@ export default function ProductDetailImgs() {
             onClick={() => handleImageClick("/assets/dummy/Lou_Croissant0.jpg")}
             className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 "
           >
-            <Image src="/assets/dummy/Lou_Croissant0.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square rounded-lg shadow-lg" />
+            <Image src="/assets/dummy/Lou_Croissant0.jpg" width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" />
             {isHovered3 && <Eye size={25} className="text-white absolute bottom-2 right-2" />}
           </div>
         </div>

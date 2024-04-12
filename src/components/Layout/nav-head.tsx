@@ -16,22 +16,14 @@ type Props = {
 
 export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScrolled = "bg-transparent", pyNotScrolled = "py-0", logoSwitch = false }: Props) {
   const [showNav, setShowNav] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  // const [lastScrollY, setLastScrollY] = useState(0);
   // console.log(showNav);
   // console.log(lastScrollY);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      if (currentScrollY <= 150) {
-        setShowNav(false);
-      } else if (currentScrollY > lastScrollY) {
-        setShowNav(false);
-      } else {
-        setShowNav(true);
-      }
-      setLastScrollY(currentScrollY);
+      setShowNav(currentScrollY > 150);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -39,7 +31,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScrollY]);
+  }, []);
 
   const navVariants = {
     hidden: { y: -100, opacity: 0 },

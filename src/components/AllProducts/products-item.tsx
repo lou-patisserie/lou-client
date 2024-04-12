@@ -19,7 +19,7 @@ export default function ProductsItem({ name, price, imgRef }: Props) {
             width={500}
             height={500}
             priority
-            className={`aspect-square object-cover rounded-md shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege`}
+            className={`aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege`}
           />
         </Link>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownNarrowWide, Dot, SquareMenu, SquareX } from "lucide-react";
+import { ArrowDownNarrowWide, Dot, Menu, SquareMenu, SquareX, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -69,7 +69,7 @@ export default function MobileNavigationMenu({ showNav }: Props) {
     <>
       <div>
         <button onClick={toggleSidenav} className={`text-luoDarkBiege hover:text-slate-700 transition ease-in-out duration-200`}>
-          <SquareMenu size={30} />
+          <Menu size={30} />
         </button>
       </div>
 
@@ -83,8 +83,8 @@ export default function MobileNavigationMenu({ showNav }: Props) {
         tabIndex={-1}
       >
         <div className="flex gap-4 justify-between pt-2 px-4">
-          <button onClick={toggleSidenav} className="text-luoDarkBiege hover:text-white transition ease-in-out duration-200">
-            <SquareX />
+          <button onClick={toggleSidenav} className="text-luoDarkBiege hover:text-slate-700 transition ease-in-out duration-200">
+            <X />
           </button>
           <Link href={"#"}>
             <Image src="/assets/img/Lou-bg-dark.png" alt="Website logo" width={40} height={40} className="" priority />

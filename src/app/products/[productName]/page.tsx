@@ -6,7 +6,7 @@ import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 export default function ProductDetailPage() {
   return (
     <>
-      {/* <SubHeroBanner /> */}
+      <SubHeroBanner />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit ">
         <div className="flex flex-col gap-6">
           <ProductDetailImgs />

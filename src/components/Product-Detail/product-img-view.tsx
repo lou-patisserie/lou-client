@@ -46,7 +46,7 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
         <X />
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
-        <Image src={currentImg} alt="product-img" width={1080} height={1080} style={{ width: "100%", height: "100%" }} />
+        <Image src={currentImg} alt="product-img" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
         <div className="p-2 flex flex-row gap-2 cursor-pointer">
           <div>
             <Image
@@ -57,6 +57,7 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
               className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant2.jpg")}
+              priority
             />
           </div>
           <div>

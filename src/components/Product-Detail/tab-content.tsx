@@ -20,7 +20,7 @@ export function ProductDesc() {
 
 export function ProductAllergenAndIngredients() {
   return (
-    <Card className="border-luoBiege">
+    <Card className="border-luoBiege ">
       <div className="p-4 text-luoDarkBiege space-y-2">
         <div className="flex flex-row gap-1 items-center">
           <CircleChevronRight size={18} strokeWidth={1.5} />

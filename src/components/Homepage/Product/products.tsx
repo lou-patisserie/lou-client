@@ -18,7 +18,7 @@ export default function Products() {
   });
 
   return (
-    <section id="products" className="flex flex-col justify-center my-16 gap-2">
+    <section id="products" className="flex flex-col justify-center my-16 gap-4">
       <div className="flex flex-row gap-2 justify-center">
         <ProductSelection onSelect={setSelection} currentSelection={currentSelection} />
       </div>
@@ -33,7 +33,7 @@ export default function Products() {
                     alt={item.name}
                     width={550}
                     height={550}
-                    className={`aspect-square object-cover rounded-md shadow-sm cursor-pointer transition ease-in-out duration-200 ${hoveredItemId === item.id ? "opacity-60 border-2 border-luoDarkBiege" : "opacity-100"}`}
+                    className={`aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 ${hoveredItemId === item.id ? "opacity-60 border-2 border-luoDarkBiege" : "opacity-100"}`}
                   />
                 </Link>
                 <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{item.name}</h3>

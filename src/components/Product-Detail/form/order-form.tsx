@@ -30,6 +30,18 @@ type Props = {
 export default function OrderForm({ id, name, price }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [cart, setCart] = useRecoilState(cartState);
+  const [productToAdd, setProductToAdd] = useState({
+    id: 0,
+    name: "",
+    price: 0,
+    quantity: 0,
+    deliveryDate: new Date(),
+    deliveryTime: "",
+    candleAndKnife: false,
+    greetingCard: false,
+    complimentaryMsg: "",
+  });
+
   console.log("Cart State", cart);
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,7 +50,7 @@ export default function OrderForm({ id, name, price }: Props) {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    const productToAdd = {
+    const newProductToAdd = {
       id: id,
       name: name,
       price: price,
@@ -49,7 +61,9 @@ export default function OrderForm({ id, name, price }: Props) {
       greetingCard: data.greetingCard || false,
       complimentaryMsg: data.complimentaryMsg || "",
     };
-    setCart([...cart, productToAdd]);
+
+    setProductToAdd(newProductToAdd);
+    setCart([...cart, newProductToAdd]);
 
     // toast({
     //   title: "You submitted the following values:",
@@ -172,7 +186,7 @@ export default function OrderForm({ id, name, price }: Props) {
           </Button>
         </form>
       </Form>
-      <ProductDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} />
+      <ProductDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} productToAdd={productToAdd} />
     </>
   );
 }

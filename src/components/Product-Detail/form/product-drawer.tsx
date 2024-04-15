@@ -95,12 +95,16 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
 
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />
               <DrawerDescription className="italic font-semibold text-luoDarkBiege mb-1">Here your details: </DrawerDescription>
-              <DrawerDescription>{formatPrice(product.price)}</DrawerDescription>
+              <DrawerDescription><strong>Price:</strong> {formatPrice(product.price)}</DrawerDescription>
               <DrawerDescription>
-                Delivery: {formatDate(product.deliveryDate)} at {product.deliveryTime}
+                <strong>Delivery:</strong> {formatDate(product.deliveryDate)} at {product.deliveryTime}
               </DrawerDescription>
-              <DrawerDescription>Candle and Knife: {product.candleAndKnife ? "Yes" : "No"}</DrawerDescription>
-              <DrawerDescription>Greeting Card: {product.greetingCard ? "Yes" : "No"}</DrawerDescription>
+              <DrawerDescription>
+                <strong>Candle and Knife:</strong> {product.candleAndKnife ? "Yes" : "No"}
+              </DrawerDescription>
+              <DrawerDescription>
+                <strong>Greeting Card:</strong> {product.greetingCard ? "Yes" : "No"}
+              </DrawerDescription>
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />
               <div>
                 <DrawerDescription className="italic font-semibold text-luoDarkBiege">Complimentary Message:</DrawerDescription>

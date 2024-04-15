@@ -8,7 +8,6 @@ import { z } from "zod";
 
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/UI/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/UI/popover";
-import { toast } from "@/components/UI/use-toast";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/UI/calendar";
 import { Button } from "@/components/UI/button";
@@ -16,8 +15,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/UI/checkbox";
 import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
-import { useRecoilState } from "recoil";
-import { cartState } from "@/recoils/atoms/products";
 import { useState } from "react";
 import ProductDrawer from "./product-drawer";
 
@@ -29,7 +26,6 @@ type Props = {
 
 export default function OrderForm({ id, name, price }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [cart, setCart] = useRecoilState(cartState);
   const [productToAdd, setProductToAdd] = useState({
     id: 0,
     name: "",
@@ -41,8 +37,6 @@ export default function OrderForm({ id, name, price }: Props) {
     greetingCard: false,
     complimentaryMsg: "",
   });
-
-  console.log("Cart State", cart);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -63,7 +57,7 @@ export default function OrderForm({ id, name, price }: Props) {
     };
 
     setProductToAdd(newProductToAdd);
-    setCart([...cart, newProductToAdd]);
+    // setCart([...cart, newProductToAdd]);
 
     // toast({
     //   title: "You submitted the following values:",
@@ -182,7 +176,7 @@ export default function OrderForm({ id, name, price }: Props) {
           />
 
           <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75 rounded-none">
-            Add to Cart
+            Proceed
           </Button>
         </form>
       </Form>

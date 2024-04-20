@@ -17,6 +17,7 @@ import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
 import { useState } from "react";
 import ProductDrawer from "./product-drawer";
+import { formatPrice } from "@/lib/formatters";
 
 type Props = {
   id: number;
@@ -45,7 +46,7 @@ export default function OrderForm({ id, name, price }: Props) {
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const newProductToAdd = {
-      id: id,
+      id: Math.random(),
       name: name,
       price: price,
       quantity: 1,
@@ -130,7 +131,7 @@ export default function OrderForm({ id, name, price }: Props) {
             )}
           />
           <div>
-            <FormLabel>Add-Ons</FormLabel>
+            <FormLabel>Add-Ons (Optional)</FormLabel>
             <FormDescription className="text-xs">Select the add-ons that you want.</FormDescription>
           </div>
           <FormField
@@ -174,10 +175,14 @@ export default function OrderForm({ id, name, price }: Props) {
               </FormItem>
             )}
           />
-
-          <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75 rounded-none">
-            Proceed
-          </Button>
+          <div className="flex flex-col gap-2">
+            <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150">
+              Buy Now - {formatPrice(price)}
+            </Button>
+            <Button name="order-submit" type="submit" className=" bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none  transition ease-in-out duration-150">
+              Add to Cart
+            </Button>
+          </div>
         </form>
       </Form>
       <ProductDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} productToAdd={productToAdd} />

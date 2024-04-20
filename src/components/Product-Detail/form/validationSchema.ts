@@ -11,7 +11,7 @@ export const FormSchema = z.object({
   greetingCard: z.boolean().default(false).optional(),
   complimentaryMsg: z
     .string()
-    .max(150, { message: "Complimentary message is too long" })
+    .max(250, { message: "Complimentary message is too long" })
     .refine((data) => data === "" || data.length >= 5, {
       message: "Complimentary message is too short",
     })

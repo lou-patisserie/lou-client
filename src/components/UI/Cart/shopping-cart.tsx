@@ -2,6 +2,7 @@
 import { cartState } from "@/recoils/atoms/products";
 import { AnimatePresence, motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 
@@ -39,8 +40,10 @@ export default function LuoCart() {
     <>
       <AnimatePresence initial={false}>
         <motion.div key={cart.length} initial={shakeAnimation.initial} animate={shakeAnimation.animate} transition={shakeAnimation.transition}>
-          <ShoppingCart className="text-luoDarkBiege " />
-          <span className="absolute z-10 -top-1.5 -right-2.5 text-white font-semibold text-xs px-[0.35rem] bg-luoDarkBiege rounded-full ">{cart.length}</span>
+          <Link href="/checkout">
+            <ShoppingCart className="text-luoDarkBiege " />
+            <span className="absolute z-10 -top-1.5 -right-2.5 text-white font-semibold text-xs px-[0.35rem] bg-luoDarkBiege rounded-full ">{cart.length}</span>
+          </Link>
         </motion.div>
       </AnimatePresence>
     </>

@@ -4,7 +4,7 @@ import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 export default function ProductsPage() {
   return (
     <>
-      <SubHeroBanner />
+      <SubHeroBanner title="All Products" />
       <AllProducts />
     </>
   );

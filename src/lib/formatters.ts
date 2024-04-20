@@ -6,7 +6,13 @@ export function formatPrice(price: number) {
   }).format(price);
 }
 
-export function formatDate(date: any) {
+export function formatDate(dateString: any) {
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) {
+    return "Invalid date";
+  }
+
   return date.toLocaleDateString("en-GB", {
     weekday: "long",
     year: "numeric",

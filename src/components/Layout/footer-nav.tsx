@@ -14,7 +14,9 @@ export default function FooterNavItems() {
           <Facebook size={20} className="text-slate-700" />
           <TiktokSvg />
         </div>
-        <p className="text-left pl-2 text-sm mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec vestibulum arcu, non fringilla sapien. Donec ac odio cursus, scelerisque sapien at, eleifend turpis.</p>
+        <p className="text-left pl-2 text-sm mt-2">
+          We are a team full of passion and deep love for the culinary world. As we progress to take local pastries to a new height, our value remains the same - to deliver excellent craftsmanship and be present in your sweet moments.
+        </p>
       </div>
       <div className="flex ms-3 flex-row grow  gap-10">
         <div className="flex flex-col gap-4">

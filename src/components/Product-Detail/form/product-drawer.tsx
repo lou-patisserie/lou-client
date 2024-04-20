@@ -6,6 +6,7 @@ import { toast, useToast } from "@/components/UI/use-toast";
 import { formatDate, formatPrice } from "@/lib/formatters";
 import { cartState } from "@/recoils/atoms/products";
 import { Minus, Plus, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
@@ -34,6 +35,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   });
   const { toast } = useToast();
   const [cart, setCart] = useRecoilState(cartState);
+  const router = useRouter();
   console.log("Cart State", cart);
   console.log("initial", initialProduct);
   console.log("newProduct", product);
@@ -58,6 +60,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
 
   function proceedToCheckOut() {
     setCart([...cart, product]);
+    router.push("/checkout");
   }
 
   function onCancel() {
@@ -95,7 +98,9 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
 
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />
               <DrawerDescription className="italic font-semibold text-luoDarkBiege mb-1">Here your details: </DrawerDescription>
-              <DrawerDescription><strong>Price:</strong> {formatPrice(product.price)}</DrawerDescription>
+              <DrawerDescription>
+                <strong>Price:</strong> {formatPrice(product.price)}
+              </DrawerDescription>
               <DrawerDescription>
                 <strong>Delivery:</strong> {formatDate(product.deliveryDate)} at {product.deliveryTime}
               </DrawerDescription>
@@ -139,7 +144,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
               </Button>
             </DrawerClose>
             <Button className="w-full rounded-none bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75" onClick={proceedToCheckOut}>
-              Proceed to Checkout
+              Checkout
             </Button>
           </DrawerFooter>
         </div>

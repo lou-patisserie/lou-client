@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/UI/button";
 import classes from "./hero-banner.module.scss";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function HeroBanner() {

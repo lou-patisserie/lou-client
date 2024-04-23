@@ -36,7 +36,7 @@ export default function AboutLogistics() {
         </AnimatePresence>
       </div>
       <div className="mx-4 flex justify-end mt-2 lg:-mt-10">
-        <Button onClick={showMoreToggle}>{showMore ? "Show Less" : "Show More"}</Button>
+        <Button onClick={showMoreToggle} className="bg-luoDarkBiege hover:bg-[#a58b73] transition duration-200">{showMore ? "Show Less" : "Show More"}</Button>
       </div>
       <div className={`${classes.gridContainer} px-4 overflow-hidden`}>
         {aboutImgs.map((img, index) => (

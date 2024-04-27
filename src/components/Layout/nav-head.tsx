@@ -23,7 +23,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setShowNav(currentScrollY > 10);
+      setShowNav(currentScrollY > 0);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

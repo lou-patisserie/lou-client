@@ -1,0 +1,14 @@
+.subBanner {
+  height: 25rem;
+  background-image: url("/assets/img/sub-banner2.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.customInset {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 25%;
+  bottom: 75%;
+}

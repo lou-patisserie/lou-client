@@ -5,6 +5,89 @@ import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
 
+export function TopNavigationMenu() {
+  return (
+    <NavigationMenu className="text-luoDarkBiege">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              {/* <li className="row-span-3">
+                <NavigationMenuLink asChild>
+                  <a className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md" href="/">
+                    <Icons.logo className="h-6 w-6" />
+                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
+                    <p className="text-sm leading-tight text-muted-foreground">Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.</p>
+                  </a>
+                </NavigationMenuLink>
+              </li> */}
+              <ListItem href="/products" title="All Products">
+                See all of our products catalog.
+              </ListItem>
+              <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
+                Discover our range of luxurious whole cakes.
+              </ListItem>
+              <ListItem href="/products/type/petit-gateau" title="Petit Gâteau">
+                Indulge in our exquisite selection of petit gâteaux.
+              </ListItem>
+              <ListItem href="/products/type/entremet" title="Entremet">
+                Experience the elegance of our layered entremets.
+              </ListItem>
+              <ListItem href="/products/type/gelato" title="Gelato">
+                Explore our delicious gelato flavors.
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        {/* <NavigationMenuItem>
+          <NavigationMenuTrigger>Our Location</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              {components.map((component) => (
+                <ListItem key={component.title} title={component.title} href={component.href}>
+                  {component.description}
+                </ListItem>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem> */}
+        <NavigationMenuItem>
+          <Link href="/location" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>Our Location</NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/about" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>About Lou</NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+}
+
+const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 text-luoDarkBiege rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-luoBiege hover:text-luoDarkBiege focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";
+
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Alert Dialog",
@@ -37,72 +120,3 @@ const components: { title: string; href: string; description: string }[] = [
     description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
 ];
-
-export function TopNavigationMenu() {
-  return (
-    <NavigationMenu className="text-luoDarkBiege">
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              {/* <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md" href="/">
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
-                    <p className="text-sm leading-tight text-muted-foreground">Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.</p>
-                  </a>
-                </NavigationMenuLink>
-              </li> */}
-              <ListItem href="/products" title="All Products">
-                See all of our products catalog
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Our Location</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem key={component.title} title={component.title} href={component.href}>
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/about" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>About Luo</NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-  );
-}
-
-const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn("block select-none space-y-1 text-luoDarkBiege rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-luoBiege hover:text-luoDarkBiege focus:bg-accent focus:text-accent-foreground", className)}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";

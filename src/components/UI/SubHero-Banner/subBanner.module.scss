@@ -5,10 +5,11 @@
   background-size: cover;
 }
 
-.customInset {
+.customInsetBanner {
   position: absolute;
   left: 0px;
   right: 0px;
   top: 25%;
   bottom: 75%;
+  z-index: 999;
 }

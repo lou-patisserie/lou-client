@@ -138,12 +138,12 @@ export default function MobileNavigationMenu({ showNav }: Props) {
               )}
             </li>
             <li>
-              <Link href="/about" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/about-lou" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">About Us</span>
               </Link>
             </li>
             <li>
-              <Link href="/location" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/our-location" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">Our Location</span>
               </Link>
             </li>

@@ -14,12 +14,10 @@ export default function TopLayoutProvider() {
           <NavHeader />
         </div>
       ) : (
- 
-          <div className="absolute inset-x-0 top-0">
-            <TopSubscribe />
-            <NavHeader marginTopNotScrolled="mt-0" bgColorNotScrolled="bg-luoBiege" pyNotScrolled="py-2" logoSwitch={true} />
-          </div>
-
+        <div className="">
+          <TopSubscribe />
+          <NavHeader marginTopNotScrolled="mt-0" bgColorNotScrolled="bg-luoBiege" pyNotScrolled="py-2" logoSwitch={true} />
+        </div>
       )}
     </>
   );

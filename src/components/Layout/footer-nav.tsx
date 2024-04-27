@@ -20,7 +20,7 @@ export default function FooterNavItems() {
       </div>
       <div className="flex ms-3 flex-row grow  gap-10">
         <div className="flex flex-col gap-4">
-          <div className="text-base font-semibold text-slate-700 tracking-wide">Product Nav</div>
+          <div className="text-base font-semibold text-slate-700 tracking-wide">Our Product</div>
           <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">
             <Link href="/products/type/whole-cakes" className={`${classes.link} `}>
               Whole Cakes

@@ -23,7 +23,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setShowNav(currentScrollY > 150);
+      setShowNav(currentScrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -43,7 +43,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       <AnimatePresence>
         <motion.div className={`${classes.navHeadPopup} flex justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
           <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
-          <div className="flex md:hidden">
+          <div className="block md:hidden">
             <MobileNavigationMenu showNav={showNav} />
           </div>
           <div>

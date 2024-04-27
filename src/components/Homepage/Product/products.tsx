@@ -18,7 +18,7 @@ export default function Products() {
   });
 
   return (
-    <section id="products" className="flex flex-col justify-center my-16 gap-4">
+    <section id="products" className="flex flex-col justify-center my-16 gap-4 mx-4 lg:mx-0">
       <div className="flex flex-row gap-2 justify-center">
         <ProductSelection onSelect={setSelection} currentSelection={currentSelection} />
       </div>

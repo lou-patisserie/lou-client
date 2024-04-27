@@ -6,13 +6,14 @@ import { cn } from "@/lib/utils";
 import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
 import NavHeader from "@/components/Layout/nav-head";
 import Footer from "@/components/Layout/footer";
-import TopLayoutProvider from "@/components/Layout-Provider/top-layout-provider";
+import TopLayoutProvider from "@/provider/Layout-Provider/top-layout-provider";
 import { Toaster } from "@/components/UI/toaster";
 import Providers from "@/provider/provider";
 
 export const metadata: Metadata = {
-  title: "Luo Patisserie | Celebration of sweet moments",
-  description: "Welcome to Lou Patisserie, where the delicate artistry of French pastry meets the vibrant flavors of Indonesia. Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny,  this enchanting patisserie brings together a fusion of culinary worlds in their home country. ",
+  title: "Lou Patisserie | Celebration of Sweet Moments",
+  description:
+    "Welcome to Lou Patisserie, where the delicate artistry of French pastry meets the vibrant flavors of Indonesia. Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny,  this enchanting patisserie brings together a fusion of culinary worlds in their home country. ",
   keywords: "lou patisserie, pastry & gelato, lou patisserie gading serpong, lou patisserie pastry & gelato",
   authors: [
     {
@@ -25,7 +26,8 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://wwww.loupatisserie.com",
     title: "Luo Patisserie",
-    description: "Welcome to Lou Patisserie, where the delicate artistry of French pastry meets the vibrant flavors of Indonesia. Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny,  this enchanting patisserie brings together a fusion of culinary worlds in their home country. ",
+    description:
+      "Welcome to Lou Patisserie, where the delicate artistry of French pastry meets the vibrant flavors of Indonesia. Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny,  this enchanting patisserie brings together a fusion of culinary worlds in their home country. ",
     siteName: "Lou Patisserie",
     images: [
       {

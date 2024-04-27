@@ -17,9 +17,9 @@ export default function ProductNav() {
         <Link href="/" className={`${classes.link}`}>
           Entremet
         </Link>
-        {/* <Link href="/" className={`${classes.link}`}>
-          Others
-        </Link> */}
+        <Link href="/" className={`${classes.link}`}>
+          Add Ons
+        </Link>
       </div>
     </div>
   );

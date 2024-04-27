@@ -1,11 +1,11 @@
-import AboutUs from "@/components/About/about";
+import AboutLou from "@/components/About/about";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 
-export default function AboutUsPage() {
+export default function AboutLouPage() {
   return (
     <>
       <SubHeroBanner title="About Lou" />
-      <AboutUs />
+      <AboutLou />
     </>
   );
 }

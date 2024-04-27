@@ -23,13 +23,19 @@ export function TopNavigationMenu() {
                 </NavigationMenuLink>
               </li> */}
               <ListItem href="/products" title="All Products">
-                See all of our products catalog
+                See all of our products catalog.
               </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
+              <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
+                Discover our range of luxurious whole cakes.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
+              <ListItem href="/products/type/petit-gateau" title="Petit Gâteau">
+                Indulge in our exquisite selection of petit gâteaux.
+              </ListItem>
+              <ListItem href="/products/type/entremet" title="Entremet">
+                Experience the elegance of our layered entremets.
+              </ListItem>
+              <ListItem href="/products/type/gelato" title="Gelato">
+                Explore our delicious gelato flavors.
               </ListItem>
             </ul>
           </NavigationMenuContent>

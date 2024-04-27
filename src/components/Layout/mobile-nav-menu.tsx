@@ -93,7 +93,7 @@ export default function MobileNavigationMenu({ showNav }: Props) {
         <div className="py-4 overflow-y-auto mt-2">
           <ul className="space-y-2 font-bold tracking-wide text-base">
             <li>
-              <Link href="#" className="flex items-center p-2 rounded-lg text-luoDarkBiege  hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/" className="flex items-center p-2 rounded-lg text-luoDarkBiege  hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">Home</span>
               </Link>
             </li>
@@ -104,28 +104,34 @@ export default function MobileNavigationMenu({ showNav }: Props) {
               </span>
               {isDropdownOpen && (
                 <motion.ul className="flex-1 ms-3 whitespace-nowrap mt-2 text-sm" initial="closed" animate={isDropdownOpen ? "open" : "closed"} variants={dropdownVariants}>
-                  <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                    <Dot />
-                    Whole Cakes
-                  </li>
-                  <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                    <Dot />
-                    Gelatto
-                  </li>
-                  <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                    <Dot />
-                    Others
-                  </li>
+                  <Link href="/products/type/whole-cakes">
+                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                      <Dot />
+                      Whole Cakes
+                    </li>
+                  </Link>
+                  <Link href="/products/type/whole-cakes">
+                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                      <Dot />
+                      Gelatto
+                    </li>
+                  </Link>
+                  <Link href="/products">
+                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                      <Dot />
+                      All Products
+                    </li>
+                  </Link>
                 </motion.ul>
               )}
             </li>
             <li>
-              <Link href="#" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/about" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">About Us</span>
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/location" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">Our Location</span>
               </Link>
             </li>

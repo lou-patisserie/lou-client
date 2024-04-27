@@ -6,7 +6,7 @@ export default function MapNavigationChannel() {
   };
   return (
     <Button onClick={mapNav} className="bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none transition ease-in-out duration-150 mt-8 px-10">
-      See on Map
+      See on Google Maps
     </Button>
   );
 }

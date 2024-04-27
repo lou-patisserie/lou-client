@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownNarrowWide, Dot, Menu, SquareMenu, SquareX, X } from "lucide-react";
+import { ArrowDownNarrowWide, Dot, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -104,22 +104,34 @@ export default function MobileNavigationMenu({ showNav }: Props) {
               </span>
               {isDropdownOpen && (
                 <motion.ul className="flex-1 ms-3 whitespace-nowrap mt-2 text-sm" initial="closed" animate={isDropdownOpen ? "open" : "closed"} variants={dropdownVariants}>
+                  <Link href="/products">
+                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                      <Dot />
+                      All Products
+                    </li>
+                  </Link>
                   <Link href="/products/type/whole-cakes">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />
                       Whole Cakes
                     </li>
                   </Link>
-                  <Link href="/products/type/whole-cakes">
+                  <Link href="/products/type/petit-gateau">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />
-                      Gelatto
+                      Petit Gâteau
                     </li>
                   </Link>
-                  <Link href="/products">
+                  <Link href="/products/type/entremet">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />
-                      All Products
+                      Entremet
+                    </li>
+                  </Link>
+                  <Link href="/products/type/add-ons">
+                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                      <Dot />
+                      Add Ons
                     </li>
                   </Link>
                 </motion.ul>

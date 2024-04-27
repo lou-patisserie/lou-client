@@ -53,12 +53,12 @@ export function TopNavigationMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem> */}
         <NavigationMenuItem>
-          <Link href="/location" legacyBehavior passHref>
+          <Link href="/our-location" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>Our Location</NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/about" legacyBehavior passHref>
+          <Link href="/about-lou" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>About Lou</NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

@@ -22,34 +22,28 @@ export default function FooterNavItems() {
         <div className="flex flex-col gap-4">
           <div className="text-base font-semibold text-slate-700 tracking-wide">Product Nav</div>
           <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">
-            <Link href="/" className={`${classes.link} `}>
-              ProductLink#1
+            <Link href="/products/type/whole-cakes" className={`${classes.link} `}>
+              Whole Cakes
             </Link>
-            <Link href="/" className={`${classes.link} `}>
-              ProductLink#2
+            <Link href="/products/type/petit-gateau" className={`${classes.link} `}>
+              Petit Gâteau
             </Link>
-            <Link href="/" className={`${classes.link} `}>
-              ProductLink#3
+            <Link href="/products/type/entremet" className={`${classes.link} `}>
+              Entremet
             </Link>
-            <Link href="/" className={`${classes.link} `}>
-              ProductLink#4
-            </Link>
-            <Link href="/" className={`${classes.link} `}>
-              ProductLink#5
+            <Link href="/products/type/add-ons" className={`${classes.link} `}>
+              Add Ons
             </Link>
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <div className="text-base font-semibold text-slate-700 tracking-wide">Know More</div>
           <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">
-            <Link href="/" className={`${classes.link} `}>
-              About Us
+            <Link href="/about-lou" className={`${classes.link} `}>
+              About Lou
             </Link>
-            <Link href="/" className={`${classes.link} `}>
+            <Link href="/our-location" className={`${classes.link} `}>
               Our Location
-            </Link>
-            <Link href="/" className={`${classes.link} `}>
-              Privacy Policy
             </Link>
           </div>
         </div>

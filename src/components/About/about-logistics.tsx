@@ -16,8 +16,8 @@ export default function AboutLogistics() {
   return (
     <>
       <div className="max-w-4xl mt-12 md:mt-20 mx-4">
-        <span className="text-xs tracking-tight">/LU:/</span>
-        <h2 className="scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0">Lou</h2>
+        <span className="text-xs text-luoDarkBiege tracking-tight">/LU:/</span>
+        <h2 className="scroll-m-20 text-3xl text-luoDarkBiege font-semibold tracking-tight first:mt-0">Lou</h2>
         <p className="leading-7 [&:not(:first-child)]:mt-4 text-[0.95rem]">
           Welcome to Lou Patisserie, where the delicate artistry of French pastry meets the vibrant flavors of Indonesia. Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny, this enchanting patisserie brings together a
           fusion of culinary worlds in their home country.

@@ -8,6 +8,9 @@ type Props = {
 export default function AllProductsSelection({ onSelectCategory, currentSelection }: Props) {
   return (
     <>
+      <Button variant="ghost" onClick={() => onSelectCategory("All Products")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege ${currentSelection === "All Products" ? "bg-luoBiege " : ""}}`}>
+        All
+      </Button>
       <Button variant="ghost" onClick={() => onSelectCategory("Whole Cakes")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege ${currentSelection === "Whole Cakes" ? "bg-luoBiege " : ""}}`}>
         Whole Cakes
       </Button>

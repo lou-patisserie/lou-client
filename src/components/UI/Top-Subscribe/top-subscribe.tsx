@@ -7,7 +7,7 @@ export default function TopSubscribe() {
       <span className={`uppercase tracking-wide flex gap-1.5 items-center text-luoBiege`}>
         {/* <Truck size={18} strokeWidth={1.2} /> */}
         <BellDot size={18} strokeWidth={1.75} />
-        Recieve Order within 1 hour of confirmation
+        Receive Order within 1 hour of confirmation
       </span>
     </div>
   );

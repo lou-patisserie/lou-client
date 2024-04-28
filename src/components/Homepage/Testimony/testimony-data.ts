@@ -30,4 +30,14 @@ export const testimonyData = [
     name: "Fris Story",
     content: "Must try their gelato..",
   },
+  {
+    id: 7,
+    name: "Janet Michaela",
+    content: "love their various gelato flavors YUMMMM",
+  },
+  {
+    id: 8,
+    name: "Ivano Wijaya",
+    content: "Aesthetic place to hangout",
+  },
 ];

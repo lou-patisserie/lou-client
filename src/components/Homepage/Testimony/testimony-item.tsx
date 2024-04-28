@@ -1,7 +1,6 @@
 import { BadgeCheck, Star } from "lucide-react";
-import classes from "./testimony.module.scss";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/UI/avatar";
-import { Card, CardContent } from "@/components/UI/card";
+import { Card } from "@/components/UI/card";
 
 type Props = {
   name: string;

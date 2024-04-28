@@ -2,10 +2,8 @@
 
 import * as React from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { Card, CardContent } from "@/components/UI/card";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/UI/carousel";
 import TestimonyItem from "./testimony-item";
-import classes from "./testimony.module.scss";
 import { testimonyData } from "./testimony-data";
 
 export default function Testimonials() {

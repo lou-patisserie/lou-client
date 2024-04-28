@@ -27,7 +27,7 @@ export default function Products() {
           <CarouselContent>
             {filteredItems.map((item) => (
               <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
-                <Link href="/products/testasd" className="" onMouseEnter={() => setHoveredItemId(item.id)} onMouseLeave={() => setHoveredItemId(null)}>
+                <Link href="/products/test" className="" onMouseEnter={() => setHoveredItemId(item.id)} onMouseLeave={() => setHoveredItemId(null)}>
                   <Image
                     src={item.imgRef}
                     alt={item.name}

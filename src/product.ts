@@ -6,7 +6,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Whole Cakes",
+    category: "Fruit-based",
   },
   {
     id: 2,
@@ -15,7 +15,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_2.jpg",
     is_new_arrival: false,
     is_bestseller: true,
-    category: "Whole Cakes",
+    category: "Fruit-based",
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Whole Cakes",
+    category: "Fruit-based",
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_36.jpg",
     is_new_arrival: true,
     is_bestseller: true,
-    category: "Whole Cakes",
+    category: "Fruit-based",
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_10.jpg",
     is_new_arrival: false,
     is_bestseller: true,
-    category: "Whole Cakes",
+    category: "Fruit-based",
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_51.jpg",
     is_new_arrival: false,
     is_bestseller: true,
-    category: "Petit Gâteau",
+    category: "Nut-free",
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_F&B_69.jpg",
     is_new_arrival: false,
     is_bestseller: true,
-    category: "Petit Gâteau",
+    category: "Nut-free",
   },
   {
     id: 8,
@@ -69,7 +69,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Petit Gâteau",
+    category: "Nut-free",
   },
   {
     id: 9,
@@ -78,7 +78,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Petit Gâteau",
+    category: "Nut-free",
   },
   {
     id: 10,
@@ -87,7 +87,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Petit Gâteau",
+    category: "Nut-free",
   },
   {
     id: 11,
@@ -96,7 +96,7 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Entremet",
+    category: "Gelatine-free",
   },
   {
     id: 12,
@@ -105,6 +105,6 @@ export const items = [
     imgRef: "/assets/dummy/Lou_Pastry_15.jpg",
     is_new_arrival: true,
     is_bestseller: false,
-    category: "Entremet",
+    category: "Gelatine-free",
   },
 ];

@@ -1,0 +1,89 @@
+
+.testiCard {
+  width: auto;
+  height: auto;
+  background: linear-gradient(to right, rgb(165, 141, 115), rgb(175, 152, 131));
+  gap: 20px;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.testiCard::before {
+  width: 150px;
+  height: 150px;
+  content: "";
+  background: linear-gradient(to right, rgb(139, 113, 88), rgb(205, 191, 177));
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  right: -25%;
+  top: -25%;
+}
+
+.testiHeading {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: 600;
+  color: rgb(241, 241, 241);
+  z-index: 21;
+}
+
+.testiDescription {
+  font-size: 0.9em;
+  color: rgb(241, 241, 241);
+  z-index: 2;
+
+  a {
+    color: rgb(241, 241, 241);
+  }
+}
+
+
+.stats {
+    display: inline-grid;
+    background-color: #111111;
+    color: #fff;
+    border-radius: 1rem;
+    border: 1px solid gray;
+  }
+  
+  .shadow {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+  
+  .stat {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  
+  .statTitle {
+    grid-column-start: 1;
+    white-space: nowrap;
+    color: rgb(197, 194, 194);
+  }
+  
+  .stat-value {
+    grid-column-start: 1;
+    white-space: nowrap;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 800;
+  }
+  
+  .stat-desc {
+    grid-column-start: 1;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgb(197, 194, 194);
+  }

@@ -6,7 +6,7 @@ import AllProductsSelection from "./selections";
 import { items } from "../../product";
 
 export default function AllProducts() {
-  const [selectedCategory, setSelectedCategory] = useState("Whole Cakes");
+  const [selectedCategory, setSelectedCategory] = useState("All Products");
   // console.log(selectedCategory)
 
   const filteredItems = selectedCategory === "All Products" 

@@ -7,9 +7,10 @@ import Image from "next/image";
 import classes from "./scss/cart-items.module.scss";
 import { formatDate } from "@/lib/formatters";
 import { Button } from "../UI/button";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { EmptyCartSVG } from "../UI/Svg/svg-ui";
 import Link from "next/link";
+import DeleteCartItem from "./cart-item-delete";
 
 export default function CartItems() {
   const [cartItems, setCartItems] = useRecoilState(cartState);
@@ -59,6 +60,11 @@ export default function CartItems() {
     setCartItems(updatedCartItems);
   };
 
+  const handleDeleteItem = (id: number) => {
+    const updatedCartItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCartItems);
+  };
+
   return (
     <Card>
       <div className="p-4">
@@ -66,15 +72,20 @@ export default function CartItems() {
         <div className="w-full h-[2px] bg-slate-200 opacity-50 my-4" />
         {cartItems.map((item) => (
           <Card key={item.id} className="my-2 p-4 ">
-            <div className="flex flex-wrap gap-2">
-              <div className="h-20 w-20">
-                <Image src="/assets/dummy/Lou_Croissant2.jpg" width={500} height={500} alt="img" className="aspect-square object-cover " />
+            <div className="flex flex-wrap gap-2  justify-between items-center">
+              <div className="flex flex-wrap gap-2">
+                <div className="h-20 w-20">
+                  <Image src="/assets/dummy/Lou_Croissant2.jpg" width={500} height={500} alt="img" className="aspect-square object-cover " />
+                </div>
+                <div className={`flex flex-col ${classes.cardItems}`}>
+                  <p className="font-medium text-base">{item.name}</p>
+                  <span className="italic">Price: {item.price}</span>
+                  <span>Date: {formatDate(item.deliveryDate)}</span>
+                  <span>When: {item.deliveryTime}</span>
+                </div>
               </div>
-              <div className={`flex flex-col ${classes.cardItems}`}>
-                <p className="font-medium text-base">{item.name}</p>
-                <span className="italic">Price: {item.price}</span>
-                <span>Date: {formatDate(item.deliveryDate)}</span>
-                <span>When: {item.deliveryTime}</span>
+              <div>
+                <DeleteCartItem onDelete={handleDeleteItem} itemId={item.id} />
               </div>
             </div>
             <div className="w-full h-[2px] bg-slate-200 opacity-50 my-4" />

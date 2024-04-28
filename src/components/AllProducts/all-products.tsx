@@ -9,7 +9,9 @@ export default function AllProducts() {
   const [selectedCategory, setSelectedCategory] = useState("Whole Cakes");
   // console.log(selectedCategory)
 
-  const filteredItems = items.filter((item) => item.category === selectedCategory);
+  const filteredItems = selectedCategory === "All Products" 
+    ? items
+    : items.filter(item => item.category === selectedCategory)
 
   return (
     <section id="all-products-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">

@@ -1,4 +1,3 @@
-import { items } from "../../product";
 import Title from "../UI/Title/title";
 import ProductsItem from "./products-item";
 import classes from "./scss/product-logistics.module.scss";

@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TopNavigationMenu } from "./top-nav-menu";
 import { TopLogo, TopScrolledLogo } from "./top-logo";
 import MobileNavigationMenu from "./mobile-nav-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./scss/nav-head.module.scss";
 import LuoCart from "../UI/Cart/shopping-cart";
+import { getAllProductTypes } from "@/api/product-type-api";
+
 
 type Props = {
   marginTopNotScrolled?: string;
@@ -16,9 +18,28 @@ type Props = {
 
 export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScrolled = "bg-transparent", pyNotScrolled = "py-0", logoSwitch = false }: Props) {
   const [showNav, setShowNav] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [productTypes, setProductTypes] = useState([]);
+  console.log(productTypes)
   // const [lastScrollY, setLastScrollY] = useState(0);
   // console.log(showNav);
   // console.log(lastScrollY);
+
+  // const fetchProductTypes = useCallback(async () => {
+  //   setLoading(true);
+  //   try {
+  //     const data = await getAllProductTypes();
+  //     setProductTypes(data.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch Product Types", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchProductTypes();
+  // }, [fetchProductTypes]);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -17,10 +17,14 @@ type Cake = {
 export default function Products() {
   const [loading, setLoading] = useState(false);
   const [currentSelection, setSelection] = useState("Best Sellers");
-  const [cakes, setCakes] = useState<Cake[]>([]);
-  console.log(currentSelection, cakes);
+  const [cakesData, setCakesData] = useState<{ [Key: string]: Cake[] }>({});
+  console.log(currentSelection, cakesData);
 
   const fetchCakes = useCallback(async () => {
+    if (cakesData[currentSelection]) {
+      return;
+    }
+
     setLoading(true);
     try {
       const queryParams: CakeQueryParams = {
@@ -36,17 +40,22 @@ export default function Products() {
       }
 
       const data = await getCakesByFlexQueries(queryParams);
-      setCakes(data.data.cakes);
+      setCakesData((prevData) => ({
+        ...prevData,
+        [currentSelection]: data.data.cakes,
+      }));
     } catch (error) {
-      console.error("Failed to fetch cakes on homepage products:", error);
+      console.error(`Failed to fetch cakes for ${currentSelection}:`, error);
     } finally {
       setLoading(false);
     }
-  }, [currentSelection]);
+  }, [currentSelection, cakesData]);
 
   useEffect(() => {
     fetchCakes();
   }, [fetchCakes]);
+
+  const currentCakes = cakesData[currentSelection] || [];
 
   return (
     <section id="products" className="flex flex-col justify-center my-16 gap-4 mx-4 lg:mx-0">
@@ -56,7 +65,7 @@ export default function Products() {
       <div className="flex w-full justify-center">
         <Carousel className="w-full max-w-[80%] md:max-w-[90%] ">
           <CarouselContent>
-            {cakes.map((cake) => (
+            {currentCakes.map((cake) => (
               <CarouselItem key={cake.ID} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
                 <Link href="/products/test" className="">
                   <Image
@@ -79,3 +88,31 @@ export default function Products() {
     </section>
   );
 }
+
+// const fetchCakes = useCallback(async () => {
+//   setLoading(true);
+//   try {
+//     const queryParams: CakeQueryParams = {
+//       sort: "desc",
+//       limit: 10,
+//       page: 1,
+//     };
+
+//     if (currentSelection === "Best Sellers") {
+//       queryParams.bestSeller = true;
+//     } else if (currentSelection === "New Arrivals") {
+//       queryParams.newArrival = true;
+//     }
+
+//     const data = await getCakesByFlexQueries(queryParams);
+//     setCakes(data.data.cakes);
+//   } catch (error) {
+//     console.error("Failed to fetch cakes on homepage products:", error);
+//   } finally {
+//     setLoading(false);
+//   }
+// }, [currentSelection]);
+
+// useEffect(() => {
+//   fetchCakes();
+// }, [fetchCakes]);

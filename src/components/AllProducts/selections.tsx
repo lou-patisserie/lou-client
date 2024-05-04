@@ -17,8 +17,8 @@ export default function AllProductsSelection({ onSelectCategory, currentSelectio
       <Button variant="ghost" onClick={() => onSelectCategory("Nut-free")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Nut-free" ? "bg-luoBiege " : ""}`}>
         Nut-Free
       </Button>
-      <Button variant="ghost" onClick={() => onSelectCategory("Gelatine-free")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Gelatine-free" ? "bg-luoBiege " : ""}`}>
-        Gelatine-Free
+      <Button variant="ghost" onClick={() => onSelectCategory("Chocolate-based")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Chocolate-based" ? "bg-luoBiege " : ""}`}>
+        Chocolate-based
       </Button>
     </>
   );

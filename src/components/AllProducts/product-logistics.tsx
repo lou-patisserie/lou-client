@@ -3,13 +3,8 @@ import ProductsItem from "./products-item";
 import classes from "./scss/product-logistics.module.scss";
 
 type Items = {
-  id: number;
+  ID: string;
   name: string;
-  price: number;
-  imgRef: string;
-  is_new_arrival: boolean;
-  is_bestseller: boolean;
-  category: string;
 };
 
 type Props = {
@@ -25,11 +20,9 @@ export default function ProductLogistics({ items, selectedCategory }: Props) {
       </div>
       <div className={classes.products}>
         {items.map((item) => (
-          <ProductsItem key={item.id} name={item.name} price={item.price} imgRef={item.imgRef} />
+          <ProductsItem key={item.ID} name={item.name}  />
         ))}
-        {/* {items.map((prod) => (
-          <ProductsItem key={prod.id} {...prod} />
-        ))} */}
+
       </div>
     </div>
   );

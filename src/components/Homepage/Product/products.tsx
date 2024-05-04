@@ -10,7 +10,7 @@ import { getCakesByFlexQueries } from "@/api/cakes-api";
 import { CakeQueryParams } from "@/api/types";
 
 type Cake = {
-  ID: number;
+  ID: string;
   name: string;
 };
 
@@ -18,7 +18,7 @@ export default function Products() {
   const [loading, setLoading] = useState(false);
   const [currentSelection, setSelection] = useState("Best Sellers");
   const [cakesData, setCakesData] = useState<{ [Key: string]: Cake[] }>({});
-  console.log(currentSelection, cakesData);
+  // console.log(currentSelection, cakesData);
 
   const fetchCakes = useCallback(async () => {
     if (cakesData[currentSelection]) {

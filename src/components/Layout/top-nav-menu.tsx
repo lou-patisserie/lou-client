@@ -5,7 +5,16 @@ import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
 
-export function TopNavigationMenu() {
+type ProductTypes = {
+  ID: string;
+  name: string;
+};
+
+type Props = {
+  typeList: ProductTypes[];
+};
+
+export function TopNavigationMenu({ typeList }: Props) {
   return (
     <NavigationMenu className="text-luoDarkBiege">
       <NavigationMenuList>
@@ -22,9 +31,15 @@ export function TopNavigationMenu() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
+
               <ListItem href="/products" title="All Products">
                 See all of our products catalog.
               </ListItem>
+              {typeList.map((type) => (
+                <ListItem key={type.ID} href={`/products/type/${type.name}`} title={type.name}>
+      
+                </ListItem>
+              ))}
               <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
                 Discover our range of luxurious whole cakes.
               </ListItem>

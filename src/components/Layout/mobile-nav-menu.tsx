@@ -5,11 +5,17 @@ import { ArrowDownNarrowWide, Dot, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-type Props = {
-  showNav: boolean;
+type ProductTypes = {
+  ID: string;
+  name: string;
 };
 
-export default function MobileNavigationMenu({ showNav }: Props) {
+type Props = {
+  showNav: boolean;
+  typeList: ProductTypes[];
+};
+
+export default function MobileNavigationMenu({ showNav, typeList }: Props) {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const sidenavRef = useRef<HTMLDivElement>(null);
@@ -110,7 +116,15 @@ export default function MobileNavigationMenu({ showNav }: Props) {
                       All Products
                     </li>
                   </Link>
-                  <Link href="/products/type/whole-cakes">
+                  {typeList.map((type) => (
+                    <Link key={type.ID} href={`/products/type/${type.name}`}>
+                      <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+                        <Dot />
+                        {type.name}
+                      </li>
+                    </Link>
+                  ))}
+                  {/* <Link href="/products/type/whole-cakes">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />
                       Whole Cakes
@@ -127,7 +141,7 @@ export default function MobileNavigationMenu({ showNav }: Props) {
                       <Dot />
                       Entremet
                     </li>
-                  </Link>
+                  </Link> */}
                   <Link href="/products/type/add-ons">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />

@@ -7,6 +7,6 @@ export type CakeQueryParams = {
   nutFree?: boolean;
   chocolateBased?: boolean;
   sort?: "asc" | "desc";
-  limit?: number;
-  page?: number;
+  limit?: string;
+  page?: string;
 };

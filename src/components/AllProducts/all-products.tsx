@@ -26,8 +26,8 @@ export default function AllProducts() {
     try {
       const queryParams: CakeQueryParams = {
         sort: "desc",
-        limit: 10,
-        page: 1,
+        limit: "10",
+        page: "1",
       };
 
       if (selectedSubType === "Fruit-based") {

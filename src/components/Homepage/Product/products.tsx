@@ -29,8 +29,8 @@ export default function Products() {
     try {
       const queryParams: CakeQueryParams = {
         sort: "desc",
-        limit: 10,
-        page: 1,
+        limit: "10",
+        page: "1",
       };
 
       if (currentSelection === "Best Sellers") {
@@ -76,7 +76,7 @@ export default function Products() {
                     className={`aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege opacity-100`}
                   />
                 </Link>
-                <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{cake.name}</h3>
+                <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default capitalize">{cake.name}</h3>
                 {/* <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(item.price)}</p> */}
               </CarouselItem>
             ))}

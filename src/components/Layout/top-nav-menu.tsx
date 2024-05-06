@@ -32,15 +32,15 @@ export function TopNavigationMenu({ typeList }: Props) {
                 </NavigationMenuLink>
               </li> */}
 
-              <ListItem href="/products" title="All Products">
+              <ListItem href="/product/all" title="All Products">
                 See all of our products catalog.
               </ListItem>
               {typeList.map((type) => (
-                <ListItem key={type.ID} href={`/products/type/${type.name}`} title={type.name}>
+                <ListItem key={type.ID} href={`/product/${type.name.toLowerCase().replace(/\s+/g, '-')}`} title={type.name}>
       
                 </ListItem>
               ))}
-              <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
+              {/* <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
                 Discover our range of luxurious whole cakes.
               </ListItem>
               <ListItem href="/products/type/petit-gateau" title="Petit Gâteau">
@@ -51,7 +51,7 @@ export function TopNavigationMenu({ typeList }: Props) {
               </ListItem>
               <ListItem href="/products/type/gelato" title="Gelato">
                 Explore our delicious gelato flavors.
-              </ListItem>
+              </ListItem> */}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

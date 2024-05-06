@@ -31,6 +31,8 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       setProductTypes(data.data);
     } catch (error) {
       console.error(`Fail to fetch Product Types`, error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 

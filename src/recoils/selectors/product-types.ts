@@ -15,7 +15,7 @@ export const fetchProductTypes = selector<ProductTypes[]>({
       // Hapus code bawah klau gak perlu
       const response = await getAllProductTypes();
       const data = response.data;
-      console.log("Fetch productTypes from API on SSR:", data);
+      // console.log("Fetch productTypes from API on SSR:", data);
       return data;
     }
 
@@ -25,13 +25,13 @@ export const fetchProductTypes = selector<ProductTypes[]>({
       const cachedData = sessionStorage.getItem(sessionStorageKey);
       if (cachedData) {
         const parsedData = JSON.parse(cachedData);
-        console.log("Using sessionStorage productTypes:", parsedData);
+        // console.log("Using sessionStorage productTypes:", parsedData);
         return parsedData as ProductTypes[];
       }
 
       const response = await getAllProductTypes();
       const data = response.data;
-      console.log("Fetch productTypes from API:", data);
+      // console.log("Fetch productTypes from API:", data);
 
       sessionStorage.setItem(sessionStorageKey, JSON.stringify(data));
       return data;

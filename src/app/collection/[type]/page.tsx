@@ -46,20 +46,27 @@ export default function ProductsPage() {
   const typeParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizedParam = normalizeText(typeParam);
 
-  useEffect(() => {
-    const typeExists = productTypes.some((type) => normalizeText(type.name) === normalizedParam);
-    // console.log("Type Exists:", typeExists, "for", normalizedParam);
+  const selectedType = productTypes.find((type) => normalizeText(type.name) === normalizedParam);
 
-    if (!typeExists && productTypes.length > 0) {
-      console.log("Type not match, redirect to not found page");
+  useEffect(() => {
+    if (!selectedType && productTypes.length > 0) {
       notFound();
     }
-  }, [productTypes, normalizedParam]);
+  }, [productTypes, selectedType]);
+
+  if (!selectedType || loading) {
+    return (
+      <>
+        <SubHeroBanner title="Our Products" />
+        <h1>Loading skeleton here...</h1>
+      </>
+    );
+  }
 
   return (
     <>
       <SubHeroBanner title="Our Products" />
-      <AllProducts cakeType={typeParam} />
+      <AllProducts cakeType={selectedType} />
     </>
   );
 }

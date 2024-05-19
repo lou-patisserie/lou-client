@@ -10,6 +10,14 @@ type ProductTypes = {
 export const fetchProductTypes = selector<ProductTypes[]>({
   key: "fetchProductTypes",
   get: async ({ get }) => {
+    if (typeof window === "undefined") {
+      console.log("fetchProductTypes: running on server, skip sessionStorage");
+      const response = await getAllProductTypes();
+      const data = response.data;
+      console.log("Fetch productTypes from API on SSR:", data);
+      return data;
+    }
+
     const sessionStorageKey = "productTypes";
 
     try {
@@ -19,6 +27,7 @@ export const fetchProductTypes = selector<ProductTypes[]>({
         console.log("Using sessionStorage productTypes:", parsedData);
         return parsedData as ProductTypes[];
       }
+
       const response = await getAllProductTypes();
       const data = response.data;
       console.log("Fetch productTypes from API:", data);
@@ -31,22 +40,3 @@ export const fetchProductTypes = selector<ProductTypes[]>({
     }
   },
 });
-
-// export const fetchProductTypes = selector({
-//   key: "fetchProductTypes",
-//   get: async ({ get }) => {
-//     try {
-//       const currentData = get(productTypesState);
-//       if (currentData.length > 0) {
-//         return currentData;
-//       }
-//       const response = await getAllProductTypes();
-//       const data = response.data
-//       console.log("Fetched data from API:", data);
-//       return data
-//     } catch (error) {
-//       console.error("Error in Recoil selector: fetching product types:", error);
-//       throw error;
-//     }
-//   },
-// });

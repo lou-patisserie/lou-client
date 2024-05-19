@@ -12,7 +12,7 @@ export default function ProductsItem({ name }: Props) {
   return (
     <div className="text-center">
       <div className="">
-        <Link href="/products/test">
+        <Link href="/product/test">
           <Image
             src="/assets/dummy/Lou_Pastry_15.jpg"
             alt="Products"

@@ -110,38 +110,21 @@ export default function MobileNavigationMenu({ showNav, typeList }: Props) {
               </span>
               {isDropdownOpen && (
                 <motion.ul className="flex-1 ms-3 whitespace-nowrap mt-2 text-sm" initial="closed" animate={isDropdownOpen ? "open" : "closed"} variants={dropdownVariants}>
-                  <Link href="/all-products">
+                  {/* <Link href="/all-products">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />
                       All Products
                     </li>
-                  </Link>
+                  </Link> */}
                   {typeList.map((type) => (
-                    <Link key={type.ID}  href={`/product/${type.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <Link key={type.ID} href={`/collection/${type.name.toLowerCase().replace(/\s+/g, "-")}`}>
                       <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                         <Dot />
                         {type.name}
                       </li>
                     </Link>
                   ))}
-                  {/* <Link href="/products/type/whole-cakes">
-                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                      <Dot />
-                      Whole Cakes
-                    </li>
-                  </Link>
-                  <Link href="/products/type/petit-gateau">
-                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                      <Dot />
-                      Petit Gâteau
-                    </li>
-                  </Link>
-                  <Link href="/products/type/entremet">
-                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                      <Dot />
-                      Entremet
-                    </li>
-                  </Link> */}
+
                   <Link href="/products/type/add-ons">
                     <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                       <Dot />

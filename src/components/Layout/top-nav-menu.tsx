@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
+import { normalizeText } from "@/lib/formatters";
 
 type ProductTypes = {
   ID: string;
@@ -31,12 +32,8 @@ export function TopNavigationMenu({ typeList }: Props) {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-
-              <ListItem href="/product/all" title="All Products">
-                See all of our products catalog.
-              </ListItem>
               {typeList.map((type) => (
-                <ListItem key={type.ID} href={`/product/${type.name.toLowerCase().replace(/\s+/g, '-')}`} title={type.name}>
+                <ListItem key={type.ID} href={`/collection/${normalizeText(type.name)}`} title={type.name}>
       
                 </ListItem>
               ))}

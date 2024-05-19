@@ -29,9 +29,8 @@ export default function ProductNav() {
       return (
         <div className={classes.container}>
           <div className={`${classes.navItems} text-luoBiege text-lg font-medium`}>
-            <Link href="/">All Product</Link>
             {productTypes.map((type) => (
-              <Link href={`/${encodeURIComponent(type.name)}`} key={type.ID} className={`${classes.link}`}>
+              <Link href={`/collection/${type.name.toLowerCase().replace(/\s+/g, "-")}`} key={type.ID} className={`${classes.link}`}>
                 {type.name}
               </Link>
             ))}

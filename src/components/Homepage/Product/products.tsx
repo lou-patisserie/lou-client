@@ -67,7 +67,7 @@ export default function Products() {
           <CarouselContent>
             {currentCakes.map((cake) => (
               <CarouselItem key={cake.ID} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
-                <Link href="/products/test" className="">
+                <Link href="/product/test" className="">
                   <Image
                     src="/assets/dummy/Lou_Pastry_15.jpg"
                     alt="/assets/dummy/Lou_Pastry_15.jpg"

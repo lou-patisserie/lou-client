@@ -11,7 +11,11 @@ type Cake = {
   name: string;
 };
 
-export default function AllProducts() {
+type Props = {
+  cakeType: string;
+};
+
+export default function AllProducts({ cakeType }: Props) {
   const [loading, setLoading] = useState(false);
   const [selectedSubType, setSelectedSubType] = useState("All Products");
   const [cakesData, setCakesData] = useState<{ [Key: string]: Cake[] }>({});
@@ -64,7 +68,7 @@ export default function AllProducts() {
         <AllProductsSelection onSelectCategory={setSelectedSubType} currentSelection={selectedSubType} />
       </div>
       <div className="w-full flex justify-center mt-8">
-        <ProductLogistics items={selectedCakes} selectedCategory={selectedSubType} />
+        <ProductLogistics items={selectedCakes} selectedCategory={selectedSubType} choosenType={cakeType} />
       </div>
     </section>
   );

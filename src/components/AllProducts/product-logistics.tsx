@@ -10,13 +10,14 @@ type Items = {
 type Props = {
   items: Items[];
   selectedCategory: string;
+  choosenType: string;
 };
 
-export default function ProductLogistics({ items, selectedCategory }: Props) {
+export default function ProductLogistics({ items, selectedCategory, choosenType = "Products" }: Props) {
   return (
     <div className={classes.container}>
-      <div>
-        <Title title={selectedCategory} />
+      <div className="capitalize">
+        <Title title={choosenType} />
       </div>
       <div className={classes.products}>
         {items.map((item) => (

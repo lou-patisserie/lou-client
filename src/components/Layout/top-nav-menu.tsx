@@ -4,8 +4,18 @@ import Link from "next/link";
 import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
+import { normalizeText } from "@/lib/formatters";
 
-export function TopNavigationMenu() {
+type ProductTypes = {
+  ID: string;
+  name: string;
+};
+
+type Props = {
+  typeList: ProductTypes[];
+};
+
+export function TopNavigationMenu({ typeList }: Props) {
   return (
     <NavigationMenu className="text-luoDarkBiege">
       <NavigationMenuList>
@@ -22,10 +32,12 @@ export function TopNavigationMenu() {
                   </a>
                 </NavigationMenuLink>
               </li> */}
-              <ListItem href="/products" title="All Products">
-                See all of our products catalog.
-              </ListItem>
-              <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
+              {typeList.map((type) => (
+                <ListItem key={type.ID} href={`/collection/${normalizeText(type.name)}`} title={type.name}>
+      
+                </ListItem>
+              ))}
+              {/* <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
                 Discover our range of luxurious whole cakes.
               </ListItem>
               <ListItem href="/products/type/petit-gateau" title="Petit Gâteau">
@@ -36,7 +48,7 @@ export function TopNavigationMenu() {
               </ListItem>
               <ListItem href="/products/type/gelato" title="Gelato">
                 Explore our delicious gelato flavors.
-              </ListItem>
+              </ListItem> */}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

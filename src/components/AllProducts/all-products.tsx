@@ -38,7 +38,7 @@ export default function AllProducts({ cakeType }: Props) {
     try {
       const queryParams: CakeQueryParams = {
         sort: "desc",
-        limit: "10",
+        limit: "10", //make this dynamic nanti pakai view more / pagination
         page: "1",
       };
 

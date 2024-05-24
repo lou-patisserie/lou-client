@@ -4,18 +4,17 @@ import Link from "next/link";
 
 type Props = {
   name: string;
-
-
+  main_image: string;
 };
 
-export default function ProductsItem({ name }: Props) {
+export default function ProductsItem({ name, main_image }: Props) {
   return (
     <div className="text-center">
       <div className="">
         <Link href="/product/test">
           <Image
-            src="/assets/dummy/Lou_Pastry_15.jpg"
-            alt="Products"
+            src={main_image}
+            alt={name}
             width={500}
             height={500}
             priority

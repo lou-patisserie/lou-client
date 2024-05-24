@@ -5,6 +5,7 @@ import classes from "./scss/product-logistics.module.scss";
 type Items = {
   ID: string;
   name: string;
+  main_image: string;
 };
 
 type Props = {
@@ -21,7 +22,7 @@ export default function ProductLogistics({ items, selectedCategory, choosenType 
       </div>
       <div className={classes.products}>
         {items.map((item) => (
-          <ProductsItem key={item.ID} name={item.name}  />
+          <ProductsItem key={item.ID} {...item}  />
         ))}
 
       </div>

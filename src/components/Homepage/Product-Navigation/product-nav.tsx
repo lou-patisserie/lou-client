@@ -34,9 +34,6 @@ export default function ProductNav() {
                 {type.name}
               </Link>
             ))}
-            <Link href="/" className={`${classes.link}`}>
-              Add Ons
-            </Link>
           </div>
         </div>
       );
@@ -45,22 +42,3 @@ export default function ProductNav() {
       return <div className={classes.container}>Error loading product types</div>;
   }
 }
-
-//   return (
-//     <div className={classes.container}>
-//       <div className={`${classes.navItems} text-luoBiege text-lg font-medium`}>
-//         <Link href="/" className={`${classes.link}`}>
-//           All Product
-//         </Link>
-//         {productTypes.map((type) => (
-//           <Link href={`/${encodeURIComponent(type.name)}`} key={type.ID} className={`${classes.link}`}>
-//             {type.name}
-//           </Link>
-//         ))}
-//         <Link href="/" className={`${classes.link}`}>
-//           Add Ons
-//         </Link>
-//       </div>
-//     </div>
-//   );
-// }

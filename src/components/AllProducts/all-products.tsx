@@ -9,6 +9,7 @@ import { getCakesByFlexQueries } from "@/api/cakes-api";
 type Cake = {
   ID: string;
   name: string;
+  main_image: string;
   is_fruit_based: boolean;
   is_nut_free: boolean;
   is_chocolate_based: boolean;

@@ -124,13 +124,6 @@ export default function MobileNavigationMenu({ showNav, typeList }: Props) {
                       </li>
                     </Link>
                   ))}
-
-                  <Link href="/products/type/add-ons">
-                    <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
-                      <Dot />
-                      Add Ons
-                    </li>
-                  </Link>
                 </motion.ul>
               )}
             </li>

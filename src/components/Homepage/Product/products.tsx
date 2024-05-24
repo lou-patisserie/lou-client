@@ -12,6 +12,7 @@ import { CakeQueryParams } from "@/api/types";
 type Cake = {
   ID: string;
   name: string;
+  main_image: string;
 };
 
 export default function Products() {
@@ -69,8 +70,8 @@ export default function Products() {
               <CarouselItem key={cake.ID} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
                 <Link href="/product/test" className="">
                   <Image
-                    src="/assets/dummy/Lou_Pastry_15.jpg"
-                    alt="/assets/dummy/Lou_Pastry_15.jpg"
+                    src={cake.main_image}
+                    alt={cake.name}
                     width={550}
                     height={550}
                     className={`aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege opacity-100`}

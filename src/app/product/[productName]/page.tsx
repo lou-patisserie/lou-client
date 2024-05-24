@@ -5,7 +5,7 @@ import ProductOrder from "@/components/Product-Detail/product-order";
 import ProductTabs from "@/components/Product-Detail/product-tabs";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 import { deSlugify, normalizeText } from "@/lib/formatters";
-import { usePathname } from "next/navigation";
+import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 type Cake = {
@@ -21,6 +21,7 @@ type Cake = {
 export default function ProductDetailPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
+  const [triggetNotFound, setTriggerNotFound] = useState(false);
   const [cakeDetail, setCakeDetail] = useState<Cake>();
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
@@ -32,17 +33,22 @@ export default function ProductDetailPage() {
     try {
       const response = await getCakeByName(normalizeCakeName);
       setCakeDetail(response.data.cake);
-      console.log("cake detail", response.data.cake);
+      // console.log("cake detail", response.data.cake);
     } catch (error) {
       console.error("Failed to fetch product detail by name", error);
+      setTriggerNotFound(true);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchCakeDetailByName()
-  }, [fetchCakeDetailByName])
+    fetchCakeDetailByName();
+  }, [fetchCakeDetailByName]);
+
+  if (triggetNotFound) {
+    return notFound();
+  }
 
   return (
     <>

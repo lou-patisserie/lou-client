@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 type ProductProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   variant: string;

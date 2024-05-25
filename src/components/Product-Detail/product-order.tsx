@@ -2,12 +2,13 @@
 import { formatPrice } from "@/lib/formatters";
 import { CalendarClock } from "lucide-react";
 import OrderForm from "./form/order-form";
-import { product } from "./dummy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
 import { useEffect, useState } from "react";
 
 type Props = {
+  cakeId?: string;
   cakeName?: string;
+  mainImgSrc?: string;
   variants: Variant[];
 };
 
@@ -19,13 +20,14 @@ type Variant = {
   price: string;
 };
 
-export default function ProductOrder({ cakeName, variants }: Props) {
+export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants }: Props) {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [selectedVariantName, setSelectedVariantName] = useState<string>("");
 
   useEffect(() => {
     if (variants.length > 0) {
       setSelectedPrice(parseFloat(variants[0].price));
+      setSelectedVariantName(variants[0].name);
     }
   }, [variants]);
 
@@ -33,7 +35,7 @@ export default function ProductOrder({ cakeName, variants }: Props) {
     const selectedVariant = variants.find((variant) => variant.ID === value);
     if (selectedVariant) {
       setSelectedPrice(parseFloat(selectedVariant.price));
-      setSelectedVariantName(selectedVariant.name)
+      setSelectedVariantName(selectedVariant.name);
     }
   };
 
@@ -41,7 +43,7 @@ export default function ProductOrder({ cakeName, variants }: Props) {
     <>
       <div className="w-full max-w-lg flex flex-col gap-8 mx-4 lg:mx-0">
         <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege">
-          <h1 className="font-bold text-xl">{cakeName ? `${cakeName}` : <div>Loading...</div>}</h1>
+          <h1 className="font-bold text-xl">{cakeName && cakeId ? `${cakeName}` : <div>Loading...</div>}</h1>
 
           {variants.length > 0 ? (
             <Tabs defaultValue={variants[0]?.ID || "Variants"} onValueChange={handleTabChange} className="w-fit">
@@ -69,7 +71,7 @@ export default function ProductOrder({ cakeName, variants }: Props) {
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={product.id} name={cakeName} price={selectedPrice} selectedVariantName={selectedVariantName} />
+          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} />
         </div>
       </div>
     </>

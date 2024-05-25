@@ -71,7 +71,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div className="flex flex-col w-full max-w-lg  border lg:border-none lg:shadow-none lg:py-0 lg:mx-0 border-luoBiege shadow-md rounded-lg py-4 mx-4">
-          <ProductOrder cakeName={cakeDetail?.name} variants={cakeVariant} />
+          <ProductOrder cakeId={cakeDetail?.ID} cakeName={cakeDetail?.name} mainImgSrc={cakeDetail?.main_image} variants={cakeVariant} />
         </div>
       </div>
     </>

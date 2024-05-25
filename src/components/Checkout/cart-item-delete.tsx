@@ -1,8 +1,8 @@
 import { Trash2 } from "lucide-react";
 
 type Props = {
-  onDelete: (id: number) => void;
-  itemId: number; // Add this line
+  onDelete: (id: string) => void;
+  itemId: string; // Add this line
 };
 
 export default function DeleteCartItem({ onDelete, itemId }: Props) {

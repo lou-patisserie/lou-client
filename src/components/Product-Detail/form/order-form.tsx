@@ -18,20 +18,21 @@ import { Textarea } from "@/components/UI/textarea";
 import { useState } from "react";
 import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
-import { redirectToWhatsApp } from "./whatsappRedirect";
+import { redirectToWhatsApp } from "../../../lib/whatsappRedirect";
 
 type Props = {
-  id: number;
+  id: string;
   name?: string;
   price: number;
+  imgSrc?: string;
   selectedVariantName: string;
 };
 
-export default function OrderForm({ id, name = "", price, selectedVariantName }: Props) {
+export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "" }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
   const [productToAdd, setProductToAdd] = useState({
-    id: 0,
+    id: "",
     name: "",
     price: 0,
     variant: "",
@@ -41,6 +42,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName }:
     candleAndKnife: false,
     greetingCard: false,
     complimentaryMsg: "",
+    imgSrc: "",
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -50,16 +52,17 @@ export default function OrderForm({ id, name = "", price, selectedVariantName }:
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const newProductToAdd = {
-      id: Math.random(),
+      id: id || Math.random().toString(),
       name: name || "",
       price: price,
-      variant: selectedVariantName || "",
+      variant: selectedVariantName,
       quantity: 1,
       deliveryDate: data.deliveryDate,
       deliveryTime: data.deliveryTime,
       candleAndKnife: data.candleAndKnife || false,
       greetingCard: data.greetingCard || false,
       complimentaryMsg: data.complimentaryMsg || "",
+      imgSrc: imgSrc || "",
     };
 
     setProductToAdd(newProductToAdd);

@@ -11,7 +11,7 @@ export default function ProductsItem({ name, main_image }: Props) {
   return (
     <div className="text-center">
       <div className="">
-        <Link href="/product/test">
+        <Link href={`/product/${name.replace(/\s+/g, "-")}`}>
           <Image
             src={main_image}
             alt={name}

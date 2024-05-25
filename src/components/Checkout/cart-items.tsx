@@ -1,16 +1,17 @@
 "use client";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { Card } from "../UI/card";
 import { cartState } from "@/recoils/atoms/products";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import classes from "./scss/cart-items.module.scss";
-import { formatDate } from "@/lib/formatters";
+import { formatDate, formatPrice } from "@/lib/formatters";
 import { Button } from "../UI/button";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { EmptyCartSVG } from "../UI/Svg/svg-ui";
 import Link from "next/link";
 import DeleteCartItem from "./cart-item-delete";
+import { redirectToWhatsAppCart } from "@/lib/whatsappRedirect";
 
 export default function CartItems() {
   const [cartItems, setCartItems] = useRecoilState(cartState);
@@ -48,7 +49,7 @@ export default function CartItems() {
     );
   }
 
-  const handleQuantityChange = (id: number, delta: number) => {
+  const handleQuantityChange = (id: string, delta: number) => {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === id) {
         const newQuantity = Math.max(1, item.quantity + delta);
@@ -60,26 +61,27 @@ export default function CartItems() {
     setCartItems(updatedCartItems);
   };
 
-  const handleDeleteItem = (id: number) => {
+  const handleDeleteItem = (id: string) => {
     const updatedCartItems = cartItems.filter((item) => item.id !== id);
     setCartItems(updatedCartItems);
   };
 
+  const cumulativeTotalPrice = cartItems.reduce((total, item) => total + (item.totalPrice || 0), 0);
+
   return (
     <Card>
       <div className="p-4">
-        <h2 className="text-xl font-semibold tracking-wide text-luoDarkBiege">Order Details</h2>
+        <h2 className="text-xl font-semibold tracking-wide text-luoDarkBiege">Cart:</h2>
         <div className="w-full h-[2px] bg-slate-200 opacity-50 my-4" />
         {cartItems.map((item) => (
           <Card key={item.id} className="my-2 p-4 ">
             <div className="flex flex-wrap gap-2  justify-between items-center">
               <div className="flex flex-wrap gap-2">
-                <div className="h-20 w-20">
-                  <Image src="/assets/dummy/Lou_Croissant2.jpg" width={500} height={500} alt="img" className="aspect-square object-cover " />
-                </div>
+                <div className="h-20 w-20">{item.imgSrc ? <Image src={item.imgSrc} width={100} height={100} alt={item.name} className="aspect-square object-cover " /> : <div></div>}</div>
                 <div className={`flex flex-col ${classes.cardItems}`}>
                   <p className="font-medium text-base">{item.name}</p>
-                  <span className="italic">Price: {item.price}</span>
+                  <span className="italic">Variant: {item.variant}</span>
+                  <span className="italic">Price: {formatPrice(item.price)}</span>
                   <span>Date: {formatDate(item.deliveryDate)}</span>
                   <span>When: {item.deliveryTime}</span>
                 </div>
@@ -103,10 +105,19 @@ export default function CartItems() {
                   <span className="sr-only">Increase</span>
                 </Button>
               </div>
-              <span>Total Price: {item.totalPrice}</span>
+              <span>Total Price: {formatPrice(item.totalPrice || 0)}</span>
             </div>
           </Card>
         ))}
+        <Card className="my-4 p-4">
+          <div className="text-lg font-semibold w-full flex flex-wrap justify-between">
+            <span>Total Cart Price:</span>
+            <span> {formatPrice(cumulativeTotalPrice)}</span>
+          </div>
+        </Card>
+        <Button className="w-full text-base tracking-wide py-6 rounded-none bg-luoDarkBiege hover:bg-luoDarkBiege hover:opacity-75" onClick={() => redirectToWhatsAppCart(cartItems, cumulativeTotalPrice)}>
+          Proceed to Checkout
+        </Button>
       </div>
     </Card>
   );

@@ -1,4 +1,4 @@
-export function formatPrice(price: number) {
+export function formatPrice(price: any) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -29,3 +29,14 @@ export function normalizeText(input: string) {
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
 }
+
+export function deSlugify(slug: string): string {
+  return slug.replace(/-/g, " ");
+}
+
+// export function deSlugify(slug: string): string {
+//   return slug
+//     .split("-")
+//     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+//     .join(" ");
+// }

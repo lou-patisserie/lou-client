@@ -50,7 +50,7 @@ type CartItem = {
 
 export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPrice: number) => {
   const phoneNumber = "+6281394757477";
-  let message = `Hi Cake Shop,\n\nI would like to place an order with the following details:\n\n`;
+  let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
 
   cartItems.forEach((item, index) => {
     message += `*Product ${index + 1}:*\n`;

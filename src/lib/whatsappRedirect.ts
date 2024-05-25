@@ -13,7 +13,7 @@ export const redirectToWhatsApp = (name: string, price: number, variant: string,
   const phoneNumber = "+6281394757477";
   const message = `Hello, Lou Patisserie,\n\nI would like to place an order with the following details:\n
   *Order Details:*
-  - *Product*: ${name}
+  - *Name*: ${name}
   - *Variant*: ${variant}
   - *Price*: ${formatPrice(price)}
   - *Quantity*: 1

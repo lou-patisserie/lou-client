@@ -14,6 +14,7 @@ type ProductProps = {
   id: number;
   name: string;
   price: number;
+  variant: string;
   quantity: number;
   deliveryDate: Date;
   deliveryTime: string;
@@ -98,6 +99,9 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
 
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />
               <DrawerDescription className="italic font-semibold text-luoDarkBiege mb-1">Here your details: </DrawerDescription>
+              <DrawerDescription>
+                <strong>Variant</strong> {product.variant}
+              </DrawerDescription>
               <DrawerDescription>
                 <strong>Price:</strong> {formatPrice(product.price)}
               </DrawerDescription>

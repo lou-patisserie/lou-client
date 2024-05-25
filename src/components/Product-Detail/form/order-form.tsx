@@ -18,19 +18,23 @@ import { Textarea } from "@/components/UI/textarea";
 import { useState } from "react";
 import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
+import { redirectToWhatsApp } from "./whatsappRedirect";
 
 type Props = {
   id: number;
-  name: string;
+  name?: string;
   price: number;
+  selectedVariantName: string;
 };
 
-export default function OrderForm({ id, name, price }: Props) {
+export default function OrderForm({ id, name = "", price, selectedVariantName }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isBuyNow, setIsBuyNow] = useState(false);
   const [productToAdd, setProductToAdd] = useState({
     id: 0,
     name: "",
     price: 0,
+    variant: "",
     quantity: 0,
     deliveryDate: new Date(),
     deliveryTime: "",
@@ -47,8 +51,9 @@ export default function OrderForm({ id, name, price }: Props) {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const newProductToAdd = {
       id: Math.random(),
-      name: name,
+      name: name || "",
       price: price,
+      variant: selectedVariantName || "",
       quantity: 1,
       deliveryDate: data.deliveryDate,
       deliveryTime: data.deliveryTime,
@@ -58,18 +63,11 @@ export default function OrderForm({ id, name, price }: Props) {
     };
 
     setProductToAdd(newProductToAdd);
-    // setCart([...cart, newProductToAdd]);
-
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
-
-    setDrawerOpen(true);
+    if (isBuyNow) {
+      redirectToWhatsApp(name || "", price, selectedVariantName, data);
+    } else {
+      setDrawerOpen(true);
+    }
   }
 
   return (
@@ -176,10 +174,10 @@ export default function OrderForm({ id, name, price }: Props) {
             )}
           />
           <div className="flex flex-col gap-2">
-            <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150">
+            <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(true)}>
               Buy Now - {formatPrice(price)}
             </Button>
-            <Button name="order-submit" type="submit" className=" bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none  transition ease-in-out duration-150">
+            <Button name="order-submit" type="submit" className="bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(false)}>
               Add to Cart
             </Button>
           </div>

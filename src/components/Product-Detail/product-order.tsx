@@ -21,6 +21,7 @@ type Variant = {
 
 export default function ProductOrder({ cakeName, variants }: Props) {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
+  const [selectedVariantName, setSelectedVariantName] = useState<string>("");
 
   useEffect(() => {
     if (variants.length > 0) {
@@ -32,6 +33,7 @@ export default function ProductOrder({ cakeName, variants }: Props) {
     const selectedVariant = variants.find((variant) => variant.ID === value);
     if (selectedVariant) {
       setSelectedPrice(parseFloat(selectedVariant.price));
+      setSelectedVariantName(selectedVariant.name)
     }
   };
 
@@ -67,7 +69,7 @@ export default function ProductOrder({ cakeName, variants }: Props) {
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={product.id} name={product.name} price={selectedPrice} />
+          <OrderForm id={product.id} name={cakeName} price={selectedPrice} selectedVariantName={selectedVariantName} />
         </div>
       </div>
     </>

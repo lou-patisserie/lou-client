@@ -18,11 +18,20 @@ type Cake = {
   aboutCake: any;
 };
 
+type Variants = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  name: string;
+  price: string;
+};
+
 export default function ProductDetailPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [triggetNotFound, setTriggerNotFound] = useState(false);
   const [cakeDetail, setCakeDetail] = useState<Cake>();
+  const [cakeVariant, setCakeVariant] = useState<Variants[]>([]);
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizeCakeName = deSlugify(cakeNameParam);
@@ -33,7 +42,8 @@ export default function ProductDetailPage() {
     try {
       const response = await getCakeByName(normalizeCakeName);
       setCakeDetail(response.data.cake);
-      // console.log("cake detail", response.data.cake);
+      setCakeVariant(response.data.variants);
+      console.log("cake detail", response.data.cake, "variant", response.data.variants);
     } catch (error) {
       console.error("Failed to fetch product detail by name", error);
       setTriggerNotFound(true);
@@ -61,7 +71,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div className="flex flex-col w-full max-w-lg  border lg:border-none lg:shadow-none lg:py-0 lg:mx-0 border-luoBiege shadow-md rounded-lg py-4 mx-4">
-          <ProductOrder />
+          <ProductOrder cakeName={cakeDetail?.name} variants={cakeVariant} />
         </div>
       </div>
     </>

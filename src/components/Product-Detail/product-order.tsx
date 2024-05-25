@@ -1,15 +1,65 @@
+"use client";
 import { formatPrice } from "@/lib/formatters";
 import { CalendarClock } from "lucide-react";
 import OrderForm from "./form/order-form";
 import { product } from "./dummy";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
+import { useEffect, useState } from "react";
 
-export default function ProductOrder() {
+type Props = {
+  cakeName?: string;
+  variants: Variant[];
+};
+
+type Variant = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  name: string;
+  price: string;
+};
+
+export default function ProductOrder({ cakeName, variants }: Props) {
+  const [selectedPrice, setSelectedPrice] = useState<number>(0);
+
+  useEffect(() => {
+    if (variants.length > 0) {
+      setSelectedPrice(parseFloat(variants[0].price));
+    }
+  }, [variants]);
+
+  const handleTabChange = (value: string) => {
+    const selectedVariant = variants.find((variant) => variant.ID === value);
+    if (selectedVariant) {
+      setSelectedPrice(parseFloat(selectedVariant.price));
+    }
+  };
+
   return (
     <>
       <div className="w-full max-w-lg flex flex-col gap-8 mx-4 lg:mx-0">
         <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege">
-          <h1 className="font-bold text-xl">{product.name}</h1>
-          <h2 className="font-bold text-lg tracking-wide">{formatPrice(product.price)}</h2>
+          <h1 className="font-bold text-xl">{cakeName ? `${cakeName}` : <div>Loading...</div>}</h1>
+
+          {variants.length > 0 ? (
+            <Tabs defaultValue={variants[0]?.ID || "Variants"} onValueChange={handleTabChange} className="w-fit">
+              <TabsList className="bg-transparent p-0 text-luoDarkBiege gap-1">
+                {variants.map((variant) => (
+                  <TabsTrigger className="hover:bg-luoBiege" key={variant.ID} value={variant.ID}>
+                    {variant.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {variants.map((variant) => (
+                <TabsContent key={variant.ID} value={variant.ID} className="mt-1">
+                  <h3 className="font-bold text-lg tracking-wide">{formatPrice(variant.price)}</h3>
+                </TabsContent>
+              ))}
+            </Tabs>
+          ) : (
+            <h3 className="font-light italic text-md tracking-wide">No Price for this Product</h3>
+          )}
+
           <div className="flex flex-row items-center gap-1 mt-2">
             <CalendarClock size={18} strokeWidth={1} />
             <span className="uppercase text-xs font-semibold tracking-wide">receive order within 1 hour of confirmation</span>
@@ -17,7 +67,7 @@ export default function ProductOrder() {
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={product.id} name={product.name} price={product.price} />
+          <OrderForm id={product.id} name={product.name} price={selectedPrice} />
         </div>
       </div>
     </>

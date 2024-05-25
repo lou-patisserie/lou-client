@@ -1,4 +1,4 @@
-export function formatPrice(price: number) {
+export function formatPrice(price: any) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",

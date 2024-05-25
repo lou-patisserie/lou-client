@@ -6,6 +6,14 @@ import AllProductsSelection from "./selections";
 import { CakeQueryParams } from "@/api/types";
 import { getCakesByFlexQueries } from "@/api/cakes-api";
 
+type Variant = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  name: string;
+  price: string;
+};
+
 type Cake = {
   ID: string;
   name: string;
@@ -13,6 +21,7 @@ type Cake = {
   is_fruit_based: boolean;
   is_nut_free: boolean;
   is_chocolate_based: boolean;
+  variants: Variant[];
 };
 
 type ProductType = {
@@ -30,7 +39,7 @@ export default function AllProducts({ cakeType }: Props) {
   const [selectedSubType, setSelectedSubType] = useState("All Products");
   const [allCakes, setAllCakes] = useState<Cake[]>([]);
   const [filteredCakes, setFilteredCakes] = useState<Cake[]>([]);
-  // console.log("Filter", filteredCakes, "original data", allCakes);
+  console.log("Filter", filteredCakes, "original data", allCakes);
   // console.log(selectedSubType, cakesData);
   // console.log(cakeType);
 

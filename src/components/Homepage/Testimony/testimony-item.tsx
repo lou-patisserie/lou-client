@@ -10,17 +10,17 @@ type Props = {
 export default function TestimonyItem({ name, content }: Props) {
   return (
     <>
-      <Card className="h-[180px] bg-luoDarkBiege border-none shadow-md">
+      <Card className="h-[180px] bg-luoBiege border-none shadow-md">
         <div className="p-4 flex flex-col gap-2">
           <div className="flex flex-row gap-1 w-full items-center">
             {Array.from({ length: 5 }).map((_, index) => (
               <div key={index}>
-                <Star fill="gold" className="text-transparent" size={15} />
+                <Star fill="gold" className="text-transparent" size={18} />
               </div>
             ))}
-            <BadgeCheck size={24} strokeWidth={1.5} className="text-white" />
+            <BadgeCheck size={24} strokeWidth={1.5} className="text-slate-700" />
           </div>
-          <p className="line-clamp-5 text-white font-light" title={content}>
+          <p className="line-clamp-5 text-slate-700 font-normal text-sm" title={content}>
             {content}
           </p>
         </div>

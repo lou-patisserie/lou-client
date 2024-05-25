@@ -9,17 +9,26 @@ import Link from "next/link";
 import { getCakesByFlexQueries } from "@/api/cakes-api";
 import { CakeQueryParams } from "@/api/types";
 
+type Variant = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  name: string;
+  price: string;
+};
+
 type Cake = {
   ID: string;
   name: string;
   main_image: string;
+  variants: Variant[];
 };
 
 export default function Products() {
   const [loading, setLoading] = useState(false);
   const [currentSelection, setSelection] = useState("Best Sellers");
   const [cakesData, setCakesData] = useState<{ [Key: string]: Cake[] }>({});
-  // console.log(currentSelection, cakesData);
+  console.log(currentSelection, cakesData);
 
   const fetchCakes = useCallback(async () => {
     if (cakesData[currentSelection]) {
@@ -78,7 +87,7 @@ export default function Products() {
                   />
                 </Link>
                 <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default capitalize">{cake.name}</h3>
-                {/* <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(item.price)}</p> */}
+                <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(cake.variants[0].price)}</p>
               </CarouselItem>
             ))}
           </CarouselContent>

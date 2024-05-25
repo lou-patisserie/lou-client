@@ -39,7 +39,7 @@ export default function CartItems() {
             <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-none border shadow-md">
               <h1 className="font-titleFont text-xl font-bold uppercase">Your Cart feels lonely.</h1>
               <p className="text-sm text-center px-10 -mt-2">Your Shopping cart lives to serve. Give it purpose - fill it with delicious cake. and make it happy.</p>
-              <Link href="/products">
+              <Link href="/collection/all-product">
                 <button className="bg-luoDarkBiege rounded-none cursor-pointer hover:opacity-75 active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">Continue Shopping</button>
               </Link>
             </div>

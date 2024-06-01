@@ -7,7 +7,8 @@ import ProductSelection from "./product-selection";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { getCakesByFlexQueries } from "@/api/cakes-api";
-import { CakeQueryParams } from "@/api/types";
+import { CakeQueryParams } from "@/types/api-types";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 type Variant = {
   ID: string;
@@ -79,7 +80,7 @@ export default function Products() {
               <CarouselItem key={cake.ID} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
                 <Link href={`/product/${cake.name.replace(/\s+/g, "-")}`} className="">
                   <Image
-                    src={cake.main_image}
+                    src={validateImageUrl(cake.main_image)}
                     alt={cake.name}
                     width={550}
                     height={550}
@@ -98,31 +99,3 @@ export default function Products() {
     </section>
   );
 }
-
-// const fetchCakes = useCallback(async () => {
-//   setLoading(true);
-//   try {
-//     const queryParams: CakeQueryParams = {
-//       sort: "desc",
-//       limit: 10,
-//       page: 1,
-//     };
-
-//     if (currentSelection === "Best Sellers") {
-//       queryParams.bestSeller = true;
-//     } else if (currentSelection === "New Arrivals") {
-//       queryParams.newArrival = true;
-//     }
-
-//     const data = await getCakesByFlexQueries(queryParams);
-//     setCakes(data.data.cakes);
-//   } catch (error) {
-//     console.error("Failed to fetch cakes on homepage products:", error);
-//   } finally {
-//     setLoading(false);
-//   }
-// }, [currentSelection]);
-
-// useEffect(() => {
-//   fetchCakes();
-// }, [fetchCakes]);

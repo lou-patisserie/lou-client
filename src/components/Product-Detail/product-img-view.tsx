@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
 import classes from "./scss/product-img-view.module.scss";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 type Props = {
   isOpen: boolean;
@@ -49,11 +50,11 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
         <X />
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
-        <Image src={currentImg || "/assets/img/image_not_found.jpeg"} alt="product-img-select" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
+        <Image src={validateImageUrl(currentImg) || "/assets/img/image_not_found.jpeg"} alt="product-img-select" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
         <div className="p-2 flex flex-row gap-2 cursor-pointer">
           <div>
             <Image
-              src={img1}
+              src={validateImageUrl(img1)}
               alt="product-img1"
               width={1080}
               height={1080}
@@ -66,7 +67,7 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
           </div>
           <div>
             <Image
-              src={img2}
+              src={validateImageUrl(img2)}
               alt="product-img2"
               width={1080}
               height={1080}
@@ -78,7 +79,7 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
           </div>
           <div>
             <Image
-              src={img3}
+              src={validateImageUrl(img3)}
               alt="product-img3"
               width={1080}
               height={1080}

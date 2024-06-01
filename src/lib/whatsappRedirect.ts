@@ -3,14 +3,22 @@ import { formatDate, formatPrice } from "@/lib/formatters";
 type OrderData = {
   deliveryDate?: Date;
   deliveryTime?: string;
-  candleAndKnife?: boolean;
-  greetingCard?: boolean;
+  addOns: Record<string, { selected: boolean; variant?: string }>;
   complimentaryMsg?: string;
 };
 
 // Single "Buy Now" Template
 export const redirectToWhatsApp = (name: string, price: number, variant: string, data: OrderData) => {
   const phoneNumber = "+6281394757477";
+  const selectedAddOns =
+    Object.keys(data.addOns)
+      .filter((key) => data.addOns[key].selected)
+      .map((key) => {
+        const addOn = data.addOns[key];
+        return addOn.variant ? `${key} (Variant: ${addOn.variant})` : key;
+      })
+      .join(", ") || "No add-ons";
+
   const message = `Hello, Lou Patisserie,\n\nI would like to place an order with the following details:\n
   *Order Details:*
   - *Name*: ${name}
@@ -19,8 +27,7 @@ export const redirectToWhatsApp = (name: string, price: number, variant: string,
   - *Quantity*: 1
   - *Delivery Date*: ${formatDate(data.deliveryDate)}
   - *Delivery Time*: ${data.deliveryTime}
-  - *Candle and Knife*: ${data.candleAndKnife ? "Yes" : "No"}
-  - *Greeting Card*: ${data.greetingCard ? "Yes" : "No"}
+  - *Add-Ons*: ${selectedAddOns}
   - *Complimentary Message*: ${data.complimentaryMsg || "No complimentary message"}
 
   Please let me know if you need any further information.
@@ -41,18 +48,27 @@ type CartItem = {
   quantity: number;
   deliveryDate?: Date;
   deliveryTime?: string;
-  candleAndKnife: boolean;
-  greetingCard: boolean;
+  addOns: Record<string, { selected: boolean; variant?: string }>;
   complimentaryMsg: string;
   totalPrice?: number;
   imgSrc?: string;
 };
 
+// Bulk Products Redirect WA msgs
 export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPrice: number) => {
   const phoneNumber = "+6281394757477";
   let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
 
   cartItems.forEach((item, index) => {
+    const selectedAddOns =
+      Object.keys(item.addOns)
+        .filter((key) => item.addOns[key].selected)
+        .map((key) => {
+          const addOn = item.addOns[key];
+          return addOn.variant ? `${key} (Variant: ${addOn.variant})` : key;
+        })
+        .join(", ") || "No add-ons";
+
     message += `*Product ${index + 1}:*\n`;
     message += `- *Name*: ${item.name}\n`;
     message += `- *Variant*: ${item.variant}\n`;
@@ -61,8 +77,7 @@ export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPri
     message += `- *Total Price*: ${formatPrice(item.totalPrice)}\n`;
     message += `- *Delivery Date*: ${formatDate(item.deliveryDate)}\n`;
     message += `- *Delivery Time*: ${item.deliveryTime}\n`;
-    message += `- *Candle & Knife*: ${item.candleAndKnife ? "Yes" : "No"}\n`;
-    message += `- *Greeting Card*: ${item.greetingCard ? "Yes" : "No"}\n`;
+    message += `- *Add-Ons*: ${selectedAddOns}\n`;
     message += `- *Complimentary Message*: ${item.complimentaryMsg || "No complimentary message"}\n\n`;
   });
 

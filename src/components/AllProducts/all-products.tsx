@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import ProductLogistics from "./product-logistics";
 import AllProductsSelection from "./selections";
-import { CakeQueryParams } from "@/api/types";
 import { getCakesByFlexQueries } from "@/api/cakes-api";
+import { CakeQueryParams } from "@/types/api-types";
 
 type Variant = {
   ID: string;

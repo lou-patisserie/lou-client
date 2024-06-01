@@ -4,23 +4,17 @@ import { CalendarClock } from "lucide-react";
 import OrderForm from "./form/order-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
 import { useEffect, useState } from "react";
+import { AddOns, Variants } from "@/types/data-types";
 
 type Props = {
   cakeId?: string;
   cakeName?: string;
   mainImgSrc?: string;
-  variants: Variant[];
+  variants: Variants[];
+  addOns: AddOns[];
 };
 
-type Variant = {
-  ID: string;
-  cake_id: string;
-  desc: string;
-  name: string;
-  price: string;
-};
-
-export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants }: Props) {
+export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants, addOns }: Props) {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [selectedVariantName, setSelectedVariantName] = useState<string>("");
 
@@ -71,7 +65,7 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} />
+          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} addOns={addOns} />
         </div>
       </div>
     </>

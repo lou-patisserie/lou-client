@@ -15,10 +15,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/UI/checkbox";
 import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
 import { redirectToWhatsApp } from "../../../lib/whatsappRedirect";
+import { AddOns } from "@/types/data-types";
 
 type Props = {
   id: string;
@@ -26,9 +27,10 @@ type Props = {
   price: number;
   imgSrc?: string;
   selectedVariantName: string;
+  addOns: AddOns[];
 };
 
-export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "" }: Props) {
+export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
   const [productToAdd, setProductToAdd] = useState({
@@ -39,15 +41,22 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     quantity: 0,
     deliveryDate: new Date(),
     deliveryTime: "",
-    candleAndKnife: false,
-    greetingCard: false,
+    addOns: {},
     complimentaryMsg: "",
     imgSrc: "",
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {},
+    defaultValues: {
+      addOns: addOns.reduce((acc, addOn) => {
+        acc[addOn.name] = {
+          selected: false,
+          variant: addOn.variants?.length > 0 ? addOn.variants[0].name : undefined,
+        };
+        return acc;
+      }, {} as Record<string, { selected: boolean; variant?: string }>),
+    },
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -59,19 +68,37 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
       quantity: 1,
       deliveryDate: data.deliveryDate,
       deliveryTime: data.deliveryTime,
-      candleAndKnife: data.candleAndKnife || false,
-      greetingCard: data.greetingCard || false,
       complimentaryMsg: data.complimentaryMsg || "",
+      addOns: data.addOns || {},
       imgSrc: imgSrc || "",
     };
 
     setProductToAdd(newProductToAdd);
     if (isBuyNow) {
-      redirectToWhatsApp(name || "", price, selectedVariantName, data);
+      redirectToWhatsApp(name || "", price, selectedVariantName, {
+        ...data,
+        addOns: data.addOns || {},
+      });
     } else {
       setDrawerOpen(true);
     }
   }
+
+  useEffect(() => {
+    const subscription = form.watch((value, { name, type }) => {
+      if (name?.includes("selected") && type === "change" && value.addOns) {
+        const addOnName = name.split(".")[1];
+        const addOnValue = value.addOns[addOnName];
+        if (addOnValue && addOnValue.selected) {
+          const addOn = addOns.find((addOn) => addOn.name === addOnName);
+          if (addOn && addOn.variants.length > 0) {
+            form.setValue(`addOns.${addOnName}.variant`, addOn.variants[0].name);
+          }
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [form, addOns]);
 
   return (
     <>
@@ -135,34 +162,53 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             <FormLabel>Add-Ons (Optional)</FormLabel>
             <FormDescription className="text-xs">Select the add-ons that you want.</FormDescription>
           </div>
-          <FormField
-            control={form.control}
-            name="candleAndKnife"
-            render={({ field }) => (
-              <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Add Candle and Knife</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="greetingCard"
-            render={({ field }) => (
-              <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3 ">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Add Greeting Card</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
+          {addOns.map((addOn) => (
+            <div key={addOn.ID} className="flex flex-col space-y-2">
+              <FormField
+                control={form.control}
+                name={`addOns.${addOn.name}.selected`}
+                render={({ field }) => (
+                  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
+                    <FormControl>
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>{addOn.name}</FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+              {form.watch(`addOns.${addOn.name}.selected`) && addOn.variants?.length > 0 && (
+                <>
+                  <FormField
+                    control={form.control}
+                    name={`addOns.${addOn.name}.variant`}
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col w-72 md:w-96">
+                        <FormLabel className="text-xs italic text-gray-600">Select Variant</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value || addOn.variants[0].name}>
+                          <FormControl>
+                            <SelectTrigger className="rounded-none">
+                              <SelectValue placeholder="Select a variant" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent className="rounded-none">
+                            {addOn.variants.map((variant) => (
+                              <SelectItem key={variant.ID} value={variant.name} className="rounded-none">
+                                {variant.name} - {formatPrice(parseFloat(variant.price))}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="w-full h-[2px] bg-luoBiege opacity-50" />
+                </>
+              )}
+            </div>
+          ))}
           <FormField
             control={form.control}
             name="complimentaryMsg"
@@ -189,4 +235,55 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
       <ProductDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} productToAdd={productToAdd} />
     </>
   );
+}
+
+{
+  /* {addOns?.map((addOn) => (
+            <FormField
+              key={addOn.ID}
+              control={form.control}
+              name={`addOns.${addOn.name}`}
+              render={({ field }) => (
+                <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
+                  <FormControl>
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>{addOn.name}</FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+          ))} */
+}
+
+{
+  /* <FormField
+control={form.control}
+name="candleAndKnife"
+render={({ field }) => (
+  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
+    <FormControl>
+      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
+    </FormControl>
+    <div className="space-y-1 leading-none">
+      <FormLabel>Add Candle and Knife</FormLabel>
+    </div>
+  </FormItem>
+)}
+/>
+<FormField
+control={form.control}
+name="greetingCard"
+render={({ field }) => (
+  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3 ">
+    <FormControl>
+      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
+    </FormControl>
+    <div className="space-y-1 leading-none">
+      <FormLabel>Add Greeting Card</FormLabel>
+    </div>
+  </FormItem>
+)}
+/> */
 }

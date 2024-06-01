@@ -18,8 +18,7 @@ type ProductProps = {
   quantity: number;
   deliveryDate: Date;
   deliveryTime: string;
-  candleAndKnife: boolean;
-  greetingCard: boolean;
+  addOns: Record<string, { selected: boolean; variant?: string }>;
   complimentaryMsg: string;
 };
 
@@ -108,12 +107,21 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
               <DrawerDescription>
                 <strong>Delivery:</strong> {formatDate(product.deliveryDate)} at {product.deliveryTime}
               </DrawerDescription>
-              <DrawerDescription>
-                <strong>Candle and Knife:</strong> {product.candleAndKnife ? "Yes" : "No"}
-              </DrawerDescription>
-              <DrawerDescription>
-                <strong>Greeting Card:</strong> {product.greetingCard ? "Yes" : "No"}
-              </DrawerDescription>
+              <DrawerDescription className="italic font-semibold text-luoDarkBiege my-1">Your Add Ons: </DrawerDescription>
+              <div className="flex flex-wrap justify-between gap-2">
+                {Object.entries(product.addOns).map(([addOn, value]) => (
+                  <div key={addOn}>
+                    <DrawerDescription>
+                      <strong>{addOn}:</strong> {value.selected ? "Yes" : "No"}
+                    </DrawerDescription>
+                    {value.selected && value.variant && (
+                      <DrawerDescription>
+                        <strong>Variant:</strong> {value.variant}
+                      </DrawerDescription>
+                    )}
+                  </div>
+                ))}
+              </div>
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />
               <div>
                 <DrawerDescription className="italic font-semibold text-luoDarkBiege">Complimentary Message:</DrawerDescription>

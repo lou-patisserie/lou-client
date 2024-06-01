@@ -1,4 +1,5 @@
 import { formatPrice } from "@/lib/formatters";
+import { validateImageUrl } from "@/lib/imgUtils";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,7 +23,7 @@ export default function ProductsItem({ name, main_image, variants }: Props) {
       <div className="">
         <Link href={`/product/${name.replace(/\s+/g, "-")}`}>
           <Image
-            src={main_image}
+            src={validateImageUrl(main_image)}
             alt={name}
             width={500}
             height={500}

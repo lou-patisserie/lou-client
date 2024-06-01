@@ -1,30 +1,15 @@
 "use client";
-import { getCakeByName } from "@/api/cakes-api";
+import { getCakeByName, getCakesByFlexQueries } from "@/api/cakes-api";
 import ProductDetailImgs from "@/components/Product-Detail/product-img-layout";
 import ProductOrder from "@/components/Product-Detail/product-order";
 import ProductTabs from "@/components/Product-Detail/product-tabs";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 import { deSlugify, normalizeText } from "@/lib/formatters";
+import { CakeQueryParams } from "@/types/api-types";
+import { AddOns, Cake, Variants } from "@/types/data-types";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-type Cake = {
-  ID: string;
-  name: string;
-  main_image: string;
-  sub_image1: string;
-  sub_image2: string;
-  variants: object[];
-  aboutCake: any;
-};
-
-type Variants = {
-  ID: string;
-  cake_id: string;
-  desc: string;
-  name: string;
-  price: string;
-};
 
 export default function ProductDetailPage() {
   const pathname = usePathname();
@@ -32,18 +17,28 @@ export default function ProductDetailPage() {
   const [triggetNotFound, setTriggerNotFound] = useState(false);
   const [cakeDetail, setCakeDetail] = useState<Cake>();
   const [cakeVariant, setCakeVariant] = useState<Variants[]>([]);
+  const [addOns, setAddOns] = useState<AddOns[]>([]);
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizeCakeName = deSlugify(cakeNameParam);
   // console.log("cakeNameparam", cakeNameParam, "normalize", normalizeCakeName);
 
-  const fetchCakeDetailByName = useCallback(async () => {
+  const fetchCakeDetailByNameAndAddOns = useCallback(async () => {
     setLoading(true);
+
     try {
+      const queryParams: CakeQueryParams = {
+        typeID: "78d1f560-65c3-430f-afe5-59cb21775131",
+        sort: "asc",
+      };
+
       const response = await getCakeByName(normalizeCakeName);
+      const addOnsResponse = await getCakesByFlexQueries(queryParams);
       setCakeDetail(response.data.cake);
       setCakeVariant(response.data.variants);
-      console.log("cake detail", response.data.cake, "variant", response.data.variants);
+      setAddOns(addOnsResponse.data.cakes);
+      // console.log(addOnsResponse.data.cakes)
+      // console.log("cake detail", response.data.cake, "variant", response.data.variants);
     } catch (error) {
       console.error("Failed to fetch product detail by name", error);
       setTriggerNotFound(true);
@@ -53,8 +48,8 @@ export default function ProductDetailPage() {
   }, []);
 
   useEffect(() => {
-    fetchCakeDetailByName();
-  }, [fetchCakeDetailByName]);
+    fetchCakeDetailByNameAndAddOns();
+  }, [fetchCakeDetailByNameAndAddOns]);
 
   if (triggetNotFound) {
     return notFound();
@@ -71,7 +66,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div className="flex flex-col w-full max-w-lg  border lg:border-none lg:shadow-none lg:py-0 lg:mx-0 border-luoBiege shadow-md rounded-lg py-4 mx-4">
-          <ProductOrder cakeId={cakeDetail?.ID} cakeName={cakeDetail?.name} mainImgSrc={cakeDetail?.main_image} variants={cakeVariant} />
+          <ProductOrder cakeId={cakeDetail?.ID} cakeName={cakeDetail?.name} mainImgSrc={cakeDetail?.main_image} variants={cakeVariant} addOns={addOns} />
         </div>
       </div>
     </>

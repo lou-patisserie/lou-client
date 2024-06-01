@@ -1,5 +1,5 @@
 import { api } from "./api-config";
-import { CakeQueryParams } from "./types";
+import { CakeQueryParams } from "../types/api-types";
 
 export const getCakesByFlexQueries = async (params: CakeQueryParams) => {
   try {

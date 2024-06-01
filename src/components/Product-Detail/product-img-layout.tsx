@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import ProductImageView from "./product-img-view";
 import { Eye } from "lucide-react";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 type Props = {
   mainImg?: string;
@@ -17,7 +18,7 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
   const [isHovered2, setIsHovered2] = useState(false);
   const [isHovered3, setIsHovered3] = useState(false);
 
-  const handleImageClick = (src: string) => {
+  const handleImageClick = (src: any) => {
     setSelectedImg(src);
     setIsOpen(true);
   };
@@ -36,7 +37,7 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
           className="flex h-fit relative items-start justify-center transition ease-in duration-150 hover:opacity-70"
         >
           {mainImg ? (
-            <Image src={mainImg} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
+            <Image src={validateImageUrl(mainImg)} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
           ) : (
             <div className="flex items-center justify-center w-full h-full bg-gray-200">Loading...</div>
           )}
@@ -50,7 +51,7 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
             className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 "
           >
             {subImg1 ? (
-              <Image src={subImg1} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
+              <Image src={validateImageUrl(subImg1)} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
             ) : (
               <div className="flex items-center justify-center w-full h-full bg-gray-200">Loading...</div>
             )}
@@ -63,7 +64,7 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
             className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 "
           >
             {subImg2 ? (
-              <Image src={subImg2} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
+              <Image src={validateImageUrl(subImg2)} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg" onError={handleImgError} />
             ) : (
               <div className="flex items-center justify-center w-full h-full bg-gray-200">Loading...</div>
             )}

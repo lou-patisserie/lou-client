@@ -14,10 +14,12 @@ export const FormSchema = z.object({
       message: "Complimentary message is too short",
     })
     .optional(),
-  addOns: z.record(
-    z.object({
-      selected: z.boolean().default(false),
-      variant: z.string().optional(),
-    })
-  ).optional(),
+    addOns: z
+    .record(
+      z.object({
+        selected: z.boolean().default(false),
+        price: z.number().default(0),
+      })
+    )
+    .optional(),
 });

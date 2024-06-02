@@ -33,6 +33,7 @@ type Props = {
 export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(price);
   const [productToAdd, setProductToAdd] = useState({
     id: "",
     name: "",
@@ -46,18 +47,41 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     imgSrc: "",
   });
 
+  
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       addOns: addOns.reduce((acc, addOn) => {
         acc[addOn.name] = {
           selected: false,
-          variant: addOn.variants?.length > 0 ? addOn.variants[0].name : undefined,
+          price: parseFloat(addOn.price),
         };
         return acc;
-      }, {} as Record<string, { selected: boolean; variant?: string }>),
+      }, {} as Record<string, { selected: boolean; price: number }>),
     },
   });
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const selectedAddOns = Object.entries(form.getValues().addOns || {}).filter(([_, details]) => details.selected);
+      const addOnsTotal = selectedAddOns.reduce((sum, [name]) => {
+        const addOn = addOns.find((addOn) => addOn.name === name);
+        const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
+        console.log(`Add-On: ${name}, Price: ${addOnPrice}`); // Log Add-On Price
+        return sum + addOnPrice;
+      }, 0);
+      setTotalPrice(price + addOnsTotal);
+    };
+
+    calculateTotalPrice();
+
+    const subscription = form.watch(() => {
+      calculateTotalPrice();
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, price, addOns]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const newProductToAdd = {
@@ -75,30 +99,15 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
 
     setProductToAdd(newProductToAdd);
     if (isBuyNow) {
-      redirectToWhatsApp(name || "", price, selectedVariantName, {
+      redirectToWhatsApp(name || "", totalPrice, selectedVariantName, {
         ...data,
         addOns: data.addOns || {},
+        totalPrice: totalPrice,
       });
     } else {
       setDrawerOpen(true);
     }
   }
-
-  useEffect(() => {
-    const subscription = form.watch((value, { name, type }) => {
-      if (name?.includes("selected") && type === "change" && value.addOns) {
-        const addOnName = name.split(".")[1];
-        const addOnValue = value.addOns[addOnName];
-        if (addOnValue && addOnValue.selected) {
-          const addOn = addOns.find((addOn) => addOn.name === addOnName);
-          if (addOn && addOn.variants.length > 0) {
-            form.setValue(`addOns.${addOnName}.variant`, addOn.variants[0].name);
-          }
-        }
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [form, addOns]);
 
   return (
     <>
@@ -173,40 +182,13 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
                       <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>{addOn.name}</FormLabel>
+                      <FormLabel>
+                        {addOn.name} - {formatPrice(parseFloat(addOn.price))}
+                      </FormLabel>
                     </div>
                   </FormItem>
                 )}
               />
-              {form.watch(`addOns.${addOn.name}.selected`) && addOn.variants?.length > 0 && (
-                <>
-                  <FormField
-                    control={form.control}
-                    name={`addOns.${addOn.name}.variant`}
-                    render={({ field }) => (
-                      <FormItem className="flex flex-col w-72 md:w-96">
-                        <FormLabel className="text-xs italic text-gray-600">Select Variant</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value || addOn.variants[0].name}>
-                          <FormControl>
-                            <SelectTrigger className="rounded-none">
-                              <SelectValue placeholder="Select a variant" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent className="rounded-none">
-                            {addOn.variants.map((variant) => (
-                              <SelectItem key={variant.ID} value={variant.name} className="rounded-none">
-                                {variant.name} - {formatPrice(parseFloat(variant.price))}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="w-full h-[2px] bg-luoBiege opacity-50" />
-                </>
-              )}
             </div>
           ))}
           <FormField
@@ -224,7 +206,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
           />
           <div className="flex flex-col gap-2">
             <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(true)}>
-              Buy Now - {formatPrice(price)}
+              Buy Now - {formatPrice(totalPrice)}
             </Button>
             <Button name="order-submit" type="submit" className="bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(false)}>
               Add to Cart
@@ -237,53 +219,3 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
   );
 }
 
-{
-  /* {addOns?.map((addOn) => (
-            <FormField
-              key={addOn.ID}
-              control={form.control}
-              name={`addOns.${addOn.name}`}
-              render={({ field }) => (
-                <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-                  <FormControl>
-                    <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>{addOn.name}</FormLabel>
-                  </div>
-                </FormItem>
-              )}
-            />
-          ))} */
-}
-
-{
-  /* <FormField
-control={form.control}
-name="candleAndKnife"
-render={({ field }) => (
-  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-    <FormControl>
-      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-    </FormControl>
-    <div className="space-y-1 leading-none">
-      <FormLabel>Add Candle and Knife</FormLabel>
-    </div>
-  </FormItem>
-)}
-/>
-<FormField
-control={form.control}
-name="greetingCard"
-render={({ field }) => (
-  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3 ">
-    <FormControl>
-      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-    </FormControl>
-    <div className="space-y-1 leading-none">
-      <FormLabel>Add Greeting Card</FormLabel>
-    </div>
-  </FormItem>
-)}
-/> */
-}

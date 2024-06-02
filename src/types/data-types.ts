@@ -19,6 +19,7 @@ export type Cake = {
 export type AddOns = {
   ID: string;
   name: string;
+  desc: string;
+  price: string;
   main_image: string;
-  variants: Variants[];
 };

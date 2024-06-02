@@ -1,15 +1,14 @@
 "use client";
-import { getCakeByName, getCakesByFlexQueries } from "@/api/cakes-api";
+import { getAllAddOns } from "@/api/add-ons-api";
+import { getCakeByName } from "@/api/cakes-api";
 import ProductDetailImgs from "@/components/Product-Detail/product-img-layout";
 import ProductOrder from "@/components/Product-Detail/product-order";
 import ProductTabs from "@/components/Product-Detail/product-tabs";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 import { deSlugify, normalizeText } from "@/lib/formatters";
-import { CakeQueryParams } from "@/types/api-types";
 import { AddOns, Cake, Variants } from "@/types/data-types";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-
 
 export default function ProductDetailPage() {
   const pathname = usePathname();
@@ -27,17 +26,13 @@ export default function ProductDetailPage() {
     setLoading(true);
 
     try {
-      const queryParams: CakeQueryParams = {
-        typeID: "78d1f560-65c3-430f-afe5-59cb21775131",
-        sort: "asc",
-      };
-
       const response = await getCakeByName(normalizeCakeName);
-      const addOnsResponse = await getCakesByFlexQueries(queryParams);
+      const addOnsResponse = await getAllAddOns();
+
       setCakeDetail(response.data.cake);
       setCakeVariant(response.data.variants);
-      setAddOns(addOnsResponse.data.cakes);
-      // console.log(addOnsResponse.data.cakes)
+      setAddOns(addOnsResponse.data);
+      // console.log(addOnsResponse.data);
       // console.log("cake detail", response.data.cake, "variant", response.data.variants);
     } catch (error) {
       console.error("Failed to fetch product detail by name", error);

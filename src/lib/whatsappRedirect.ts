@@ -3,8 +3,9 @@ import { formatDate, formatPrice } from "@/lib/formatters";
 type OrderData = {
   deliveryDate?: Date;
   deliveryTime?: string;
-  addOns: Record<string, { selected: boolean; variant?: string }>;
+  addOns: Record<string, { selected: boolean; price: number }>;
   complimentaryMsg?: string;
+  totalPrice: number;
 };
 
 // Single "Buy Now" Template
@@ -15,20 +16,22 @@ export const redirectToWhatsApp = (name: string, price: number, variant: string,
       .filter((key) => data.addOns[key].selected)
       .map((key) => {
         const addOn = data.addOns[key];
-        return addOn.variant ? `${key} (Variant: ${addOn.variant})` : key;
+        return `${key} (${formatPrice(addOn.price)})`;
       })
-      .join(", ") || "No add-ons";
+      .join(", ") || "No Add-Ons";
 
   const message = `Hello, Lou Patisserie,\n\nI would like to place an order with the following details:\n
   *Order Details:*
   - *Name*: ${name}
   - *Variant*: ${variant}
-  - *Price*: ${formatPrice(price)}
+  - *Cake Price*: ${formatPrice(price)}
   - *Quantity*: 1
   - *Delivery Date*: ${formatDate(data.deliveryDate)}
   - *Delivery Time*: ${data.deliveryTime}
   - *Add-Ons*: ${selectedAddOns}
   - *Complimentary Message*: ${data.complimentaryMsg || "No complimentary message"}
+
+  *Total Price*: ${formatPrice(data.totalPrice)}
 
   Please let me know if you need any further information.
 

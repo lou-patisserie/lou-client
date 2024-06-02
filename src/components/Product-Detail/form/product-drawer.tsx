@@ -18,7 +18,7 @@ type ProductProps = {
   quantity: number;
   deliveryDate: Date;
   deliveryTime: string;
-  addOns: Record<string, { selected: boolean; variant?: string }>;
+  addOns: Record<string, { selected: boolean }>;
   complimentaryMsg: string;
 };
 
@@ -36,9 +36,9 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   const { toast } = useToast();
   const [cart, setCart] = useRecoilState(cartState);
   const router = useRouter();
-  console.log("Cart State", cart);
-  console.log("initial", initialProduct);
-  console.log("newProduct", product);
+  // console.log("Cart State", cart);
+  // console.log("initial", initialProduct);
+  // console.log("newProduct", product);
 
   useEffect(() => {
     setProduct({
@@ -109,17 +109,10 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
               </DrawerDescription>
               <DrawerDescription className="italic font-semibold text-luoDarkBiege my-1">Your Add Ons: </DrawerDescription>
               <div className="flex flex-wrap justify-between gap-2">
-                {Object.entries(product.addOns).map(([addOn, value]) => (
-                  <div key={addOn}>
-                    <DrawerDescription>
-                      <strong>{addOn}:</strong> {value.selected ? "Yes" : "No"}
-                    </DrawerDescription>
-                    {value.selected && value.variant && (
-                      <DrawerDescription>
-                        <strong>Variant:</strong> {value.variant}
-                      </DrawerDescription>
-                    )}
-                  </div>
+                {Object.entries(product.addOns).map(([addOn, details]) => (
+                  <DrawerDescription key={addOn}>
+                    <strong>{addOn}:</strong> {details.selected ? "Yes" : "No"}
+                  </DrawerDescription>
                 ))}
               </div>
               <div className="w-full h-[2px] bg-slate-200 opacity-50 my-2" />

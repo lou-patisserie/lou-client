@@ -51,7 +51,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     resolver: zodResolver(FormSchema),
     defaultValues: {
       addOns: addOns.reduce((acc, addOn) => {
-        console.log("getting what", addOn.name, addOn.price);
+        // console.log("getting what", addOn.name, addOn.price);
         acc[addOn.name] = {
           selected: false,
           price: parseFloat(addOn.price),
@@ -87,10 +87,10 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
   }, [form, price, addOns]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Before Submit - Add-Ons:", form.getValues("addOns"));
-    console.log("Form Data:", data); // Log form data
-    console.log("Add-Ons:", data.addOns); // Log Add-Ons data
-    console.log("This Cake Price", price);
+    // console.log("Before Submit - Add-Ons:", form.getValues("addOns"));
+    // console.log("Form Data:", data); // Log form data
+    // console.log("Add-Ons:", data.addOns); // Log Add-Ons data
+    // console.log("This Cake Price", price);
     const newProductToAdd = {
       id: id || Math.random().toString(),
       name: name || "",

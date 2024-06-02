@@ -8,7 +8,7 @@ type CartItem = {
   quantity: number;
   deliveryDate?: Date;
   deliveryTime?: string;
-  addOns: Record<string, { selected: boolean; variant?: string }>;
+  addOns: Record<string, { selected: boolean; price: number }>;
   complimentaryMsg: string;
   totalPrice?: number;
   imgSrc?: string;

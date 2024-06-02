@@ -53,7 +53,8 @@ export default function CartItems() {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === id) {
         const newQuantity = Math.max(1, item.quantity + delta);
-        const newTotalPrice = item.price * newQuantity;
+        const addOnsTotal = Object.values(item.addOns).reduce((sum, addOn) => (addOn.selected ? sum + addOn.price : sum), 0);
+        const newTotalPrice = item.price * newQuantity + addOnsTotal;
         return { ...item, quantity: newQuantity, totalPrice: newTotalPrice };
       }
       return item;
@@ -84,6 +85,21 @@ export default function CartItems() {
                   <span className="italic">Price: {formatPrice(item.price)}</span>
                   <span>Date: {formatDate(item.deliveryDate)}</span>
                   <span>When: {item.deliveryTime}</span>
+                  <div className="flex flex-col gap-0 text-start justify-start items-start mt-1 italic font-semibold text-[12px] text-slate-700">
+                    <div>
+                      <p className="">Add-Ons:</p>
+                    </div>
+                    {Object.entries(item.addOns)
+                      .filter(([_, details]) => details.selected)
+                      .map(([addOn, details]) => (
+                        <div key={addOn}>
+                          <span className="">
+                            {addOn}: {formatPrice(details.price)}
+                          </span>
+                        </div>
+                      ))}
+                    {Object.entries(item.addOns).filter(([_, details]) => details.selected).length === 0 && <span>No Add-Ons</span>}
+                  </div>
                 </div>
               </div>
               <div>

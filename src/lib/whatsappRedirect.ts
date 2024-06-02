@@ -51,7 +51,7 @@ type CartItem = {
   quantity: number;
   deliveryDate?: Date;
   deliveryTime?: string;
-  addOns: Record<string, { selected: boolean; variant?: string }>;
+  addOns: Record<string, { selected: boolean; price: number }>;
   complimentaryMsg: string;
   totalPrice?: number;
   imgSrc?: string;
@@ -63,25 +63,23 @@ export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPri
   let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
 
   cartItems.forEach((item, index) => {
-    const selectedAddOns =
-      Object.keys(item.addOns)
-        .filter((key) => item.addOns[key].selected)
-        .map((key) => {
-          const addOn = item.addOns[key];
-          return addOn.variant ? `${key} (Variant: ${addOn.variant})` : key;
-        })
-        .join(", ") || "No add-ons";
-
     message += `*Product ${index + 1}:*\n`;
     message += `- *Name*: ${item.name}\n`;
     message += `- *Variant*: ${item.variant}\n`;
     message += `- *Price*: ${formatPrice(item.price)}\n`;
     message += `- *Quantity*: ${item.quantity}\n`;
-    message += `- *Total Price*: ${formatPrice(item.totalPrice)}\n`;
+
     message += `- *Delivery Date*: ${formatDate(item.deliveryDate)}\n`;
     message += `- *Delivery Time*: ${item.deliveryTime}\n`;
+
+    const selectedAddOns = Object.entries(item.addOns)
+      .filter(([_, details]) => details.selected)
+      .map(([addOn, details]) => `${addOn}: ${formatPrice(details.price)}`)
+      .join(", ") || "No Add-Ons";
+
     message += `- *Add-Ons*: ${selectedAddOns}\n`;
     message += `- *Complimentary Message*: ${item.complimentaryMsg || "No complimentary message"}\n\n`;
+    message += `- *Total Cake Price with Add-Ons*: ${formatPrice(item.totalPrice)}\n\n`;
   });
 
   message += `*Cumulative Total Price*: ${formatPrice(cumulativeTotalPrice)}\n\n`;

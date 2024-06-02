@@ -47,12 +47,11 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     imgSrc: "",
   });
 
-  
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       addOns: addOns.reduce((acc, addOn) => {
+        console.log("getting what", addOn.name, addOn.price);
         acc[addOn.name] = {
           selected: false,
           price: parseFloat(addOn.price),
@@ -62,15 +61,19 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     },
   });
 
+  const handleAddOnChange = (addOnName: string, isSelected: any) => {
+    const addOn = addOns.find((addOn) => addOn.name === addOnName);
+    const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
+    form.setValue(`addOns.${addOnName}`, {
+      selected: isSelected,
+      price: isSelected ? addOnPrice : 0,
+    });
+  };
+
   useEffect(() => {
     const calculateTotalPrice = () => {
       const selectedAddOns = Object.entries(form.getValues().addOns || {}).filter(([_, details]) => details.selected);
-      const addOnsTotal = selectedAddOns.reduce((sum, [name]) => {
-        const addOn = addOns.find((addOn) => addOn.name === name);
-        const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
-        console.log(`Add-On: ${name}, Price: ${addOnPrice}`); // Log Add-On Price
-        return sum + addOnPrice;
-      }, 0);
+      const addOnsTotal = selectedAddOns.reduce((sum, [name, details]) => sum + details.price, 0);
       setTotalPrice(price + addOnsTotal);
     };
 
@@ -84,6 +87,10 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
   }, [form, price, addOns]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log("Before Submit - Add-Ons:", form.getValues("addOns"));
+    console.log("Form Data:", data); // Log form data
+    console.log("Add-Ons:", data.addOns); // Log Add-Ons data
+    console.log("This Cake Price", price);
     const newProductToAdd = {
       id: id || Math.random().toString(),
       name: name || "",
@@ -99,7 +106,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
 
     setProductToAdd(newProductToAdd);
     if (isBuyNow) {
-      redirectToWhatsApp(name || "", totalPrice, selectedVariantName, {
+      redirectToWhatsApp(name || "", price, selectedVariantName, {
         ...data,
         addOns: data.addOns || {},
         totalPrice: totalPrice,
@@ -179,7 +186,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
                 render={({ field }) => (
                   <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
                     <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
+                      <Checkbox checked={field.value} onCheckedChange={(isChecked) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel>
@@ -218,4 +225,3 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     </>
   );
 }
-

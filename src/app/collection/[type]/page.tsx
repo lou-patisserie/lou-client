@@ -57,7 +57,7 @@ export default function ProductsPage() {
     }
   }, [productTypes, selectedType]);
 
-  const skeletonCount = 6;
+  const skeletonCount = 10;
   if (!selectedType || loading) {
     return (
       <>
@@ -74,7 +74,7 @@ export default function ProductsPage() {
             <div className="md:w-[75%] w-screen">
               <div className={classes.skeletonGrid}>
                 {Array.from({ length: skeletonCount }).map((_, index) => (
-                  <Skeleton key={index} className="w-full h-48" />
+                  <Skeleton key={index} className="w-full h-48 md:h-72" />
                 ))}
               </div>
             </div>

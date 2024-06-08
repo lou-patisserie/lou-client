@@ -127,7 +127,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             name="deliveryDate"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Delivery/Pickup Date</FormLabel>
+                <FormLabel>Delivery/Pickup Date<span className="text-red-500">*</span></FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -150,7 +150,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             name="deliveryTime"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Time</FormLabel>
+                <FormLabel>Time<span className="text-red-500">*</span></FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="rounded-none">

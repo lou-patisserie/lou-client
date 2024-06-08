@@ -5,6 +5,7 @@ import OrderForm from "./form/order-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
 import { useEffect, useState } from "react";
 import { AddOns, Variants } from "@/types/data-types";
+import { Skeleton } from "../UI/skeleton";
 
 type Props = {
   cakeId?: string;
@@ -12,9 +13,10 @@ type Props = {
   mainImgSrc?: string;
   variants: Variants[];
   addOns: AddOns[];
+  loading?: boolean;
 };
 
-export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants, addOns }: Props) {
+export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants, addOns, loading }: Props) {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [selectedVariantName, setSelectedVariantName] = useState<string>("");
 
@@ -36,8 +38,8 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
   return (
     <>
       <div className="w-full max-w-lg flex flex-col gap-8 mx-4 lg:mx-0">
-        <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege">
-          <h1 className="font-bold text-xl">{cakeName && cakeId ? `${cakeName}` : <div>Loading...</div>}</h1>
+        <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege w-full">
+          {cakeName && cakeId ? <h1 className="font-bold text-xl">{cakeName}</h1> : <Skeleton className="w-96 h-8" />}
 
           {variants.length > 0 ? (
             <Tabs defaultValue={variants[0]?.ID || "Variants"} onValueChange={handleTabChange} className="w-fit">
@@ -55,7 +57,11 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
               ))}
             </Tabs>
           ) : (
-            <h3 className="font-light italic text-md tracking-wide">No Price for this Product</h3>
+            // <h3 className="font-light italic text-md tracking-wide">No Price for this Product</h3>
+            <div>
+              <Skeleton className="w-96 h-7 mt-1" />
+              <Skeleton className="w-96 h-6 mt-1" />
+            </div>
           )}
 
           <div className="flex flex-row items-center gap-1 mt-2">
@@ -65,7 +71,7 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} addOns={addOns} />
+          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} addOns={addOns} loading={loading} />
         </div>
       </div>
     </>

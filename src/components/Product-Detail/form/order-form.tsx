@@ -20,6 +20,7 @@ import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
 import { redirectToWhatsApp } from "../../../lib/whatsappRedirect";
 import { AddOns } from "@/types/data-types";
+import { Skeleton } from "@/components/UI/skeleton";
 
 type Props = {
   id: string;
@@ -28,9 +29,10 @@ type Props = {
   imgSrc?: string;
   selectedVariantName: string;
   addOns: AddOns[];
+  loading?: boolean;
 };
 
-export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns }: Props) {
+export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns, loading }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
   const [totalPrice, setTotalPrice] = useState(price);
@@ -178,26 +180,30 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             <FormLabel>Add-Ons (Optional)</FormLabel>
             <FormDescription className="text-xs">Select the add-ons that you want.</FormDescription>
           </div>
-          {addOns.map((addOn) => (
-            <div key={addOn.ID} className="flex flex-col space-y-2">
-              <FormField
-                control={form.control}
-                name={`addOns.${addOn.name}.selected`}
-                render={({ field }) => (
-                  <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-                    <FormControl>
-                      <Checkbox checked={field.value} onCheckedChange={(isChecked) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel>
-                        {addOn.name} - {formatPrice(parseFloat(addOn.price))}
-                      </FormLabel>
-                    </div>
-                  </FormItem>
-                )}
-              />
-            </div>
-          ))}
+          {loading ? (
+            <Skeleton className="w-full max-w-96 h-7 my-2" />
+          ) : (
+            addOns.map((addOn) => (
+              <div key={addOn.ID} className="flex flex-col space-y-2">
+                <FormField
+                  control={form.control}
+                  name={`addOns.${addOn.name}.selected`}
+                  render={({ field }) => (
+                    <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={(isChecked) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          {addOn.name} - {formatPrice(parseFloat(addOn.price))}
+                        </FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            ))
+          )}
           <FormField
             control={form.control}
             name="complimentaryMsg"

@@ -112,12 +112,12 @@ export default function AllProducts({ cakeType }: Props) {
       </div>
 
       {loading && page === 1 ? (
-      <div></div>
+        <div></div>
       ) : (
         <>
           <div className="w-full flex flex-col justify-center mt-8">
             <div className="flex justify-center">
-              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} />
+              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} loading={loading} page={page} />
             </div>
 
             {page < totalPages && !loading && (
@@ -130,7 +130,6 @@ export default function AllProducts({ cakeType }: Props) {
           </div>
         </>
       )}
-      {loading && page > 1 && <p>Loading more...</p>}
     </section>
   );
 }

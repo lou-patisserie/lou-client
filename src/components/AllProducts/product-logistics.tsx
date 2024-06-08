@@ -1,4 +1,5 @@
 import Title from "../UI/Title/title";
+import { Skeleton } from "../UI/skeleton";
 import ProductsItem from "./products-item";
 import classes from "./scss/product-logistics.module.scss";
 
@@ -21,10 +22,12 @@ type Props = {
   items: Items[];
   selectedCategory: string;
   choosenType: string;
+  page?: number;
+  loading?: boolean;
 };
 
-export default function ProductLogistics({ items, selectedCategory, choosenType = "Products" }: Props) {
-  console.log("items", items);
+export default function ProductLogistics({ items, selectedCategory, choosenType = "Products", page = 1, loading }: Props) {
+  // console.log("items", items);
   return (
     <div className={classes.container}>
       <div className="capitalize">
@@ -34,6 +37,12 @@ export default function ProductLogistics({ items, selectedCategory, choosenType 
         {items.map((item) => (
           <ProductsItem key={item.ID} {...item} />
         ))}
+        {loading && page > 1 && (
+          <div className="flex flex-col">
+            <Skeleton className="w-full h-60 md:h-72 rounded-none" />
+            <Skeleton className="w-full h-14 mt-2 rounded-none" />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ export default function ProductsPage() {
       <>
         <SubHeroBanner title="Our Products" />
         {/* <h1>Loading skeleton here...</h1> */}
-        <div className="w-full flex flex-col justify-center mt-8 mx-4">
+        <div className="w-full flex flex-col justify-center mt-8 px-4">
           <div className="flex justify-center">
             <Skeleton className="w-full max-w-xl h-9 my-8" />
           </div>
@@ -71,7 +71,7 @@ export default function ProductsPage() {
             <Skeleton className="h-9 md:w-[75%] w-screen my-4" />
           </div>
           <div className="flex justify-center">
-            <div className="md:w-[75%] w-screen">
+            <div className="md:w-[75%] w-full">
               <div className={classes.skeletonGrid}>
                 {Array.from({ length: skeletonCount }).map((_, index) => (
                   <Skeleton key={index} className="w-full h-48 md:h-72" />

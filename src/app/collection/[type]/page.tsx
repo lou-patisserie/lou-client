@@ -1,7 +1,10 @@
 "use client";
+
+import classes from "./collection.module.scss";
 import { getAllProductTypes } from "@/api/product-type-api";
 import AllProducts from "@/components/AllProducts/all-products";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
+import { Skeleton } from "@/components/UI/skeleton";
 import { normalizeText } from "@/lib/formatters";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -54,13 +57,28 @@ export default function ProductsPage() {
     }
   }, [productTypes, selectedType]);
 
+  const skeletonCount = 6;
   if (!selectedType || loading) {
     return (
       <>
         <SubHeroBanner title="Our Products" />
         {/* <h1>Loading skeleton here...</h1> */}
-        <div className="w-full flex flex-col justify-center mt-8">
-          <div className="flex justify-center">tes</div>
+        <div className="w-full flex flex-col justify-center mt-8 mx-4">
+          <div className="flex justify-center">
+            <Skeleton className="w-full max-w-xl h-9 my-8" />
+          </div>
+          <div className="flex justify-start md:justify-center">
+            <Skeleton className="h-9 md:w-[75%] w-screen my-4" />
+          </div>
+          <div className="flex justify-center">
+            <div className="md:w-[75%] w-screen">
+              <div className={classes.skeletonGrid}>
+                {Array.from({ length: skeletonCount }).map((_, index) => (
+                  <Skeleton key={index} className="w-full h-48" />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );

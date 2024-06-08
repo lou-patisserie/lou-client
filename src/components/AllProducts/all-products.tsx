@@ -112,7 +112,7 @@ export default function AllProducts({ cakeType }: Props) {
       </div>
 
       {loading && page === 1 ? (
-        <p>Loading here</p>
+      <div></div>
       ) : (
         <>
           <div className="w-full flex flex-col justify-center mt-8">

@@ -39,35 +39,45 @@ export default function AllProducts({ cakeType }: Props) {
   const [selectedSubType, setSelectedSubType] = useState("All Products");
   const [allCakes, setAllCakes] = useState<Cake[]>([]);
   const [filteredCakes, setFilteredCakes] = useState<Cake[]>([]);
-  console.log("Filter", filteredCakes, "original data", allCakes);
-  // console.log(selectedSubType, cakesData);
-  // console.log(cakeType);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchCakes = useCallback(async () => {
-    setLoading(true);
-    try {
-      const queryParams: CakeQueryParams = {
-        sort: "desc",
-        limit: "10", //make this dynamic nanti pakai view more / pagination
-        page: "1",
-      };
+  const fetchCakes = useCallback(
+    async (page: number) => {
+      setLoading(true);
+      try {
+        const queryParams: CakeQueryParams = {
+          sort: "desc",
+          limit: "10",
+          page: page.toString(),
+        };
 
-      // console.log(queryParams);
-      if (cakeType.ID !== "952addc3-dfe5-4ef6-9699-8378f28c40f6") {
-        queryParams.typeID = cakeType.ID;
+        // console.log(queryParams);
+        // if (cakeType.ID !== "952addc3-dfe5-4ef6-9699-8378f28c40f6") {
+        //   queryParams.typeID = cakeType.ID;
+        // }
+
+        if (cakeType.name !== "All Product") {
+          queryParams.typeID = cakeType.ID;
+        }
+
+        const response = await getCakesByFlexQueries(queryParams);
+        setAllCakes((prevCakes) => {
+          const newCakes = response.data.cakes.filter((cake: Cake) => !prevCakes.some((existingCake) => existingCake.ID === cake.ID));
+          return [...prevCakes, ...newCakes];
+        });
+        setTotalPages(response.data.totalPage);
+      } catch (error) {
+        console.error(`Failed to fetch cakes with type ${cakeType.ID}`, error);
+      } finally {
+        setLoading(false);
       }
-
-      const response = await getCakesByFlexQueries(queryParams);
-      setAllCakes(response.data.cakes);
-    } catch (error) {
-      console.error(`Failed to fetch cakes with type ${cakeType.ID}`, error);
-    } finally {
-      setLoading(false);
-    }
-  }, [cakeType.ID, cakeType.name]);
+    },
+    [cakeType.ID, cakeType.name]
+  );
 
   useEffect(() => {
-    fetchCakes();
+    fetchCakes(1);
   }, [fetchCakes]);
 
   useEffect(() => {
@@ -87,20 +97,40 @@ export default function AllProducts({ cakeType }: Props) {
     filterCakes();
   }, [selectedSubType, allCakes]);
 
+  const handleShowMore = () => {
+    if (page < totalPages) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      fetchCakes(nextPage);
+    }
+  };
+
   return (
     <section id="all-products-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">
       <div className="flex flex-wrap gap-2 justify-center mx-4">
         <AllProductsSelection onSelectCategory={setSelectedSubType} currentSelection={selectedSubType} />
       </div>
-      <div className="w-full flex justify-center mt-8">
-        {loading ? (
-          <>
-            <p>Loading here</p>
-          </>
-        ) : (
-          <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} />
-        )}
-      </div>
+
+      {loading && page === 1 ? (
+        <p>Loading here</p>
+      ) : (
+        <>
+          <div className="w-full flex flex-col justify-center mt-8">
+            <div className="flex justify-center">
+              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} />
+            </div>
+
+            {page < totalPages && !loading && (
+              <div className="flex justify-center">
+                <button onClick={handleShowMore} className="mt-4 w-44 px-4 py-2  bg-luoDarkBiege text-white rounded-none">
+                  Show More
+                </button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+      {loading && page > 1 && <p>Loading more...</p>}
     </section>
   );
 }

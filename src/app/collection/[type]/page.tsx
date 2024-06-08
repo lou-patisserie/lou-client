@@ -58,7 +58,10 @@ export default function ProductsPage() {
     return (
       <>
         <SubHeroBanner title="Our Products" />
-        <h1>Loading skeleton here...</h1>
+        {/* <h1>Loading skeleton here...</h1> */}
+        <div className="w-full flex flex-col justify-center mt-8">
+          <div className="flex justify-center">tes</div>
+        </div>
       </>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 import { getAllAddOns } from "@/api/add-ons-api";
 import { getCakeByName } from "@/api/cakes-api";
+import FaqProductDetail from "@/components/Product-Detail/faq-product";
 import ProductDetailImgs from "@/components/Product-Detail/product-img-layout";
 import ProductOrder from "@/components/Product-Detail/product-order";
 import ProductTabs from "@/components/Product-Detail/product-tabs";
@@ -68,6 +69,9 @@ export default function ProductDetailPage() {
             <ProductOrder cakeId={cakeData?.ID} cakeName={cakeData?.name} mainImgSrc={cakeData?.main_image} variants={cakeVariant} addOns={addOns} loading={loading} />
           </Suspense>
         </div>
+      </div>
+      <div className="flex flex-wrap mt-10 md:mt-16 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">
+        <FaqProductDetail />
       </div>
     </>
   );

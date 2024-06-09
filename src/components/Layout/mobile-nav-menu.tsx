@@ -4,11 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowDownNarrowWide, Dot, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { ProductTypes } from "@/types/data-types";
 
-type ProductTypes = {
-  ID: string;
-  name: string;
-};
 
 type Props = {
   showNav: boolean;

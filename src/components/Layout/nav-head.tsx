@@ -9,6 +9,7 @@ import LuoCart from "../UI/Cart/shopping-cart";
 import { getAllProductTypes } from "@/api/product-type-api";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { fetchProductTypes } from "@/recoils/selectors/product-types";
+import { ProductTypes } from "@/types/data-types";
 
 type Props = {
   marginTopNotScrolled?: string;
@@ -53,7 +54,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
   let content;
   switch (productTypesLoadable.state) {
     case "hasValue":
-      const productTypes = productTypesLoadable.contents;
+      const productTypes = productTypesLoadable.contents as ProductTypes[];
       if (showNav === true) {
         content = (
           <AnimatePresence>

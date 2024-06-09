@@ -30,4 +30,11 @@ export type CakeDetails = {
   allergen: string;
   ingredients: string;
   storage_serving: string;
-}
+};
+
+export type ProductTypes = {
+  ID: string;
+  name: string;
+  desc: string;
+  created_date: string;
+};

@@ -5,12 +5,9 @@ import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
 import { normalizeText } from "@/lib/formatters";
+import { ProductTypes } from "@/types/data-types";
 
-type ProductTypes = {
-  ID: string;
-  name: string;
-  desc: string;
-};
+
 
 type Props = {
   typeList: ProductTypes[];

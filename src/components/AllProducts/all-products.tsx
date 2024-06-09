@@ -5,6 +5,9 @@ import ProductLogistics from "./product-logistics";
 import AllProductsSelection from "./selections";
 import { getCakesByFlexQueries } from "@/api/cakes-api";
 import { CakeQueryParams } from "@/types/api-types";
+import { getAllAddOns } from "@/api/add-ons-api";
+import AddOnsLogistics from "./add-ons-logistics";
+import { AddOns } from "@/types/data-types";
 
 type Variant = {
   ID: string;
@@ -41,32 +44,33 @@ export default function AllProducts({ cakeType }: Props) {
   const [filteredCakes, setFilteredCakes] = useState<Cake[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [allAddOns, setAllAddOns] = useState<AddOns[]>();
 
   const fetchCakes = useCallback(
     async (page: number) => {
       setLoading(true);
       try {
-        const queryParams: CakeQueryParams = {
-          sort: "desc",
-          limit: "10",
-          page: page.toString(),
-        };
+        if (cakeType.name === "Add Ons") {
+          const response = await getAllAddOns();
+          setAllAddOns(response.data);
+        } else {
+          const queryParams: CakeQueryParams = {
+            sort: "desc",
+            limit: "10",
+            page: page.toString(),
+          };
 
-        // console.log(queryParams);
-        // if (cakeType.ID !== "952addc3-dfe5-4ef6-9699-8378f28c40f6") {
-        //   queryParams.typeID = cakeType.ID;
-        // }
+          if (cakeType.name !== "All Product") {
+            queryParams.typeID = cakeType.ID;
+          }
 
-        if (cakeType.name !== "All Product") {
-          queryParams.typeID = cakeType.ID;
+          const response = await getCakesByFlexQueries(queryParams);
+          setAllCakes((prevCakes) => {
+            const newCakes = response.data.cakes.filter((cake: Cake) => !prevCakes.some((existingCake) => existingCake.ID === cake.ID));
+            return [...prevCakes, ...newCakes];
+          });
+          setTotalPages(response.data.totalPage);
         }
-
-        const response = await getCakesByFlexQueries(queryParams);
-        setAllCakes((prevCakes) => {
-          const newCakes = response.data.cakes.filter((cake: Cake) => !prevCakes.some((existingCake) => existingCake.ID === cake.ID));
-          return [...prevCakes, ...newCakes];
-        });
-        setTotalPages(response.data.totalPage);
       } catch (error) {
         console.error(`Failed to fetch cakes with type ${cakeType.ID}`, error);
       } finally {
@@ -81,21 +85,23 @@ export default function AllProducts({ cakeType }: Props) {
   }, [fetchCakes]);
 
   useEffect(() => {
-    const filterCakes = () => {
-      if (selectedSubType === "All Products") {
-        setFilteredCakes(allCakes);
-      } else {
-        const subtypeFilter = (cake: Cake) => {
-          if (selectedSubType === "Fruit-based") return cake.is_fruit_based;
-          if (selectedSubType === "Nut-free") return cake.is_nut_free;
-          if (selectedSubType === "Chocolate-based") return cake.is_chocolate_based;
-          return true;
-        };
-        setFilteredCakes(allCakes.filter(subtypeFilter));
-      }
-    };
-    filterCakes();
-  }, [selectedSubType, allCakes]);
+    if (cakeType.name !== "Add Ons") {
+      const filterCakes = () => {
+        if (selectedSubType === "All Products") {
+          setFilteredCakes(allCakes);
+        } else {
+          const subtypeFilter = (cake: Cake) => {
+            if (selectedSubType === "Fruit-based") return cake.is_fruit_based;
+            if (selectedSubType === "Nut-free") return cake.is_nut_free;
+            if (selectedSubType === "Chocolate-based") return cake.is_chocolate_based;
+            return true;
+          };
+          setFilteredCakes(allCakes.filter(subtypeFilter));
+        }
+      };
+      filterCakes();
+    }
+  }, [selectedSubType, allCakes, cakeType.name]);
 
   const handleShowMore = () => {
     if (page < totalPages) {
@@ -104,6 +110,18 @@ export default function AllProducts({ cakeType }: Props) {
       fetchCakes(nextPage);
     }
   };
+
+  if (cakeType.name === "Add Ons") {
+    return (
+      <section id="add-ons-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">
+        <div className="w-full flex flex-col justify-center mt-8">
+          <div className="flex justify-center">
+            <AddOnsLogistics addOnsData={allAddOns} choosenType={cakeType.name} />
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="all-products-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">
@@ -133,3 +151,8 @@ export default function AllProducts({ cakeType }: Props) {
     </section>
   );
 }
+
+// console.log(queryParams);
+// if (cakeType.ID !== "952addc3-dfe5-4ef6-9699-8378f28c40f6") {
+//   queryParams.typeID = cakeType.ID;
+// }

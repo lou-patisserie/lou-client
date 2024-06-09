@@ -45,8 +45,8 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   const [cart, setCart] = useRecoilState(cartState);
   const router = useRouter();
   // console.log("Cart State", cart);
-  console.log("initial", initialProduct);
-  console.log("newProduct", product);
+  // console.log("initial", initialProduct);
+  // console.log("newProduct", product);
 
   useEffect(() => {
     setProduct({

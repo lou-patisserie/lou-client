@@ -13,7 +13,6 @@ export type Cake = {
   sub_image1: string;
   sub_image2: string;
   variants: Variants[];
-  aboutCake: any;
 };
 
 export type AddOns = {
@@ -23,3 +22,12 @@ export type AddOns = {
   price: string;
   main_image: string;
 };
+
+export type CakeDetails = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  allergen: string;
+  ingredients: string;
+  storage_serving: string;
+}

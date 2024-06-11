@@ -8,6 +8,7 @@ import { CakeQueryParams } from "@/types/api-types";
 import { getAllAddOns } from "@/api/add-ons-api";
 import AddOnsLogistics from "./add-ons-logistics";
 import { AddOns } from "@/types/data-types";
+import { debounce } from "lodash";
 
 type Variant = {
   ID: string;
@@ -45,6 +46,7 @@ export default function AllProducts({ cakeType }: Props) {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [allAddOns, setAllAddOns] = useState<AddOns[]>();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchCakes = useCallback(
     async (page: number) => {
@@ -80,6 +82,28 @@ export default function AllProducts({ cakeType }: Props) {
     [cakeType.ID, cakeType.name]
   );
 
+  const debouncedSearch = useCallback(
+    debounce(async (query: string) => {
+      try {
+        const queryParams: CakeQueryParams = {
+          name: encodeURIComponent(query),
+          sort: "desc",
+          limit: "10",
+          page: "1",
+        };
+
+        if (cakeType.name !== "All Product") {
+          queryParams.typeID = cakeType.ID;
+        }
+        const response = await getCakesByFlexQueries(queryParams);
+        setAllCakes(response.data.cakes);
+      } catch (error) {
+        console.error(`Failed to search cakes with query ${query}`, error);
+      }
+    }, 300),
+    [cakeType.ID]
+  );
+
   useEffect(() => {
     fetchCakes(1);
   }, [fetchCakes]);
@@ -111,6 +135,12 @@ export default function AllProducts({ cakeType }: Props) {
     }
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    debouncedSearch(query);
+  };
+
   if (cakeType.name === "Add Ons") {
     return (
       <section id="add-ons-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">
@@ -135,7 +165,7 @@ export default function AllProducts({ cakeType }: Props) {
         <>
           <div className="w-full flex flex-col justify-center mt-8">
             <div className="flex justify-center">
-              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} loading={loading} page={page} />
+              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} loading={loading} page={page} searchQuery={searchQuery} onSearchChange={handleSearchChange} />
             </div>
 
             {page < totalPages && !loading && (

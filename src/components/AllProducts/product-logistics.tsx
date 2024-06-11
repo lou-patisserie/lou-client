@@ -2,6 +2,7 @@ import Title from "../UI/Title/title";
 import { Skeleton } from "../UI/skeleton";
 import ProductsItem from "./products-item";
 import classes from "./scss/product-logistics.module.scss";
+import SearchProducts from "./search-products";
 
 type Variant = {
   ID: string;
@@ -24,15 +25,17 @@ type Props = {
   choosenType: string;
   page?: number;
   loading?: boolean;
+  searchQuery: string;
+  onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function ProductLogistics({ items, selectedCategory, choosenType = "Products", page = 1, loading }: Props) {
+export default function ProductLogistics({ items, selectedCategory, choosenType = "Products", page = 1, loading, searchQuery, onSearchChange }: Props) {
   // console.log("items", items);
   return (
     <div className={classes.container}>
       <div className="capitalize w-full flex justify-between flex-wrap">
         <Title title={choosenType} />
-        <span>Search</span>
+        <SearchProducts searchQuery={searchQuery} onSearchChange={onSearchChange} typeName={choosenType} />
       </div>
       <div className={classes.products}>
         {items.map((item) => (

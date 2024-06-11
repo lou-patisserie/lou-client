@@ -30,8 +30,9 @@ export default function ProductLogistics({ items, selectedCategory, choosenType 
   // console.log("items", items);
   return (
     <div className={classes.container}>
-      <div className="capitalize">
+      <div className="capitalize w-full flex justify-between flex-wrap">
         <Title title={choosenType} />
+        <span>Search</span>
       </div>
       <div className={classes.products}>
         {items.map((item) => (

@@ -9,6 +9,7 @@ import { getAllAddOns } from "@/api/add-ons-api";
 import AddOnsLogistics from "./add-ons-logistics";
 import { AddOns } from "@/types/data-types";
 import { debounce } from "lodash";
+import { notFound } from "next/navigation";
 
 type Variant = {
   ID: string;
@@ -47,6 +48,7 @@ export default function AllProducts({ cakeType }: Props) {
   const [totalPages, setTotalPages] = useState(1);
   const [allAddOns, setAllAddOns] = useState<AddOns[]>();
   const [searchQuery, setSearchQuery] = useState("");
+  const [notFoundError, setNotFoundError] = useState(false);
 
   const fetchCakes = useCallback(
     async (page: number) => {
@@ -86,7 +88,7 @@ export default function AllProducts({ cakeType }: Props) {
     debounce(async (query: string) => {
       try {
         const queryParams: CakeQueryParams = {
-          name: encodeURIComponent(query),
+          name: query,
           sort: "desc",
           limit: "10",
           page: "1",
@@ -97,10 +99,13 @@ export default function AllProducts({ cakeType }: Props) {
         }
         const response = await getCakesByFlexQueries(queryParams);
         setAllCakes(response.data.cakes);
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Failed to search cakes with query ${query}`, error);
+        if (error.response?.status === 404) {
+          setNotFoundError(true);
+        }
       }
-    }, 300),
+    }, 500),
     [cakeType.ID]
   );
 
@@ -140,6 +145,10 @@ export default function AllProducts({ cakeType }: Props) {
     setSearchQuery(query);
     debouncedSearch(query);
   };
+
+  if (notFoundError) {
+    return notFound();
+  }
 
   if (cakeType.name === "Add Ons") {
     return (

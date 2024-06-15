@@ -29,7 +29,7 @@ export default function Products() {
   const [loading, setLoading] = useState(false);
   const [currentSelection, setSelection] = useState("Best Sellers");
   const [cakesData, setCakesData] = useState<{ [Key: string]: Cake[] }>({});
-  console.log(currentSelection, cakesData);
+  // console.log(currentSelection, cakesData);
 
   const fetchCakes = useCallback(async () => {
     if (cakesData[currentSelection]) {

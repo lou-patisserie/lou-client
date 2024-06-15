@@ -15,7 +15,7 @@ import { redirectToWhatsAppCart } from "@/lib/whatsappRedirect";
 
 export default function CartItems() {
   const [cartItems, setCartItems] = useRecoilState(cartState);
-  console.log(cartItems);
+  // console.log(cartItems);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

@@ -10,7 +10,7 @@ export default function Testimonials() {
   const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true }));
 
   return (
-    <div className="w-full flex justify-center my-12 px-4 md:px-0">
+    <div className="w-full flex justify-center my-16 md:my-24 px-4 md:px-0">
       <Carousel
         opts={{
           align: "start",

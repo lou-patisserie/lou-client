@@ -1,3 +1,4 @@
+import FAQs from "@/components/FAQ/faqs";
 import BottomBanner from "@/components/Homepage/BottomBanner/bottom-banner";
 import HeroBanner from "@/components/Homepage/HeroBanner/hero-banner";
 import ProductNav from "@/components/Homepage/Product-Navigation/product-nav";
@@ -18,6 +19,9 @@ export default function Home() {
       <Products />
       <BottomBanner />
       <Testimonials />
+      <div className="flex flex-wrap mt-10 md:mt-16 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">
+        <FAQs />
+      </div>
     </>
   );
 }

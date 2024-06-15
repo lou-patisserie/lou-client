@@ -3,6 +3,7 @@
 import classes from "./collection.module.scss";
 import { getAllProductTypes } from "@/api/product-type-api";
 import AllProducts from "@/components/AllProducts/all-products";
+import FAQs from "@/components/FAQ/faqs";
 import SubHeroBanner from "@/components/UI/SubHero-Banner/subhero-banner";
 import { Skeleton } from "@/components/UI/skeleton";
 import { normalizeText } from "@/lib/formatters";
@@ -88,6 +89,9 @@ export default function ProductsPage() {
     <>
       <SubHeroBanner title="Our Products" />
       <AllProducts cakeType={selectedType} />
+      <div className="flex flex-wrap mt-10 md:mt-20 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">
+        <FAQs maxWidth="max-w-[90rem]" />
+      </div>
     </>
   );
 }

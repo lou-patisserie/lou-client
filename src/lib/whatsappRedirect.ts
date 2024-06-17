@@ -10,7 +10,7 @@ type OrderData = {
 
 // Single "Buy Now" Template
 export const redirectToWhatsApp = (name: string, price: number, variant: string, data: OrderData) => {
-  const phoneNumber = "+6281394757477";
+  const phoneNumber = "+6281110019906";
   const selectedAddOns =
     Object.keys(data.addOns)
       .filter((key) => data.addOns[key].selected)
@@ -59,7 +59,7 @@ type CartItem = {
 
 // Bulk Products Redirect WA msgs
 export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPrice: number) => {
-  const phoneNumber = "+6281394757477";
+  const phoneNumber = "+6281110019906"; 
   let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
 
   cartItems.forEach((item, index) => {

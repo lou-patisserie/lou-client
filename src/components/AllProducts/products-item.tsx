@@ -1,21 +1,30 @@
 import { formatPrice } from "@/lib/formatters";
+import { validateImageUrl } from "@/lib/imgUtils";
 import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
   name: string;
-  price: number;
-  imgRef: string;
+  main_image: string;
+  variants: Variant[];
 };
 
-export default function ProductsItem({ name, price, imgRef }: Props) {
+type Variant = {
+  ID: string;
+  cake_id: string;
+  desc: string;
+  name: string;
+  price: string;
+};
+
+export default function ProductsItem({ name, main_image, variants }: Props) {
   return (
     <div className="text-center">
       <div className="">
-        <Link href="/products/test">
+        <Link href={`/product/${name.replace(/\s+/g, "-")}`}>
           <Image
-            src={imgRef}
-            alt="Products"
+            src={validateImageUrl(main_image)}
+            alt={name}
             width={500}
             height={500}
             priority
@@ -24,7 +33,7 @@ export default function ProductsItem({ name, price, imgRef }: Props) {
         </Link>
       </div>
       <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{name}</h3>
-      <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(price)}</p>
+      <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(variants[0].price)}</p>
     </div>
   );
 }

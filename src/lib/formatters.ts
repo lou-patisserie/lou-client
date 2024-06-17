@@ -1,4 +1,4 @@
-export function formatPrice(price: number) {
+export function formatPrice(price: any) {
   return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -20,3 +20,23 @@ export function formatDate(dateString: any) {
     day: "numeric",
   });
 }
+
+export function normalizeText(input: string) {
+  return input
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}
+
+export function deSlugify(slug: string): string {
+  return slug.replace(/-/g, " ");
+}
+
+// export function deSlugify(slug: string): string {
+//   return slug
+//     .split("-")
+//     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+//     .join(" ");
+// }

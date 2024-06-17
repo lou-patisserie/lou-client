@@ -1,16 +1,17 @@
 import { AtomEffect, atom } from "recoil";
 
 type CartItem = {
-  id: number;
+  id: string;
   name: string;
   price: number;
+  variant: string;
   quantity: number;
   deliveryDate?: Date;
   deliveryTime?: string;
-  candleAndKnife: boolean;
-  greetingCard: boolean;
+  addOns: Record<string, { selected: boolean; price: number }>;
   complimentaryMsg: string;
   totalPrice?: number;
+  imgSrc?: string;
 };
 
 const isClient = typeof window !== 'undefined';

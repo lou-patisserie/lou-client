@@ -1,11 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TopNavigationMenu } from "./top-nav-menu";
 import { TopLogo, TopScrolledLogo } from "./top-logo";
 import MobileNavigationMenu from "./mobile-nav-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import classes from "./scss/nav-head.module.scss";
 import LuoCart from "../UI/Cart/shopping-cart";
+import { getAllProductTypes } from "@/api/product-type-api";
+import { useRecoilValue, useRecoilValueLoadable } from "recoil";
+import { fetchProductTypes } from "@/recoils/selectors/product-types";
+import { ProductTypes } from "@/types/data-types";
 
 type Props = {
   marginTopNotScrolled?: string;
@@ -16,77 +20,97 @@ type Props = {
 
 export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScrolled = "bg-transparent", pyNotScrolled = "py-0", logoSwitch = false }: Props) {
   const [showNav, setShowNav] = useState(false);
-  // const [lastScrollY, setLastScrollY] = useState(0);
-  // console.log(showNav);
-  // console.log(lastScrollY);
+  const productTypesLoadable = useRecoilValueLoadable(fetchProductTypes);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setShowNav(currentScrollY > 10);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    if (isClient) {
+      const handleScroll = () => {
+        const currentScrollY = window.scrollY;
+        setShowNav(currentScrollY > 0);
+      };
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [isClient]);
+
+  if (!isClient) {
+    return <div></div>;
+  }
 
   const navVariants = {
     hidden: { y: -100, opacity: 0 },
     visible: { y: 0, opacity: 1 },
   };
 
-  if (showNav === true) {
-    return (
-      <AnimatePresence>
-        <motion.div className={`${classes.navHeadPopup} flex justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
-          <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
-          <div className="block md:hidden">
-            <MobileNavigationMenu showNav={showNav} />
-          </div>
-          <div>
-            <div className="hidden md:block">
-              <TopNavigationMenu />
+  let content;
+  switch (productTypesLoadable.state) {
+    case "hasValue":
+      const productTypes = productTypesLoadable.contents as ProductTypes[];
+      if (showNav === true) {
+        content = (
+          <AnimatePresence>
+            <motion.div className={`${classes.navHeadPopup} flex justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
+              <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
+              <div className="block md:hidden">
+                <MobileNavigationMenu typeList={productTypes} showNav={showNav} />
+              </div>
+              <div>
+                <div className="hidden md:block">
+                  <TopNavigationMenu typeList={productTypes} />
+                </div>
+                <div>
+                  <div className="flex items-center text-center md:hidden ">
+                    <TopScrolledLogo />
+                  </div>
+                </div>
+              </div>
+              <div className="relative w-fit h-fit">
+                <LuoCart />
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        );
+      }
+      if (showNav === false) {
+        content = (
+          <div className={`flex justify-between items-center px-10  ${pyNotScrolled} ${marginTopNotScrolled} ${bgColorNotScrolled}  `}>
+            <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
+            <div className="flex md:hidden">
+              <MobileNavigationMenu typeList={productTypes} showNav={showNav} />
             </div>
             <div>
-              <div className="flex items-center text-center md:hidden ">
-                <TopScrolledLogo />
+              <div className="hidden md:block">
+                <TopNavigationMenu typeList={productTypes} />
+              </div>
+              <div>
+                <div className="flex items-center text-center md:hidden ">
+                  <TopScrolledLogo />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="relative w-fit h-fit">
-            <LuoCart />
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    );
-  }
-
-  if (!showNav) {
-    return (
-      <div className={`flex justify-between items-center px-10  ${pyNotScrolled} ${marginTopNotScrolled} ${bgColorNotScrolled}  `}>
-        <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
-        <div className="flex md:hidden">
-          <MobileNavigationMenu showNav={showNav} />
-        </div>
-        <div>
-          <div className="hidden md:block">
-            <TopNavigationMenu />
-          </div>
-          <div>
-            <div className="flex items-center text-center md:hidden ">
-              <TopScrolledLogo />
+            <div className="relative w-fit h-fit">
+              <LuoCart />
             </div>
           </div>
-        </div>
-        <div className="relative w-fit h-fit">
-          <LuoCart />
-        </div>
-      </div>
-    );
+        );
+      }
+      break;
+    case "hasError":
+      console.error("Error loading product types:", productTypesLoadable.contents);
+      content = <div>Error loading product types</div>;
+      break;
   }
+
+  return content;
 }
 
 // return (

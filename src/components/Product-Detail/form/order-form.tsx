@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { startOfDay } from "date-fns";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/UI/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/UI/popover";
 import { cn } from "@/lib/utils";
@@ -15,61 +15,107 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/UI/checkbox";
 import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
+import { redirectToWhatsApp } from "../../../lib/whatsappRedirect";
+import { AddOns } from "@/types/data-types";
+import { Skeleton } from "@/components/UI/skeleton";
 
 type Props = {
-  id: number;
-  name: string;
+  id: string;
+  name?: string;
   price: number;
+  imgSrc?: string;
+  selectedVariantName: string;
+  addOns: AddOns[];
+  loading?: boolean;
 };
 
-export default function OrderForm({ id, name, price }: Props) {
+export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns, loading }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isBuyNow, setIsBuyNow] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(price);
   const [productToAdd, setProductToAdd] = useState({
-    id: 0,
+    id: "",
     name: "",
     price: 0,
+    variant: "",
     quantity: 0,
     deliveryDate: new Date(),
     deliveryTime: "",
-    candleAndKnife: false,
-    greetingCard: false,
+    addOns: {},
     complimentaryMsg: "",
+    imgSrc: "",
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {},
+    defaultValues: {
+      addOns: addOns.reduce((acc, addOn) => {
+        // console.log("getting what", addOn.name, addOn.price);
+        acc[addOn.name] = {
+          selected: false,
+          price: parseFloat(addOn.price),
+        };
+        return acc;
+      }, {} as Record<string, { selected: boolean; price: number }>),
+    },
   });
 
+  const handleAddOnChange = (addOnName: string, isSelected: any) => {
+    const addOn = addOns.find((addOn) => addOn.name === addOnName);
+    const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
+    form.setValue(`addOns.${addOnName}`, {
+      selected: isSelected,
+      price: isSelected ? addOnPrice : 0,
+    });
+  };
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const selectedAddOns = Object.entries(form.getValues().addOns || {}).filter(([_, details]) => details.selected);
+      const addOnsTotal = selectedAddOns.reduce((sum, [name, details]) => sum + details.price, 0);
+      setTotalPrice(price + addOnsTotal);
+    };
+
+    calculateTotalPrice();
+
+    const subscription = form.watch(() => {
+      calculateTotalPrice();
+    });
+
+    return () => subscription.unsubscribe();
+  }, [form, price, addOns]);
+
   function onSubmit(data: z.infer<typeof FormSchema>) {
+    // console.log("Before Submit - Add-Ons:", form.getValues("addOns"));
+    // console.log("Form Data:", data); // Log form data
+    // console.log("Add-Ons:", data.addOns); // Log Add-Ons data
+    // console.log("This Cake Price", price);
     const newProductToAdd = {
-      id: Math.random(),
-      name: name,
+      id: id || Math.random().toString(),
+      name: name || "",
       price: price,
+      variant: selectedVariantName,
       quantity: 1,
       deliveryDate: data.deliveryDate,
       deliveryTime: data.deliveryTime,
-      candleAndKnife: data.candleAndKnife || false,
-      greetingCard: data.greetingCard || false,
       complimentaryMsg: data.complimentaryMsg || "",
+      addOns: data.addOns || {},
+      imgSrc: imgSrc || "",
     };
 
     setProductToAdd(newProductToAdd);
-    // setCart([...cart, newProductToAdd]);
-
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // });
-
-    setDrawerOpen(true);
+    if (isBuyNow) {
+      redirectToWhatsApp(name || "", price, selectedVariantName, {
+        ...data,
+        addOns: data.addOns || {},
+        totalPrice: totalPrice,
+      });
+    } else {
+      setDrawerOpen(true);
+    }
   }
 
   return (
@@ -81,7 +127,7 @@ export default function OrderForm({ id, name, price }: Props) {
             name="deliveryDate"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Delivery/Pickup Date</FormLabel>
+                <FormLabel>Delivery/Pickup Date<span className="text-red-500">*</span></FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -92,7 +138,7 @@ export default function OrderForm({ id, name, price }: Props) {
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 rounded-none" align="start">
-                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => date < new Date()} initialFocus />
+                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} disabled={(date) => startOfDay(date) < startOfDay(new Date())} initialFocus />
                   </PopoverContent>
                 </Popover>
                 <FormMessage />
@@ -104,7 +150,7 @@ export default function OrderForm({ id, name, price }: Props) {
             name="deliveryTime"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Time</FormLabel>
+                <FormLabel>Time<span className="text-red-500">*</span></FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="rounded-none">
@@ -134,34 +180,30 @@ export default function OrderForm({ id, name, price }: Props) {
             <FormLabel>Add-Ons (Optional)</FormLabel>
             <FormDescription className="text-xs">Select the add-ons that you want.</FormDescription>
           </div>
-          <FormField
-            control={form.control}
-            name="candleAndKnife"
-            render={({ field }) => (
-              <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Add Candle and Knife</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="greetingCard"
-            render={({ field }) => (
-              <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3 ">
-                <FormControl>
-                  <Checkbox checked={field.value} onCheckedChange={field.onChange} className="rounded-none" />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Add Greeting Card</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
+          {loading ? (
+            <Skeleton className="w-full max-w-96 h-7 my-2" />
+          ) : (
+            addOns.map((addOn) => (
+              <div key={addOn.ID} className="flex flex-col space-y-2">
+                <FormField
+                  control={form.control}
+                  name={`addOns.${addOn.name}.selected`}
+                  render={({ field }) => (
+                    <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={(isChecked) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          {addOn.name} - {formatPrice(parseFloat(addOn.price))}
+                        </FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            ))
+          )}
           <FormField
             control={form.control}
             name="complimentaryMsg"
@@ -176,10 +218,10 @@ export default function OrderForm({ id, name, price }: Props) {
             )}
           />
           <div className="flex flex-col gap-2">
-            <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150">
-              Buy Now - {formatPrice(price)}
+            <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(true)}>
+              Buy Now - {formatPrice(totalPrice)}
             </Button>
-            <Button name="order-submit" type="submit" className=" bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none  transition ease-in-out duration-150">
+            <Button name="order-submit" type="submit" className="bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(false)}>
               Add to Cart
             </Button>
           </div>

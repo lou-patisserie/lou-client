@@ -7,13 +7,19 @@ export const FormSchema = z.object({
   deliveryTime: z.string({
     required_error: "Please select a time for delivery.",
   }),
-  candleAndKnife: z.boolean().default(false).optional(),
-  greetingCard: z.boolean().default(false).optional(),
   complimentaryMsg: z
     .string()
     .max(250, { message: "Complimentary message is too long" })
     .refine((data) => data === "" || data.length >= 5, {
       message: "Complimentary message is too short",
     })
+    .optional(),
+    addOns: z
+    .record(
+      z.object({
+        selected: z.boolean().default(false),
+        price: z.number().default(0),
+      })
+    )
     .optional(),
 });

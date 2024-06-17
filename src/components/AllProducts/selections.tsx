@@ -11,14 +11,14 @@ export default function AllProductsSelection({ onSelectCategory, currentSelectio
       <Button variant="ghost" onClick={() => onSelectCategory("All Products")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege ${currentSelection === "All Products" ? "bg-luoBiege " : ""}}`}>
         All
       </Button>
-      <Button variant="ghost" onClick={() => onSelectCategory("Whole Cakes")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege ${currentSelection === "Whole Cakes" ? "bg-luoBiege " : ""}}`}>
-        Whole Cakes
+      <Button variant="ghost" onClick={() => onSelectCategory("Fruit-based")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege ${currentSelection === "Fruit-based" ? "bg-luoBiege " : ""}}`}>
+       Fruit-Based
       </Button>
-      <Button variant="ghost" onClick={() => onSelectCategory("Petit Gâteau")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Petit Gâteau" ? "bg-luoBiege " : ""}`}>
-        Petit Gâteau
+      <Button variant="ghost" onClick={() => onSelectCategory("Nut-free")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Nut-free" ? "bg-luoBiege " : ""}`}>
+        Nut-Free
       </Button>
-      <Button variant="ghost" onClick={() => onSelectCategory("Entremet")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Entremet" ? "bg-luoBiege " : ""}`}>
-        Entremet
+      <Button variant="ghost" onClick={() => onSelectCategory("Chocolate-based")} className={`text-xs font-bold uppercase rounded-full tracking-wide bg-slate-100 hover:bg-luoBiege  ${currentSelection === "Chocolate-based" ? "bg-luoBiege " : ""}`}>
+        Chocolate-based
       </Button>
     </>
   );

@@ -6,14 +6,18 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
 import classes from "./scss/product-img-view.module.scss";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: Function;
   selectedImg: string;
+  img1?: string;
+  img2?: string;
+  img3?: string;
 };
 
-export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Props) {
+export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 = "/assets/img/image_not_found.jpeg", img2 = "/assets/img/image_not_found.jpeg", img3 = "/assets/img/image_not_found.jpeg" }: Props) {
   const [currentImg, setCurrentImg] = useState(selectedImg);
   //   console.log(currentImg)
 
@@ -36,9 +40,9 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
     }
   };
 
-  const img1 = "/assets/dummy/Lou_Croissant2.jpg";
-  const img2 = "/assets/dummy/Lou_Croissant0.jpg";
-  const img3 = "/assets/dummy/Lou_Croissant3.jpg";
+  const handleImgError = (e: any) => {
+    e.target.src = "/assets/img/image_not_found.jpeg";
+  };
 
   const content = (
     <div className={classes.modal} onClick={() => setIsOpen(false)}>
@@ -46,40 +50,43 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg }: Pro
         <X />
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
-        <Image src={currentImg} alt="product-img" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
+        <Image src={validateImageUrl(currentImg) || "/assets/img/image_not_found.jpeg"} alt="product-img-select" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
         <div className="p-2 flex flex-row gap-2 cursor-pointer">
           <div>
             <Image
-              src={img1}
-              alt="product-img"
+              src={validateImageUrl(img1)}
+              alt="product-img1"
               width={1080}
               height={1080}
               className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
-              onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant2.jpg")}
+              onClick={() => imageClickHandler(img1)}
+              onError={handleImgError}
               priority
             />
           </div>
           <div>
             <Image
-              src={img2}
-              alt="product-img"
+              src={validateImageUrl(img2)}
+              alt="product-img2"
               width={1080}
               height={1080}
               className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img2 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
-              onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant0.jpg")}
+              onClick={() => imageClickHandler(img2)}
+              onError={handleImgError}
             />
           </div>
           <div>
             <Image
-              src={img3}
-              alt="product-img"
+              src={validateImageUrl(img3)}
+              alt="product-img3"
               width={1080}
               height={1080}
               className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img3 ? "border-2 border-luoDarkBiege" : ""}`}
               style={{ width: "100%", height: "100%" }}
-              onClick={() => imageClickHandler("/assets/dummy/Lou_Croissant3.jpg")}
+              onClick={() => imageClickHandler(img3)}
+              onError={handleImgError}
             />
           </div>
         </div>

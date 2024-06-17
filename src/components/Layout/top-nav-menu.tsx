@@ -4,8 +4,16 @@ import Link from "next/link";
 import { Icons } from "../UI/icons";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "../UI/navigation-menu";
 import { cn } from "@/lib/utils";
+import { normalizeText } from "@/lib/formatters";
+import { ProductTypes } from "@/types/data-types";
 
-export function TopNavigationMenu() {
+
+
+type Props = {
+  typeList: ProductTypes[];
+};
+
+export function TopNavigationMenu({ typeList }: Props) {
   return (
     <NavigationMenu className="text-luoDarkBiege">
       <NavigationMenuList>
@@ -13,45 +21,14 @@ export function TopNavigationMenu() {
           <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              {/* <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <a className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md" href="/">
-                    <Icons.logo className="h-6 w-6" />
-                    <div className="mb-2 mt-4 text-lg font-medium">shadcn/ui</div>
-                    <p className="text-sm leading-tight text-muted-foreground">Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.</p>
-                  </a>
-                </NavigationMenuLink>
-              </li> */}
-              <ListItem href="/products" title="All Products">
-                See all of our products catalog.
-              </ListItem>
-              <ListItem href="/products/type/whole-cakes" title="Whole Cakes">
-                Discover our range of luxurious whole cakes.
-              </ListItem>
-              <ListItem href="/products/type/petit-gateau" title="Petit Gâteau">
-                Indulge in our exquisite selection of petit gâteaux.
-              </ListItem>
-              <ListItem href="/products/type/entremet" title="Entremet">
-                Experience the elegance of our layered entremets.
-              </ListItem>
-              <ListItem href="/products/type/gelato" title="Gelato">
-                Explore our delicious gelato flavors.
-              </ListItem>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        {/* <NavigationMenuItem>
-          <NavigationMenuTrigger>Our Location</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem key={component.title} title={component.title} href={component.href}>
-                  {component.description}
+              {typeList.map((type) => (
+                <ListItem key={type.ID} href={`/collection/${normalizeText(type.name)}`} title={type.name}>
+                  {type.desc}
                 </ListItem>
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem> */}
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <Link href="/our-location" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>Our Location</NavigationMenuLink>

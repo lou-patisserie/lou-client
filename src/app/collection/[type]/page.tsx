@@ -66,16 +66,20 @@ export default function ProductsPage() {
         {/* <h1>Loading skeleton here...</h1> */}
         <div className="w-full flex flex-col justify-center mt-8 px-4">
           <div className="flex justify-center">
-            <Skeleton className="w-full max-w-xl h-9 my-8" />
+            <Skeleton className="w-full max-w-xl h-9 mt-8 mb-6" />
           </div>
           <div className="flex justify-start md:justify-center">
-            <Skeleton className="h-9 md:w-[75%] w-screen my-4" />
+            <Skeleton className="h-9 md:w-[75%] w-screen mb-4 mt-6" />
           </div>
           <div className="flex justify-center">
             <div className="md:w-[75%] w-full">
               <div className={classes.skeletonGrid}>
                 {Array.from({ length: skeletonCount }).map((_, index) => (
-                  <Skeleton key={index} className="w-full h-48 md:h-72" />
+                  <div key={index} className="flex flex-col items-center text-center justify-center">
+                    <Skeleton className="w-full h-48 md:h-72" />
+                    <Skeleton className="w-full h-6 mt-2" />
+                    <Skeleton className="w-1/2 h-4 mt-1" />
+                  </div>
                 ))}
               </div>
             </div>

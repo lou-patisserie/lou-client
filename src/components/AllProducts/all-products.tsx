@@ -1,5 +1,6 @@
 "use client";
 
+import classes from "./scss/all-products.module.scss";
 import { useCallback, useEffect, useState } from "react";
 import ProductLogistics from "./product-logistics";
 import AllProductsSelection from "./selections";
@@ -10,7 +11,7 @@ import AddOnsLogistics from "./add-ons-logistics";
 import { AddOns } from "@/types/data-types";
 import { debounce } from "lodash";
 import { notFound } from "next/navigation";
-
+import { Skeleton } from "../UI/skeleton";
 
 type Variant = {
   ID: string;
@@ -150,14 +151,33 @@ export default function AllProducts({ cakeType }: Props) {
   if (notFoundError) {
     return notFound();
   }
-
+  const skeletonCount = 10;
   if (cakeType.name === "Add Ons") {
     return (
       <section id="add-ons-page" className="flex flex-col justify-center my-8 md:my-16 gap-2">
         <div className="w-full flex flex-col justify-center mt-8">
-          <div className="flex justify-center">
-            <AddOnsLogistics addOnsData={allAddOns} choosenType={cakeType.name} />
-          </div>
+          {loading ? (
+            <div className="flex justify-center">
+              <div className="md:w-[75%] w-full">
+                <div className="flex justify-start md:justify-center">
+                  <Skeleton className="h-9 w-full mb-4 mt-6" />
+                </div>
+                <div className={classes.skeletonGrid}>
+                  {Array.from({ length: skeletonCount }).map((_, index) => (
+                    <div key={index} className="flex flex-col items-center text-center justify-center">
+                      <Skeleton className="w-full h-48 md:h-72" />
+                      <Skeleton className="w-full h-6 mt-2" />
+                      <Skeleton className="w-1/2 h-4 mt-1" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <AddOnsLogistics addOnsData={allAddOns} choosenType={cakeType.name} />
+            </div>
+          )}
         </div>
       </section>
     );
@@ -170,7 +190,22 @@ export default function AllProducts({ cakeType }: Props) {
       </div>
 
       {loading && page === 1 ? (
-        <div></div>
+        <div className="flex justify-center">
+          <div className="md:w-[75%] w-full">
+            <div className="flex justify-start md:justify-center">
+              <Skeleton className="h-9 w-full mb-4 mt-6" />
+            </div>
+            <div className={classes.skeletonGrid}>
+              {Array.from({ length: skeletonCount }).map((_, index) => (
+                <div key={index} className="flex flex-col items-center text-center justify-center">
+                  <Skeleton className="w-full h-48 md:h-72" />
+                  <Skeleton className="w-full h-6 mt-2" />
+                  <Skeleton className="w-1/2 h-4 mt-1" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <>
           <div className="w-full flex flex-col justify-center mt-8">

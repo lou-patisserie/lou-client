@@ -21,11 +21,6 @@ export default function FaqProductDetail() {
         <AccordionContent>We do not offer message writing on cakes. However, we provide a personalized message card service. Please enter your message in the designated box above when placing your order.</AccordionContent>
         <div className="h-[1px] w-full bg-luoDarkBiege opacity-50" />
       </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Is it animated?</AccordionTrigger>
-        <AccordionContent>Yes. It&apos;s animated by default, but you can disable it if you prefer.</AccordionContent>
-        <div className="h-[1px] w-full bg-luoDarkBiege opacity-50" />
-      </AccordionItem>
     </Accordion>
   );
 }

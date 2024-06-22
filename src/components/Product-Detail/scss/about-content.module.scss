@@ -1,0 +1,84 @@
+.renderedJoditHtml {
+  //   font-family: Arial, sans-serif;
+  line-height: 1.6;
+
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  h2 {
+    font-size: 1.75em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+  }
+
+  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 1.5em;
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin-left: 1.5em;
+  }
+
+  li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+  }
+
+  strong,
+  b {
+    font-weight: bold;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  a {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 0.5em;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+}

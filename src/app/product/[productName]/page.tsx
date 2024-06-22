@@ -22,7 +22,7 @@ export default function ProductDetailPage() {
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizeCakeName = deSlugify(cakeNameParam);
-  // console.log("cake data", cakeData, "cake detail", cakeDetails);
+  console.log("cake data", cakeData, "cake detail", cakeDetails);
   // console.log("cakeNameparam", cakeNameParam, "normalize", normalizeCakeName);
 
   const fetchCakeDetailByNameAndAddOns = useCallback(async () => {

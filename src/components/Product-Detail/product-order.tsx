@@ -19,6 +19,7 @@ type Props = {
 export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, variants, addOns, loading }: Props) {
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [selectedVariantName, setSelectedVariantName] = useState<string>("");
+  console.log(variants)
 
   useEffect(() => {
     if (variants.length > 0) {

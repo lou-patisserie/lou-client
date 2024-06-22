@@ -51,7 +51,7 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
         <Image src={validateImageUrl(currentImg) || "/assets/img/image_not_found.jpeg"} alt="product-img-select" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
-        <div className="p-2 flex flex-row gap-2 cursor-pointer">
+        <div className={classes.imgTabLayout}>
           <div>
             <Image
               src={validateImageUrl(img1)}

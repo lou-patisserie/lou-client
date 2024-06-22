@@ -38,3 +38,26 @@ export type ProductTypes = {
   desc: string;
   created_date: string;
 };
+
+
+export type AddOnCartItem = {
+  id: string;
+  name: string;
+  price: number;
+  main_image: string;
+  quantity: number;
+};
+
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  variant: string;
+  quantity: number;
+  deliveryDate?: Date;
+  deliveryTime?: string;
+  addOns?: Record<string, { selected: boolean; price: number; name: string; main_image: string }>;
+  complimentaryMsg: string;
+  totalPrice?: number;
+  imgSrc?: string;
+};

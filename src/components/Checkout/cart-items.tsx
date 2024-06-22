@@ -12,6 +12,7 @@ import { EmptyCartSVG } from "../UI/Svg/svg-ui";
 import Link from "next/link";
 import DeleteCartItem from "./cart-item-delete";
 import { redirectToWhatsAppCart } from "@/lib/whatsappRedirect";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 export default function CartItems() {
   const [cartItems, setCartItems] = useRecoilState(cartState);
@@ -77,7 +78,7 @@ export default function CartItems() {
           <Card key={item.id} className="my-2 p-4 ">
             <div className="flex flex-wrap gap-2  justify-between items-center">
               <div className="flex flex-wrap gap-2">
-                <div className="h-20 w-20">{item.imgSrc ? <Image src={item.imgSrc} width={100} height={100} alt={item.name} className="aspect-square object-cover " /> : <div></div>}</div>
+                <div className="h-20 w-20">{item.imgSrc ? <Image src={validateImageUrl(item.imgSrc)} width={100} height={100} alt={item.name} className="aspect-square object-cover " /> : <div></div>}</div>
                 <div className={`flex flex-col ${classes.cardItems}`}>
                   <p className="font-medium text-base">{item.name}</p>
                   {item.variant && <span className="italic">Variant: {item.variant}</span>}

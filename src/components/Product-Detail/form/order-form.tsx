@@ -53,29 +53,37 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     resolver: zodResolver(FormSchema),
     defaultValues: {
       addOns: addOns.reduce((acc, addOn) => {
-        // console.log("getting what", addOn.name, addOn.price);
         acc[addOn.name] = {
           selected: false,
           price: parseFloat(addOn.price),
+          name: addOn.name,
+          main_image: addOn.main_image,
+          ID: addOn.ID
         };
         return acc;
-      }, {} as Record<string, { selected: boolean; price: number }>),
+      }, {} as Record<string, { selected: boolean; price: number; name: string; main_image: string, ID: string }>),
     },
   });
 
-  const handleAddOnChange = (addOnName: string, isSelected: any) => {
+  const handleAddOnChange = (addOnName: string, isSelected: boolean) => {
     const addOn = addOns.find((addOn) => addOn.name === addOnName);
     const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
+    const name = addOn ? addOn.name : "";
+    const main_image = addOn ? addOn.main_image : "";
+    const addOnId = addOn ? addOn.ID: "";
     form.setValue(`addOns.${addOnName}`, {
       selected: isSelected,
       price: isSelected ? addOnPrice : 0,
+      name: isSelected ? name : "",
+      main_image: isSelected ? main_image : "",
+      ID: isSelected ? addOnId: "",
     });
   };
 
   useEffect(() => {
     const calculateTotalPrice = () => {
       const selectedAddOns = Object.entries(form.getValues().addOns || {}).filter(([_, details]) => details.selected);
-      const addOnsTotal = selectedAddOns.reduce((sum, [name, details]) => sum + details.price, 0);
+      const addOnsTotal = selectedAddOns.reduce((sum, [_, details]) => sum + details.price, 0);
       setTotalPrice(price + addOnsTotal);
     };
 
@@ -89,10 +97,6 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
   }, [form, price, addOns]);
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    // console.log("Before Submit - Add-Ons:", form.getValues("addOns"));
-    // console.log("Form Data:", data); // Log form data
-    // console.log("Add-Ons:", data.addOns); // Log Add-Ons data
-    // console.log("This Cake Price", price);
     const newProductToAdd = {
       id: id || Math.random().toString(),
       name: name || "",
@@ -127,7 +131,9 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             name="deliveryDate"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Delivery/Pickup Date<span className="text-red-500">*</span></FormLabel>
+                <FormLabel>
+                  Delivery/Pickup Date<span className="text-red-500">*</span>
+                </FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -150,7 +156,9 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
             name="deliveryTime"
             render={({ field }) => (
               <FormItem className="flex flex-col w-72 md:w-96">
-                <FormLabel>Time<span className="text-red-500">*</span></FormLabel>
+                <FormLabel>
+                  Time<span className="text-red-500">*</span>
+                </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger className="rounded-none">
@@ -191,7 +199,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
                   render={({ field }) => (
                     <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
                       <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={(isChecked) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
+                        <Checkbox checked={field.value} onCheckedChange={(isChecked: any) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>

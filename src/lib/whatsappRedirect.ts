@@ -1,4 +1,5 @@
 import { formatDate, formatPrice } from "@/lib/formatters";
+import { CartItem } from "@/types/data-types";
 
 type OrderData = {
   deliveryDate?: Date;
@@ -42,44 +43,35 @@ export const redirectToWhatsApp = (name: string, price: number, variant: string,
   window.open(whatsappURL, "_blank");
 };
 
-// Cart Template
-type CartItem = {
-  id: string;
-  name: string;
-  price: number;
-  variant: string;
-  quantity: number;
-  deliveryDate?: Date;
-  deliveryTime?: string;
-  addOns: Record<string, { selected: boolean; price: number }>;
-  complimentaryMsg: string;
-  totalPrice?: number;
-  imgSrc?: string;
-};
-
 // Bulk Products Redirect WA msgs
 export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPrice: number) => {
-  const phoneNumber = "+6281110019906"; 
+  const phoneNumber = "+6281110019906";
   let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
 
   cartItems.forEach((item, index) => {
     message += `*Product ${index + 1}:*\n`;
     message += `- *Name*: ${item.name}\n`;
-    message += `- *Variant*: ${item.variant}\n`;
+
+    if (item.variant) {
+      message += `- *Variant*: ${item.variant}\n`;
+    }
+
     message += `- *Price*: ${formatPrice(item.price)}\n`;
     message += `- *Quantity*: ${item.quantity}\n`;
 
-    message += `- *Delivery Date*: ${formatDate(item.deliveryDate)}\n`;
-    message += `- *Delivery Time*: ${item.deliveryTime}\n`;
+    if (item.deliveryDate) {
+      message += `- *Delivery Date*: ${formatDate(item.deliveryDate)}\n`;
+    }
 
-    const selectedAddOns = Object.entries(item.addOns)
-      .filter(([_, details]) => details.selected)
-      .map(([addOn, details]) => `${addOn}: ${formatPrice(details.price)}`)
-      .join(", ") || "No Add-Ons";
+    if (item.deliveryTime) {
+      message += `- *Delivery Time*: ${item.deliveryTime}\n`;
+    }
 
-    message += `- *Add-Ons*: ${selectedAddOns}\n`;
-    message += `- *Complimentary Message*: ${item.complimentaryMsg || "No complimentary message"}\n\n`;
-    message += `- *Total Cake Price with Add-Ons*: ${formatPrice(item.totalPrice)}\n\n`;
+    if (item.complimentaryMsg) {
+      message += `- *Complimentary Message*: ${item.complimentaryMsg}\n`;
+    }
+
+    message += `- *Total Product Price*: ${formatPrice(item.totalPrice)}\n\n`;
   });
 
   message += `*Cumulative Total Price*: ${formatPrice(cumulativeTotalPrice)}\n\n`;

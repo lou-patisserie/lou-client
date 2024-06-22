@@ -11,12 +11,13 @@ export const fetchProductTypes = selector<ProductTypes[]>({
   key: "fetchProductTypes",
   get: async ({ get }) => {
     if (typeof window === "undefined") {
-      console.log("fetchProductTypes: running on server, skip sessionStorage");
-      // Hapus code bawah klau gak perlu
-      const response = await getAllProductTypes();
-      const data = response.data;
+      // console.log("fetchProductTypes: running on server, skip sessionStorage");
+      // // Hapus code bawah klau gak perlu
+      // const response = await getAllProductTypes();
+      // const data = response.data;
       // console.log("Fetch productTypes from API on SSR:", data);
-      return data;
+      // return data;
+      return
     }
 
     const sessionStorageKey = "productTypes";

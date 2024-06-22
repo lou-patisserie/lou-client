@@ -1,20 +1,8 @@
+import { CartItem } from "@/types/data-types";
 import { AtomEffect, atom } from "recoil";
 
-type CartItem = {
-  id: string;
-  name: string;
-  price: number;
-  variant: string;
-  quantity: number;
-  deliveryDate?: Date;
-  deliveryTime?: string;
-  addOns: Record<string, { selected: boolean; price: number }>;
-  complimentaryMsg: string;
-  totalPrice?: number;
-  imgSrc?: string;
-};
 
-const isClient = typeof window !== 'undefined';
+const isClient = typeof window !== "undefined";
 
 const localStorageEffect =
   (key: string): AtomEffect<CartItem[]> =>

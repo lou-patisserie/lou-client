@@ -19,6 +19,9 @@ export const FormSchema = z.object({
       z.object({
         selected: z.boolean().default(false),
         price: z.number().default(0),
+        name: z.string().default(""),
+        main_image: z.string().default(""),
+        ID: z.string().default("")
       })
     )
     .optional(),

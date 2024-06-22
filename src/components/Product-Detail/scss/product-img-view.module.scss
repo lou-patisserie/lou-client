@@ -20,7 +20,16 @@
   height: fit-content;
   border-radius: 0;
   overflow: hidden;
-  background: #F0E8DD;
+  background: #f0e8dd;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   cursor: auto;
+
+  .imgTabLayout {
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    margin: 0;
+  }
 }

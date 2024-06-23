@@ -80,3 +80,26 @@ export const redirectToWhatsAppCart = (cartItems: CartItem[], cumulativeTotalPri
   const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   window.open(whatsappURL, "_blank");
 };
+
+export const redirectToWhatsAppAddOns = (name: string, price: number, data: OrderData) => {
+  const phoneNumber = "+6281110019906";
+  let message = `Hi Lou Patisserie,\n\nI would like to place an order with the following details:\n\n`;
+
+  message += `*Add-Ons Name:* ${name}\n`;
+  message += `*Price:* ${price}\n`;
+
+  if (data.deliveryDate) {
+    message += `*Delivery Date:* ${formatDate(data.deliveryDate)}\n`;
+  }
+
+  if (data.deliveryTime) {
+    message += `*Delivery Time:* ${data.deliveryTime}\n`;
+  }
+
+  if (data.complimentaryMsg) {
+    message += `*Complimentary Message:* ${data.complimentaryMsg}\n`;
+  }
+
+  const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, "_blank");
+};

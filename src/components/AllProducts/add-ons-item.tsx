@@ -13,7 +13,7 @@ export default function AddOnsItem({ name, price, main_image }: Props) {
   return (
     <div className="text-center">
       <div className="">
-        <Link href={`/add-ons/test`}>
+        <Link href={`/add-ons/${name.replace(/\s+/g, "-")}`}>
           <Image
             src={validateImageUrl(main_image)}
             alt={name}

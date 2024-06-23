@@ -23,6 +23,16 @@ export type AddOns = {
   main_image: string;
 };
 
+export type AddOnDetail = {
+  ID: string;
+  name: string;
+  price: string;
+  desc: string;
+  main_image: string;
+  sub_image1: string;
+  sub_image2: string;
+};
+
 export type CakeDetails = {
   ID: string;
   cake_id: string;
@@ -38,7 +48,6 @@ export type ProductTypes = {
   desc: string;
   created_date: string;
 };
-
 
 export type AddOnCartItem = {
   id: string;

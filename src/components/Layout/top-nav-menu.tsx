@@ -20,7 +20,7 @@ export function TopNavigationMenu({ typeList }: Props) {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] capitalize">
               {typeList.map((type) => (
                 <ListItem key={type.ID} href={`/collection/${normalizeText(type.name)}`} title={type.name}>
                   {type.desc}

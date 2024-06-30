@@ -1,3 +1,4 @@
+import { Frown } from "lucide-react";
 import Title from "../UI/Title/title";
 import { Skeleton } from "../UI/skeleton";
 import ProductsItem from "./products-item";
@@ -27,9 +28,10 @@ type Props = {
   loading?: boolean;
   searchQuery: string;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  searchPerformed: boolean;
 };
 
-export default function ProductLogistics({ items, selectedCategory, choosenType = "Products", page = 1, loading, searchQuery, onSearchChange }: Props) {
+export default function ProductLogistics({ items, selectedCategory, choosenType = "Products", page = 1, loading, searchQuery, onSearchChange, searchPerformed }: Props) {
   // console.log("items", items);
   return (
     <div className={classes.container}>
@@ -38,14 +40,22 @@ export default function ProductLogistics({ items, selectedCategory, choosenType 
         <SearchProducts searchQuery={searchQuery} onSearchChange={onSearchChange} typeName={choosenType} />
       </div>
       <div className={classes.products}>
-        {items.map((item) => (
-          <ProductsItem key={item.ID} {...item} />
-        ))}
-        {loading && page > 1 && (
-          <div className="flex flex-col">
-            <Skeleton className="w-full h-60 md:h-72 rounded-none" />
-            <Skeleton className="w-full h-14 mt-2 rounded-none" />
+        {searchPerformed ? (
+          <div className="w-full text-start items-start gap-2 text-luoDarkBiege flex justify-center h-[22vh]">
+            <Frown size={40} color="#8B7158" strokeWidth={1.5} /> <span>Your search did not find any products.</span>
           </div>
+        ) : (
+          <>
+            {items.map((item) => (
+              <ProductsItem key={item.ID} {...item} />
+            ))}
+            {loading && page > 1 && (
+              <div className="flex flex-col">
+                <Skeleton className="w-full h-60 md:h-72 rounded-none" />
+                <Skeleton className="w-full h-14 mt-2 rounded-none" />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -12,10 +12,11 @@ import { EmptyCartSVG } from "../UI/Svg/svg-ui";
 import Link from "next/link";
 import DeleteCartItem from "./cart-item-delete";
 import { redirectToWhatsAppCart } from "@/lib/whatsappRedirect";
+import { validateImageUrl } from "@/lib/imgUtils";
 
 export default function CartItems() {
   const [cartItems, setCartItems] = useRecoilState(cartState);
-  // console.log(cartItems);
+  console.log(cartItems);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -53,8 +54,7 @@ export default function CartItems() {
     const updatedCartItems = cartItems.map((item) => {
       if (item.id === id) {
         const newQuantity = Math.max(1, item.quantity + delta);
-        const addOnsTotal = Object.values(item.addOns).reduce((sum, addOn) => (addOn.selected ? sum + addOn.price : sum), 0);
-        const newTotalPrice = item.price * newQuantity + addOnsTotal;
+        const newTotalPrice = item.price * newQuantity;
         return { ...item, quantity: newQuantity, totalPrice: newTotalPrice };
       }
       return item;
@@ -78,32 +78,17 @@ export default function CartItems() {
           <Card key={item.id} className="my-2 p-4 ">
             <div className="flex flex-wrap gap-2  justify-between items-center">
               <div className="flex flex-wrap gap-2">
-                <div className="h-20 w-20">{item.imgSrc ? <Image src={item.imgSrc} width={100} height={100} alt={item.name} className="aspect-square object-cover " /> : <div></div>}</div>
+                <div className="h-20 w-20">{item.imgSrc ? <Image src={validateImageUrl(item.imgSrc)} width={100} height={100} alt={item.name} className="aspect-square object-cover " /> : <div></div>}</div>
                 <div className={`flex flex-col ${classes.cardItems}`}>
                   <p className="font-medium text-base">{item.name}</p>
-                  <span className="italic">Variant: {item.variant}</span>
+                  {item.variant && <span className="italic">Variant: {item.variant}</span>}
                   <span className="italic">Price: {formatPrice(item.price)}</span>
                   <span>Date: {formatDate(item.deliveryDate)}</span>
                   <span>When: {item.deliveryTime}</span>
-                  <div className="flex flex-col gap-0 text-start justify-start items-start mt-1 italic font-semibold text-[12px] text-slate-700">
-                    <div>
-                      <p className="">Add-Ons:</p>
-                    </div>
-                    {Object.entries(item.addOns)
-                      .filter(([_, details]) => details.selected)
-                      .map(([addOn, details]) => (
-                        <div key={addOn}>
-                          <span className="">
-                            {addOn}: {formatPrice(details.price)}
-                          </span>
-                        </div>
-                      ))}
-                    {Object.entries(item.addOns).filter(([_, details]) => details.selected).length === 0 && <span>No Add-Ons</span>}
-                  </div>
                 </div>
               </div>
               <div>
-                <DeleteCartItem onDelete={handleDeleteItem} itemId={item.id} />
+                <DeleteCartItem onDelete={handleDeleteItem} itemId={item.id} name={item.name} />
               </div>
             </div>
             <div className="w-full h-[2px] bg-slate-200 opacity-50 my-4" />

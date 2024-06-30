@@ -15,8 +15,9 @@ export const fetchProductTypes = selector<ProductTypes[]>({
       // Hapus code bawah klau gak perlu
       const response = await getAllProductTypes();
       const data = response.data;
-      // console.log("Fetch productTypes from API on SSR:", data);
+      console.log("Fetch productTypes from API on SSR:", data);
       return data;
+      // return
     }
 
     const sessionStorageKey = "productTypes";

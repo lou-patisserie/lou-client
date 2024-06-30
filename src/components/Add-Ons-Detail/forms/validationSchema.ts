@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const FormSchema = z.object({
+export const AddOnFormSchema = z.object({
   deliveryDate: z.date({
     required_error: "Delivery pickup date is required",
   }),
@@ -13,16 +13,5 @@ export const FormSchema = z.object({
     .refine((data) => data === "" || data.length >= 5, {
       message: "Complimentary message is too short",
     })
-    .optional(),
-    addOns: z
-    .record(
-      z.object({
-        selected: z.boolean().default(false),
-        price: z.number().default(0),
-        name: z.string().default(""),
-        main_image: z.string().default(""),
-        ID: z.string().default("")
-      })
-    )
     .optional(),
 });

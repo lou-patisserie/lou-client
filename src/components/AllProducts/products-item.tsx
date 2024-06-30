@@ -32,7 +32,7 @@ export default function ProductsItem({ name, main_image, variants }: Props) {
           />
         </Link>
       </div>
-      <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default">{name}</h3>
+      <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default capitalize">{name}</h3>
       <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(variants[0].price)}</p>
     </div>
   );

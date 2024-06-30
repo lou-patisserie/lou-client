@@ -55,10 +55,10 @@ export default function RootLayout({
           <TopLayoutProvider />
           <main className="min-h-screen">{children}</main>
           <Toaster />
+          <div>
+            <Footer />
+          </div>
         </Providers>
-        <div>
-          <Footer />
-        </div>
       </body>
     </html>
   );

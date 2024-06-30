@@ -17,17 +17,17 @@ export default function TestimonyItem({ name, content }: Props) {
   return (
     <>
       <Card className="w-full max-w-md  bg-white shadow-lg rounded-lg ">
-        <CardContent className="grid gap-6 p-6">
-          <div className="flex items-center gap-4">
-            <Avatar className="w-14 h-14 border-2 border-transparent ">
+        <CardContent className="grid gap-2 md:gap-6 p-2 md:p-6">
+          <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-4">
+            <Avatar className="w-10 h-10 md:w-14 md:h-14 border-2 border-transparent ">
               <AvatarImage src="" />
-              <AvatarFallback className="bg-luoBiege">{getInitials(name)}</AvatarFallback>
+              <AvatarFallback className="bg-luoBiege text-sm md:text-base">{getInitials(name)}</AvatarFallback>
             </Avatar>
             <div>
-              <h4 className="font-semibold text-gray-800 ">{name}</h4>
+              <h4 className="font-semibold text-gray-800  text-sm md:text-base">{name}</h4>
             </div>
           </div>
-          <div className="text-sm leading-relaxed text-gray-600  line-clamp-5">
+          <div className="text-xs md:text-sm leading-relaxed text-gray-600  line-clamp-5">
             <p>{content}</p>
           </div>
           <div className="flex items-center gap-2">

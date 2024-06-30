@@ -1,7 +1,9 @@
+import NotFoundContent from "@/components/UI/NotFound/not-found-content";
+
 export default function NotFound() {
   return (
     <>
-      <h2>Page not found</h2>
+      <NotFoundContent content="Sorry, but the content you are looking for does not exist, has been removed, or is temporarily unavailable." />
     </>
   );
 }

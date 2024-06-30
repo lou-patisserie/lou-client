@@ -23,6 +23,16 @@ export type AddOns = {
   main_image: string;
 };
 
+export type AddOnDetail = {
+  ID: string;
+  name: string;
+  price: string;
+  desc: string;
+  main_image: string;
+  sub_image1: string;
+  sub_image2: string;
+};
+
 export type CakeDetails = {
   ID: string;
   cake_id: string;
@@ -37,4 +47,26 @@ export type ProductTypes = {
   name: string;
   desc: string;
   created_date: string;
+};
+
+export type AddOnCartItem = {
+  id: string;
+  name: string;
+  price: number;
+  main_image: string;
+  quantity: number;
+};
+
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  variant: string;
+  quantity: number;
+  deliveryDate?: Date;
+  deliveryTime?: string;
+  addOns?: Record<string, { selected: boolean; price: number; name: string; main_image: string }>;
+  complimentaryMsg: string;
+  totalPrice?: number;
+  imgSrc?: string;
 };

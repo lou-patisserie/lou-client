@@ -5,6 +5,7 @@ import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, Dr
 import { toast, useToast } from "@/components/UI/use-toast";
 import { formatDate, formatPrice } from "@/lib/formatters";
 import { cartState } from "@/recoils/atoms/products";
+import { AddOnCartItem, CartItem } from "@/types/data-types";
 import { Minus, Plus, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,8 +19,9 @@ type ProductProps = {
   quantity: number;
   deliveryDate: Date;
   deliveryTime: string;
-  addOns: Record<string, { selected: boolean; price: number }>;
+  addOns: Record<string, { selected: boolean; price: number; name: string; main_image: string, ID: string }>;
   complimentaryMsg: string;
+  imgSrc: string;
 };
 
 type Props = {
@@ -44,9 +46,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   const { toast } = useToast();
   const [cart, setCart] = useRecoilState(cartState);
   const router = useRouter();
-  // console.log("Cart State", cart);
-  // console.log("initial", initialProduct);
-  // console.log("newProduct", product);
+  console.log("initial", initialProduct);
 
   useEffect(() => {
     setProduct({
@@ -66,8 +66,63 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
     });
   }
 
+  function transformProductToCartItems(product: ProductProps): CartItem[] {
+    const baseProduct: CartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      variant: product.variant,
+      quantity: product.quantity,
+      deliveryDate: product.deliveryDate,
+      deliveryTime: product.deliveryTime,
+      complimentaryMsg: product.complimentaryMsg,
+      totalPrice: product.price * product.quantity,
+      imgSrc: product.imgSrc,
+    };
+
+    const selectedAddOns: CartItem[] = Object.values(product.addOns)
+      .filter((addOn) => addOn.selected)
+      .map((addOn) => ({
+        id: addOn.ID,
+        name: addOn.name,
+        price: addOn.price,
+        imgSrc: addOn.main_image,
+        quantity: 1,
+        variant: "", // Placeholder or default value
+        complimentaryMsg: "", // Default empty string
+        deliveryDate: product.deliveryDate,
+        deliveryTime: product.deliveryTime,
+        totalPrice: addOn.price,
+      }));
+
+    return [baseProduct, ...selectedAddOns];
+  }
+
+  function addItemsToCart(cartItems: CartItem[]) {
+    setCart((currCart) => {
+      const updatedCart = [...currCart];
+      cartItems.forEach((newItem) => {
+        const existingItemIndex = updatedCart.findIndex((item) => item.id === newItem.id && item.variant === newItem.variant && item.name === newItem.name);
+
+        if (existingItemIndex > -1) {
+          const existingItem = updatedCart[existingItemIndex];
+          const updatedItem = {
+            ...existingItem,
+            quantity: existingItem.quantity + newItem.quantity,
+            totalPrice: existingItem.price * (existingItem.quantity + newItem.quantity),
+          };
+          updatedCart[existingItemIndex] = updatedItem;
+        } else {
+          updatedCart.push(newItem);
+        }
+      });
+      return updatedCart;
+    });
+  }
+
   function proceedToCheckOut() {
-    setCart([...cart, product]);
+    const cartItems = transformProductToCartItems(product);
+    addItemsToCart(cartItems);
     router.push("/checkout");
   }
 
@@ -76,7 +131,8 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   }
 
   function continueShopping() {
-    setCart([...cart, product]);
+    const cartItems = transformProductToCartItems(product);
+    addItemsToCart(cartItems);
     toast({
       title: `${product.name} is added to your cart.`,
       description: (
@@ -89,6 +145,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
       variant: "default",
     });
   }
+
   return (
     <Drawer open={onOpenDrawer} onOpenChange={setOpenDrawer}>
       {/* <DrawerTrigger>Open</DrawerTrigger> */}

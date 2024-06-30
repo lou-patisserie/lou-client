@@ -1,41 +1,33 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { startOfDay } from "date-fns";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/UI/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/UI/popover";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/UI/calendar";
 import { Button } from "@/components/UI/button";
+import { Calendar } from "@/components/UI/calendar";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/UI/form";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/UI/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/UI/select";
-import { Checkbox } from "@/components/UI/checkbox";
-import { FormSchema } from "./validationSchema";
 import { Textarea } from "@/components/UI/textarea";
-import { useEffect, useState } from "react";
-import ProductDrawer from "./product-drawer";
 import { formatPrice } from "@/lib/formatters";
-import { redirectToWhatsApp } from "../../../lib/whatsappRedirect";
-import { AddOns } from "@/types/data-types";
-import { Skeleton } from "@/components/UI/skeleton";
+import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { AddOnFormSchema } from "./validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { format, startOfDay } from "date-fns";
+import { cn } from "@/lib/utils";
+import { redirectToWhatsAppAddOns } from "@/lib/whatsappRedirect";
+import AddOnDrawer from "./addon-drawer.tsx";
 
 type Props = {
   id: string;
   name?: string;
   price: number;
   imgSrc?: string;
-  selectedVariantName: string;
-  addOns: AddOns[];
   loading?: boolean;
 };
 
-export default function OrderForm({ id, name = "", price, selectedVariantName, imgSrc = "", addOns, loading }: Props) {
+export default function AddOnOrderForm({ id, name = "", price, imgSrc, loading }: Props) {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
   const [isBuyNow, setIsBuyNow] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(price);
   const [productToAdd, setProductToAdd] = useState({
     id: "",
     name: "",
@@ -44,79 +36,34 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
     quantity: 0,
     deliveryDate: new Date(),
     deliveryTime: "",
-    addOns: {},
     complimentaryMsg: "",
     imgSrc: "",
+    totalPrice: price,
   });
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      addOns: addOns.reduce((acc, addOn) => {
-        acc[addOn.name] = {
-          selected: false,
-          price: parseFloat(addOn.price),
-          name: addOn.name,
-          main_image: addOn.main_image,
-          ID: addOn.ID
-        };
-        return acc;
-      }, {} as Record<string, { selected: boolean; price: number; name: string; main_image: string, ID: string }>),
-    },
+  const form = useForm<z.infer<typeof AddOnFormSchema>>({
+    resolver: zodResolver(AddOnFormSchema),
+    defaultValues: {},
   });
 
-  const handleAddOnChange = (addOnName: string, isSelected: boolean) => {
-    const addOn = addOns.find((addOn) => addOn.name === addOnName);
-    const addOnPrice = addOn ? parseFloat(addOn.price) : 0;
-    const name = addOn ? addOn.name : "";
-    const main_image = addOn ? addOn.main_image : "";
-    const addOnId = addOn ? addOn.ID: "";
-    form.setValue(`addOns.${addOnName}`, {
-      selected: isSelected,
-      price: isSelected ? addOnPrice : 0,
-      name: isSelected ? name : "",
-      main_image: isSelected ? main_image : "",
-      ID: isSelected ? addOnId: "",
-    });
-  };
-
-  useEffect(() => {
-    const calculateTotalPrice = () => {
-      const selectedAddOns = Object.entries(form.getValues().addOns || {}).filter(([_, details]) => details.selected);
-      const addOnsTotal = selectedAddOns.reduce((sum, [_, details]) => sum + details.price, 0);
-      setTotalPrice(price + addOnsTotal);
-    };
-
-    calculateTotalPrice();
-
-    const subscription = form.watch(() => {
-      calculateTotalPrice();
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form, price, addOns]);
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  function onSubmit(data: z.infer<typeof AddOnFormSchema>) {
     const newProductToAdd = {
       id: id || Math.random().toString(),
       name: name || "",
       price: price,
-      variant: selectedVariantName,
+      variant: "",
       quantity: 1,
       deliveryDate: data.deliveryDate,
       deliveryTime: data.deliveryTime,
       complimentaryMsg: data.complimentaryMsg || "",
-      addOns: data.addOns || {},
       imgSrc: imgSrc || "",
+      addOns: {},
+      totalPrice: price,
     };
 
     setProductToAdd(newProductToAdd);
     if (isBuyNow) {
-      redirectToWhatsApp(name || "", price, selectedVariantName, {
-        ...data,
-        addOns: data.addOns || {},
-        totalPrice: totalPrice,
-      });
+      redirectToWhatsAppAddOns(name || "", price, newProductToAdd);
     } else {
       setDrawerOpen(true);
     }
@@ -184,34 +131,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
               </FormItem>
             )}
           />
-          <div>
-            <FormLabel>Add-Ons (Optional)</FormLabel>
-            <FormDescription className="text-xs">Select the add-ons that you want.</FormDescription>
-          </div>
-          {loading ? (
-            <Skeleton className="w-full max-w-96 h-7 my-2" />
-          ) : (
-            addOns.map((addOn) => (
-              <div key={addOn.ID} className="flex flex-col space-y-2">
-                <FormField
-                  control={form.control}
-                  name={`addOns.${addOn.name}.selected`}
-                  render={({ field }) => (
-                    <FormItem className="flex w-72 md:w-96 flex-row items-start space-x-2 space-y-0 rounded-none border px-4 py-3">
-                      <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={(isChecked: any) => handleAddOnChange(addOn.name, isChecked)} className="rounded-none" />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          {addOn.name} - {formatPrice(parseFloat(addOn.price))}
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            ))
-          )}
+
           <FormField
             control={form.control}
             name="complimentaryMsg"
@@ -227,7 +147,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
           />
           <div className="flex flex-col gap-2">
             <Button name="order-submit" type="submit" className="bg-luoDarkBiege hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(true)}>
-              Buy Now - {formatPrice(totalPrice)}
+              Buy Now - {formatPrice(price)}
             </Button>
             <Button name="order-submit" type="submit" className="bg-luoBiege text-luoDarkBiege hover:bg-[#e8dbca] rounded-none transition ease-in-out duration-150" onClick={() => setIsBuyNow(false)}>
               Add to Cart
@@ -235,7 +155,7 @@ export default function OrderForm({ id, name = "", price, selectedVariantName, i
           </div>
         </form>
       </Form>
-      <ProductDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} productToAdd={productToAdd} />
+      <AddOnDrawer onOpenDrawer={isDrawerOpen} setOpenDrawer={setDrawerOpen} productToAdd={productToAdd} />
     </>
   );
 }

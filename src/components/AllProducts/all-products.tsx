@@ -145,12 +145,12 @@ export default function AllProducts({ cakeType }: Props) {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
+    if (!query) {
+      setNotFoundError(false);
+    }
     debouncedSearch(query);
   };
 
-  if (notFoundError) {
-    return notFound();
-  }
   const skeletonCount = 10;
   if (cakeType.name === "Add Ons") {
     return (
@@ -210,7 +210,16 @@ export default function AllProducts({ cakeType }: Props) {
         <>
           <div className="w-full flex flex-col justify-center mt-8">
             <div className="flex justify-center">
-              <ProductLogistics items={filteredCakes} selectedCategory={selectedSubType} choosenType={cakeType.name} loading={loading} page={page} searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+              <ProductLogistics
+                items={filteredCakes}
+                selectedCategory={selectedSubType}
+                choosenType={cakeType.name}
+                loading={loading}
+                page={page}
+                searchQuery={searchQuery}
+                onSearchChange={handleSearchChange}
+                searchPerformed={notFoundError}
+              />
             </div>
 
             {page < totalPages && !loading && (

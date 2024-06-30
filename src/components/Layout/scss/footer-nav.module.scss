@@ -1,26 +1,26 @@
 .link {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
-    color: inherit;
-  
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 1px;
-      background-color: rgb(51 65 85);
-      transition: transform 0.2s ease-out;
-      transform: scaleX(0);
-      transform-origin: right;
-    }
-  
-    &:hover::after,
-    &:focus::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  text-transform: capitalize;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: rgb(51 65 85);
+    transition: transform 0.2s ease-out;
+    transform: scaleX(0);
+    transform-origin: right;
   }
-  
+
+  &:hover::after,
+  &:focus::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}

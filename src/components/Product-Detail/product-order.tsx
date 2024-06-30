@@ -41,7 +41,7 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
     <>
       <div className="w-full max-w-lg flex flex-col gap-8 mx-4 lg:mx-0">
         <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege w-full">
-          {cakeName && cakeId ? <h1 className="font-bold text-xl">{cakeName}</h1> : <Skeleton className="w-96 h-8" />}
+          {cakeName && cakeId ? <h1 className="font-bold text-xl capitalize">{cakeName}</h1> : <Skeleton className="w-96 h-8" />}
 
           {variants.length > 0 ? (
             <Tabs defaultValue={variants[0]?.ID || "Variants"} onValueChange={handleTabChange} className="w-fit">

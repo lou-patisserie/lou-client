@@ -37,7 +37,7 @@ export default function FooterNavItems() {
                 <Link href="https://wa.me/6281110019906" target="_blank" rel="nofollow">
                   <WhatsappSvg />
                 </Link>
-                <Link href="https://www.instagram.com/lou_jkt" target="_blank" rel="nofollow">
+                <Link href="https://www.tiktok.com/@loupatisserie?_t=8nhdXzcGLZv&_r=1" target="_blank" rel="nofollow">
                   <TiktokSvg />
                 </Link>
               </div>
@@ -85,9 +85,15 @@ export default function FooterNavItems() {
             <div className="max-w-72 flex flex-col ">
               <Image src="/assets/img/Lou_footer.png" width={80} height={50} alt="Lou-Footer-Logo" />
               <div className="flex gap-2 pl-2">
-                <Instagram size={20} className="text-slate-700" />
-                <Facebook size={20} className="text-slate-700" />
-                <TiktokSvg />
+                <Link href="https://www.instagram.com/lou_jkt" target="_blank" rel="nofollow">
+                  <Instagram size={20} className="text-slate-700" />
+                </Link>
+                <Link href="https://wa.me/6281110019906" target="_blank" rel="nofollow">
+                  <WhatsappSvg />
+                </Link>
+                <Link href="https://www.tiktok.com/@loupatisserie?_t=8nhdXzcGLZv&_r=1" target="_blank" rel="nofollow">
+                  <TiktokSvg />
+                </Link>
               </div>
               <p className="text-left pl-2 text-sm mt-2">
                 We are a team full of passion and deep love for the culinary world. As we progress to take local

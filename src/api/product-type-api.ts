@@ -5,7 +5,7 @@ export const getAllProductTypes = async () => {
     const response = await api.get("/product-types", {
       params: {
         order: "true",
-        sort: "asc",
+        sort: "desc",
       },
     });
     return response.data;

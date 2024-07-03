@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
 import { useEffect, useState } from "react";
 import { AddOns, Variants } from "@/types/data-types";
 import { Skeleton } from "../UI/skeleton";
+import ShareLinks from "../UI/Link/share-link";
 
 type Props = {
   cakeId?: string;
@@ -20,7 +21,7 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
   const [selectedPrice, setSelectedPrice] = useState<number>(0);
   const [selectedVariantName, setSelectedVariantName] = useState<string>("");
   // console.log(variants)
-  console.log(addOns)
+  console.log(addOns);
 
   useEffect(() => {
     if (variants.length > 0) {
@@ -41,7 +42,15 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
     <>
       <div className="w-full max-w-lg flex flex-col gap-8 mx-4 lg:mx-0">
         <div className="flex flex-col h-fit items-start justify-start text-luoDarkBiege w-full">
-          {cakeName && cakeId ? <h1 className="font-bold text-xl capitalize">{cakeName}</h1> : <Skeleton className="w-72 md:w-96 h-8" />}
+          {cakeName && cakeId ? (
+            <h1 className="font-bold text-xl capitalize">{cakeName}</h1> 
+            // <div className="flex flex-row justify-between gap-2 w-72  md:w-96">
+            //   <h1 className="font-bold text-xl capitalize">{cakeName}</h1> 
+            //   <ShareLinks />
+            // </div>
+          ) : (
+            <Skeleton className="w-72 md:w-96 h-8" />
+          )}
 
           {variants.length > 0 ? (
             <Tabs defaultValue={variants[0]?.ID || "Variants"} onValueChange={handleTabChange} className="w-fit">
@@ -68,12 +77,22 @@ export default function ProductOrder({ cakeId = "", cakeName, mainImgSrc, varian
 
           <div className="flex flex-row items-center gap-1 mt-2">
             <CalendarClock size={18} strokeWidth={1} />
-            <span className="uppercase text-xs font-semibold tracking-wide">receive order within 1 hour of confirmation</span>
+            <span className="uppercase text-xs font-semibold tracking-wide">
+              receive order within 1 hour of confirmation
+            </span>
           </div>
         </div>
         <div className="flex w-full flex-col h-fit items-start justify-start gap-4">
           <span className="font-semibold text-luoDarkBiege">Make Your Order Here:</span>
-          <OrderForm id={cakeId} name={cakeName} price={selectedPrice} imgSrc={mainImgSrc} selectedVariantName={selectedVariantName} addOns={addOns} loading={loading} />
+          <OrderForm
+            id={cakeId}
+            name={cakeName}
+            price={selectedPrice}
+            imgSrc={mainImgSrc}
+            selectedVariantName={selectedVariantName}
+            addOns={addOns}
+            loading={loading}
+          />
         </div>
       </div>
     </>

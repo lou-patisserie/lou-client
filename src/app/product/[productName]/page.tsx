@@ -22,6 +22,7 @@ export default function ProductDetailPage() {
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizeCakeName = deSlugify(cakeNameParam);
+  console.log('pathname', pathname)
   // console.log("cake data", cakeData, "cake detail", cakeDetails);
   // console.log("cakeNameparam", cakeNameParam, "normalize", normalizeCakeName);
 

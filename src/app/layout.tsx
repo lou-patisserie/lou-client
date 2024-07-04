@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import TopSubscribe from "@/components/UI/Top-Subscribe/top-subscribe";
 import NavHeader from "@/components/Layout/nav-head";
@@ -53,7 +55,7 @@ export default function RootLayout({
       <body id="portal" className={`${cn(GeistSans.variable)} `}>
         <Providers>
           <TopLayoutProvider />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen">{children}<Analytics /> <SpeedInsights /></main>
           <Toaster />
           <div>
             <Footer />

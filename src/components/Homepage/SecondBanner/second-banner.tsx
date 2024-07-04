@@ -15,7 +15,7 @@ export default function SecondBanner() {
         <div>
           <ShoppingBasket size={45} strokeWidth={1.5} />
           <p>Crafted To Order</p>
-          <span>to ensure exceptional quality and taste</span>
+          <span>freshly made within 1 hour from purchase</span>
         </div>
         <div>
           <Medal size={42} strokeWidth={1.5} />

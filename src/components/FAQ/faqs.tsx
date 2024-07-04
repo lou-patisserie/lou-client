@@ -10,16 +10,16 @@ export default function FAQs({ maxWidth = "max-w-5xl" }: Props) {
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap gap-1 items-center">
           {/* <ChevronLast strokeWidth={2.5} size={25} /> */}
-          <span className="text-md md:text-lg font-normal tracking-wide">FAQs</span>
+          <span className="text-lg md:text-2xl font-bold tracking-wide">FAQs</span>
         </div>
 
         <div className="h-[1px] w-full bg-luoDarkBiege opacity-25" />
       </div>
 
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-base md:text-md font-semibold">Ordering</AccordionTrigger>
+        <AccordionTrigger className="text-sm md:text-md font-semibold">Ordering</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-6">
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 ">
             <p className="font-semibold">How to Order?</p>
             <ul className=" ml-6 list-disc [&>li]:mt-2">
               <li>Option 1: Come directly to our store.</li>
@@ -53,7 +53,7 @@ export default function FAQs({ maxWidth = "max-w-5xl" }: Props) {
         <div className="h-[1px] w-full bg-luoDarkBiege opacity-25" />
       </AccordionItem>
       <AccordionItem value="item-2">
-        <AccordionTrigger className="text-base md:text-md font-semibold">Payments, Refunds and Invoices</AccordionTrigger>
+        <AccordionTrigger className="text-sm md:text-md font-semibold">Payments, Refunds and Invoices</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <p className="font-semibold">What forms of payment do you accept?</p>
@@ -67,7 +67,7 @@ export default function FAQs({ maxWidth = "max-w-5xl" }: Props) {
         <div className="h-[1px] w-full bg-luoDarkBiege opacity-25" />
       </AccordionItem>
       <AccordionItem value="item-3">
-        <AccordionTrigger className="text-base md:text-md font-semibold">Halal, Product Information & Customization</AccordionTrigger>
+        <AccordionTrigger className="text-sm md:text-md font-semibold">Halal, Product Information & Customization</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <p className="font-semibold">Are your products halal?</p>
@@ -96,7 +96,7 @@ export default function FAQs({ maxWidth = "max-w-5xl" }: Props) {
         <div className="h-[1px] w-full bg-luoDarkBiege opacity-25" />
       </AccordionItem>
       <AccordionItem value="item-4">
-        <AccordionTrigger className="text-base md:text-md font-semibold">Other</AccordionTrigger>
+        <AccordionTrigger className="text-sm md:text-md font-semibold">Other</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <p className="font-semibold">Does Lou have a loyalty program?</p>

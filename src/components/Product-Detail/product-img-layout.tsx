@@ -5,6 +5,7 @@ import ProductImageView from "./product-img-view";
 import { Eye } from "lucide-react";
 import { validateImageUrl } from "@/lib/imgUtils";
 import { Skeleton } from "../UI/skeleton";
+import ShareLinks from "../UI/Link/share-link";
 
 type Props = {
   mainImg?: string;
@@ -38,7 +39,12 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
           className="flex h-fit relative items-start justify-center transition ease-in duration-150 hover:opacity-70"
         >
           {mainImg ? <Image src={mainImg} width={900} height={900} alt="Luo Croissant" className="object-cover aspect-square shadow-lg w-full" onError={handleImgError} /> : <Skeleton className="aspect-square w-full" />}
-          {isHovered && mainImg && <Eye size={35} className="text-white absolute bottom-2 right-2" />}
+          {isHovered && mainImg && 
+          <>
+            <ShareLinks className="text-white drop-shadow absolute top-2 right-2 hover:text-luoDarkBiege" />
+            <Eye size={35} className="text-white absolute bottom-2 right-2" />
+          </>
+          }
         </div>
         <div className="flex flex-row gap-2 w-full">
           <div

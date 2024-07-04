@@ -7,7 +7,7 @@ export default function HeroBanner() {
   const router = useRouter();
 
   function exploreBtn() {
-    router.push("/products");
+    router.push("/collection/all-product");
   }
 
   return (

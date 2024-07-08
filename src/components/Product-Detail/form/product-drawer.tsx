@@ -46,7 +46,7 @@ export default function ProductDrawer({ onOpenDrawer, setOpenDrawer, productToAd
   const { toast } = useToast();
   const [cart, setCart] = useRecoilState(cartState);
   const router = useRouter();
-  console.log("initial", initialProduct);
+  // console.log("initial", initialProduct);
 
   useEffect(() => {
     setProduct({

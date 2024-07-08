@@ -125,7 +125,7 @@ export default function MobileNavigationMenu({ showNav, typeList }: Props) {
               )}
             </li>
             <li>
-              <Link href="/about-lou" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
+              <Link href="/about-us" className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                 <span className="ms-3">About Us</span>
               </Link>
             </li>

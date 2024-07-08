@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Lou Patisserie & Grivo.id",
-      url: "https://www.loupatisserie.com/about-lou",
+      url: "https://www.loupatisserie.com/about-us",
     },
   ],
   robots: "index, follow",
@@ -41,7 +41,7 @@ const aboutUsData = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "About Us",
-  "url": "https://www.loupatisserie.com/about-lou",
+  "url": "https://www.loupatisserie.com/about-us",
   "logo": "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/logo%2FLOU%20L%20Symbol%20BG-02.png?alt=media&token=d50eea79-30b8-4622-86e8-ae0023d9c6b1",
   "contactPoint": {
     "@type": "ContactPoint",

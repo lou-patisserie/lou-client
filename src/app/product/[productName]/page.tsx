@@ -11,6 +11,7 @@ import { AddOns, Cake, CakeDetails, Variants } from "@/types/data-types";
 import { notFound, usePathname } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import JSONLD from "@/components/JSONLD";
+import Head from "next/head";
 
 export default function ProductDetailPage() {
   const pathname = usePathname();
@@ -54,16 +55,16 @@ export default function ProductDetailPage() {
         cake.main_image,
         cake.sub_image1,
         cake.sub_image2,
-      ].filter(Boolean), 
+      ].filter(Boolean),
       "description": details.description,
       "sku": cake.ID,
       "offers": {
         "@type": "AggregateOffer",
-        "priceCurrency": "IDR", 
+        "priceCurrency": "IDR",
         "lowPrice": Math.min(...variants.map((variant: { price: any; }) => variant.price)),
         "highPrice": Math.max(...variants.map((variant: { price: any; }) => variant.price)),
         "url": `https://www.loupatisserie.com/products/${normalizeCakeName}`,
-        "availability": "http://schema.org/InStock", 
+        "availability": "http://schema.org/InStock",
       },
       "additionalType": addOns.map((addOn: { name: any; image: any; description: any; price: any; }) => ({
         "@type": "Product",
@@ -86,6 +87,20 @@ export default function ProductDetailPage() {
 
   return (
     <>
+      <Head>
+        <title>{cakeData ? `${cakeData.name} | Lou Patisserie & Gelato` : 'Product Not Found | Lou Patisserie & Gelato'}</title>
+        <meta name="description" content={cakeDetails ? cakeDetails.desc : "Product details not available."} />
+        <meta property="og:title" content={cakeData ? cakeData.name : "Product Not Found"} />
+        <meta property="og:description" content={cakeDetails ? cakeDetails.desc : "Product details not available."} />
+        <meta property="og:image" content={cakeData ? cakeData.main_image : "/default-image.png"} />
+        <meta property="og:url" content={`https://www.loupatisserie.com/products/${normalizeCakeName}`} />
+        <meta property="og:type" content="product" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={cakeData ? cakeData.name : "Product Not Found"} />
+        <meta name="twitter:description" content={cakeDetails ? cakeDetails.desc : "Product details not available."} />
+        <meta name="twitter:image" content={cakeData ? cakeData.main_image : "/default-image.png"} />
+        <link rel="canonical" href={`https://www.loupatisserie.com/products/${normalizeCakeName}`} />
+      </Head>
       <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Product Details" />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit">

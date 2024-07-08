@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Lou Patisserie & Grivo.id",
-      url: "https://wwww.loupatisserie.com/about-lou",
+      url: "https://www.loupatisserie.com/about-lou",
     },
   ],
   robots: "index, follow",
   openGraph: {
     type: "website",
-    url: "https://wwww.loupatisserie.com/about-us",
+    url: "https://www.loupatisserie.com/about-us",
     title: "About Us",
     description:
       "Founded by Audrey, a Le Cordon Bleu alumna, alongside her sister, Vanny,  this enchanting patisserie brings together a fusion of culinary worlds in their home country.",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "About Us",
     card: "summary_large_image",
-    site: "https://wwww.loupatisserie.com/about-us",
+    site: "https://www.loupatisserie.com/about-us",
     creator: "Lou Patisserie & Grivo.id",
     images: "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/logo%2FLOU%20L%20Symbol%20BG-02.png?alt=media&token=d50eea79-30b8-4622-86e8-ae0023d9c6b1",
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 const aboutUsData = {
   "@context": "https://schema.org",
-  "@type": "WebSite",
+  "@type": "AboutPage",
   "name": "About Us",
   "url": "https://www.loupatisserie.com/about-lou",
   "logo": "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/logo%2FLOU%20L%20Symbol%20BG-02.png?alt=media&token=d50eea79-30b8-4622-86e8-ae0023d9c6b1",

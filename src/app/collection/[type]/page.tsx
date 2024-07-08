@@ -8,18 +8,20 @@ import { Skeleton } from "@/components/UI/skeleton";
 import { normalizeText } from "@/lib/formatters";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import Head from "next/head";
 import JSONLD from "@/components/JSONLD";
 
-type ProductType = {
+type productTypes = {
   ID: string;
   name: string;
+  desc: string;
   created_date: string;
 };
 
 export default function ProductsPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
-  const [productTypes, setProductTypes] = useState<ProductType[]>([]);
+  const [productTypes, setProductTypes] = useState<productTypes[]>([]);
   const [jsonLdData, setJsonLdData] = useState({});
 
   const fetchProductTypes = useCallback(async () => {
@@ -30,11 +32,11 @@ export default function ProductsPage() {
       if (cachedData) {
         const parsedData = JSON.parse(cachedData);
         setProductTypes(parsedData);
-        generateJsonLd(parsedData); 
+        generateJsonLd(parsedData);
       } else {
         const { data } = await getAllProductTypes();
         setProductTypes(data);
-        generateJsonLd(data); 
+        generateJsonLd(data);
       }
     } catch (error) {
       console.error("Failed to fetch product types", error);
@@ -43,7 +45,7 @@ export default function ProductsPage() {
     }
   }, []);
 
-  const generateJsonLd = (productTypes: ProductType[]) => {
+  const generateJsonLd = (productTypes: productTypes[]) => {
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "WebSite",
@@ -112,6 +114,22 @@ export default function ProductsPage() {
 
   return (
     <>
+      <Head>
+        <title>{productTypes[0].name}</title>
+        <meta name="description" content={productTypes[0].desc} />
+        <meta name="keywords" content={productTypes[0].name} />
+        <meta name="author" content="Lou Patisserie & Grivo.id" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://www.loupatisserie.com/collection/${normalizeText(productTypes[0].name)}`} />
+        <meta property="og:title" content={productTypes[0].name} />
+        <meta property="og:description" content={productTypes[0].desc} />
+        <meta property="og:site_name" content="Lou Patisserie & Gelato" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={`https://www.loupatisserie.com/collection/${normalizeText(productTypes[0].name)}`} />
+        <meta property="twitter:title" content={productTypes[0].name} />
+        <meta property="twitter:description" content={productTypes[0].desc} />
+      </Head>
       <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Our Products" />
       <AllProducts cakeType={selectedType} />

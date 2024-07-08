@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "Lou Patisserie & Grivo.id",
-      url: "https://wwww.loupatisserie.com/our-location",
+      url: "https://www.loupatisserie.com/our-location",
     },
   ],
   robots: "index, follow",
   openGraph: {
     type: "website",
-    url: "https://wwww.loupatisserie.com/our-location",
+    url: "https://www.loupatisserie.com/our-location",
     title: "Our Location",
     description:
       "Ruko South Goldfinch Blok E No. 33. Jl. Springs Boulevard, Gading Serpong, Serpong, Tangerang.",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     title: "Our Location",
     card: "summary_large_image",
-    site: "https://wwww.loupatisserie.com/our-location",
+    site: "https://www.loupatisserie.com/our-location",
     creator: "Lou Patisserie & Grivo.id",
     images: "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2FLou_Interior%2016.jpg?alt=media&token=e14edff7-d088-492e-af2a-23462c7dd573",
   },

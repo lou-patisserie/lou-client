@@ -1,5 +1,4 @@
 "use client";
-
 import classes from "./collection.module.scss";
 import { getAllProductTypes } from "@/api/product-type-api";
 import AllProducts from "@/components/AllProducts/all-products";
@@ -9,6 +8,7 @@ import { Skeleton } from "@/components/UI/skeleton";
 import { normalizeText } from "@/lib/formatters";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import JSONLD from "@/components/JSONLD";
 
 type ProductType = {
   ID: string;
@@ -20,6 +20,7 @@ export default function ProductsPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [productTypes, setProductTypes] = useState<ProductType[]>([]);
+  const [jsonLdData, setJsonLdData] = useState({});
 
   const fetchProductTypes = useCallback(async () => {
     setLoading(true);
@@ -29,11 +30,11 @@ export default function ProductsPage() {
       if (cachedData) {
         const parsedData = JSON.parse(cachedData);
         setProductTypes(parsedData);
-        // console.log("Product Types Session Storage Fetched:", parsedData);
+        generateJsonLd(parsedData); 
       } else {
         const { data } = await getAllProductTypes();
         setProductTypes(data);
-        // console.log("Product Types API Fetched:", data);
+        generateJsonLd(data); 
       }
     } catch (error) {
       console.error("Failed to fetch product types", error);
@@ -41,6 +42,27 @@ export default function ProductsPage() {
       setLoading(false);
     }
   }, []);
+
+  const generateJsonLd = (productTypes: ProductType[]) => {
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "All Products",
+      "url": "https://www.loupatisserie.com/collection/all-product",
+      "logo": "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2FLou_Interior%2016.jpg?alt=media&token=e14edff7-d088-492e-af2a-23462c7dd573",
+      "image": productTypes.map((type) => ({
+        "@type": "ImageObject",
+        "name": type.name,
+        "url": `https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2F${type.ID}.jpg?alt=media`, // Replace with actual URLs
+      })),
+      "hasPart": productTypes.map((type) => ({
+        "@type": "Product",
+        "name": type.name,
+        "url": `https://www.loupatisserie.com/collection/${normalizeText(type.name)}`,
+      }))
+    };
+    setJsonLdData(jsonLd);
+  };
 
   useEffect(() => {
     fetchProductTypes();
@@ -63,7 +85,6 @@ export default function ProductsPage() {
     return (
       <>
         <SubHeroBanner title="Our Products" />
-        {/* <h1>Loading skeleton here...</h1> */}
         <div className="w-full flex flex-col justify-center mt-8 px-4">
           <div className="flex justify-center">
             <Skeleton className="w-full max-w-xl h-9 mt-8 mb-6" />
@@ -91,6 +112,7 @@ export default function ProductsPage() {
 
   return (
     <>
+      <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Our Products" />
       <AllProducts cakeType={selectedType} />
       <div className="flex flex-wrap mt-10 md:mt-20 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">

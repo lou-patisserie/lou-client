@@ -63,7 +63,7 @@ export default function FooterNavItems() {
               <div className="flex flex-col gap-4">
                 <div className="text-base font-semibold text-slate-700 tracking-wide">Know More</div>
                 <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">
-                  <Link href="/about-lou">
+                  <Link href="/about-us">
                     <span className={classes.link}>About Lou</span>
                   </Link>
                   <Link href="/our-location">
@@ -106,7 +106,7 @@ export default function FooterNavItems() {
               <div className="flex flex-col gap-4">
                 <div className="text-base font-semibold text-slate-700 tracking-wide">Know More</div>
                 <div className="flex flex-col gap-2 text-sm text-luoDarkBiege">
-                  <Link href="/about-lou">
+                  <Link href="/about-us">
                     <span className={classes.link}>About Lou</span>
                   </Link>
                   <Link href="/our-location">

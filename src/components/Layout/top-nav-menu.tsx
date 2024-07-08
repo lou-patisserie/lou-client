@@ -35,7 +35,7 @@ export function TopNavigationMenu({ typeList }: Props) {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/about-lou" legacyBehavior passHref>
+          <Link href="/about-us" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>About Lou</NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

@@ -1,19 +1,13 @@
 "use client";
 import { Link } from "lucide-react";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "../drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "../drawer";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../dialog";
 import { Button } from "../button";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { Input } from "../input";
+import { usePathname } from "next/navigation";
+import { useToast } from "../use-toast";
 
 type Props = {
   className?: string;
@@ -21,7 +15,16 @@ type Props = {
 
 export default function ShareLinks({ className }: Props) {
   const [open, setOpen] = useState(false);
+  const [fullUrl, setFullUrl] = useState("");
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const pathname = usePathname();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setFullUrl(`${window.location.origin}${pathname}`);
+    }
+  }, [pathname]);
 
   const handleClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -30,6 +33,21 @@ export default function ShareLinks({ className }: Props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCopy = async () => {
+    if (navigator.clipboard) {
+      await navigator.clipboard.writeText(fullUrl);
+      toast({
+        description: "Link copied to clipboard!",
+        variant: "default",
+      });
+    } else {
+      toast({
+        description: "Failed to copy link, please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isDesktop) {
@@ -42,10 +60,10 @@ export default function ShareLinks({ className }: Props) {
         </DialogTrigger>
         <DialogContent onClick={(e) => e.stopPropagation()} className="sm:max-w-[425px]">
           <DialogHeader onClick={(e) => e.stopPropagation()}>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
+            <DialogTitle>Share</DialogTitle>
+            <DialogDescription>Copy the link below to share:</DialogDescription>
           </DialogHeader>
-          <LinkPage />
+          <LinkPage url={fullUrl} className="flex flex-row gap-2" onCopy={handleCopy} />
           <DialogClose onClick={handleClose} />
         </DialogContent>
       </Dialog>
@@ -59,23 +77,40 @@ export default function ShareLinks({ className }: Props) {
           <Link />
         </button>
       </DrawerTrigger>
-      <DrawerContent onClick={(e) => e.stopPropagation()}>
+      <DrawerContent onClick={(e) => e.stopPropagation()} className="py-4">
         <DrawerHeader className="text-left" onClick={(e) => e.stopPropagation()}>
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>Make changes to your profile here. Click save when you're done.</DrawerDescription>
+          <DrawerTitle>Share</DrawerTitle>
+          <DrawerDescription>Copy the link below to share:</DrawerDescription>
         </DrawerHeader>
-        <LinkPage className="px-4" />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild onClick={handleClose}>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
+        <LinkPage url={fullUrl} className="flex flex-col gap-2 px-4" onCopy={handleCopy} isDrawer />
       </DrawerContent>
     </Drawer>
   );
 }
 
+type LinkPageProps = {
+  url: string;
+  className?: string;
+  onCopy: () => void;
+  isDrawer?: boolean;
+};
 
-function LinkPage({ className }: React.ComponentProps<"form">) {
-  return <Button type="submit">Save changes</Button>;
+function LinkPage({ url, className, onCopy, isDrawer = false }: LinkPageProps) {
+  return (
+    <div className={className}>
+      <Input className="rounded-none focus-visible:ring-luoDarkBiege" type="url" readOnly value={url} />
+      <div className={`${isDrawer ? "flex flex-row gap-2" : "flex flex-col gap-2"}`}>
+        {isDrawer && (
+          <DrawerClose asChild onClick={(e) => e.stopPropagation()}>
+            <Button variant="outline" className="rounded-none" onClick={onCopy}>
+              Cancel
+            </Button>
+          </DrawerClose>
+        )}
+        <Button onClick={onCopy} type="button" className="bg-luoDarkBiege w-full hover:bg-[#a58b73] rounded-none transition ease-in-out duration-150">
+          Copy Link
+        </Button>
+      </div>
+    </div>
+  );
 }

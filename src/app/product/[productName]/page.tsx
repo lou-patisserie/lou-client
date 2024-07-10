@@ -21,6 +21,7 @@ export default function ProductDetailPage() {
   const [cakeVariant, setCakeVariant] = useState<Variants[]>([]);
   const [cakeDetails, setCakeDetails] = useState<CakeDetails>();
   const [addOns, setAddOns] = useState<AddOns[]>([]);
+  const [addOnsFetchError, setAddOnsFetchError] = useState(false);
   const [jsonLdData, setJsonLdData] = useState({});
   const pathSegments = pathname.split("/");
   const cakeNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
@@ -31,13 +32,19 @@ export default function ProductDetailPage() {
 
     try {
       const response = await getCakeByName(normalizeCakeName);
-      const addOnsResponse = await getAllAddOns();
-
       setCakeData(response.data.cake);
       setCakeVariant(response.data.variants);
       setCakeDetails(response.data.aboutCake);
-      setAddOns(addOnsResponse.data);
-      generateJsonLd(response.data.cake, response.data.aboutCake, response.data.variants, addOnsResponse.data);
+      generateJsonLd(response.data.cake, response.data.aboutCake, response.data.variants, []);
+
+      try {
+        const addOnsResponse = await getAllAddOns();
+        setAddOns(addOnsResponse.data);
+        generateJsonLd(response.data.cake, response.data.aboutCake, response.data.variants, addOnsResponse.data);
+      } catch (addOnsError) {
+        console.error("Failed to fetch add-ons", addOnsError);
+        setAddOnsFetchError(true);
+      }
     } catch (error) {
       console.error("Failed to fetch product detail by name", error);
       setTriggerNotFound(true);
@@ -46,33 +53,34 @@ export default function ProductDetailPage() {
     }
   }, [normalizeCakeName]);
 
-  const generateJsonLd = (cake: { name: any; main_image: any; sub_image1: any; sub_image2: any; ID: any; }, details: { description: any; }, variants: any[], addOns: any[]) => {
+  const generateJsonLd = (
+    cake: { name: any; main_image: any; sub_image1: any; sub_image2: any; ID: any },
+    details: { description: any },
+    variants: any[],
+    addOns: any[]
+  ) => {
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",
-      "name": cake.name,
-      "image": [
-        cake.main_image,
-        cake.sub_image1,
-        cake.sub_image2,
-      ].filter(Boolean),
-      "description": details.description,
-      "sku": cake.ID,
-      "offers": {
+      name: cake.name,
+      image: [cake.main_image, cake.sub_image1, cake.sub_image2].filter(Boolean),
+      description: details.description,
+      sku: cake.ID,
+      offers: {
         "@type": "AggregateOffer",
-        "priceCurrency": "IDR",
-        "lowPrice": Math.min(...variants.map((variant: { price: any; }) => variant.price)),
-        "highPrice": Math.max(...variants.map((variant: { price: any; }) => variant.price)),
-        "url": `https://www.loupatisserie.com/products/${normalizeCakeName}`,
-        "availability": "http://schema.org/InStock",
+        priceCurrency: "IDR",
+        lowPrice: Math.min(...variants.map((variant: { price: any }) => variant.price)),
+        highPrice: Math.max(...variants.map((variant: { price: any }) => variant.price)),
+        url: `https://www.loupatisserie.com/products/${normalizeCakeName}`,
+        availability: "http://schema.org/InStock",
       },
-      "additionalType": addOns.map((addOn: { name: any; image: any; description: any; price: any; }) => ({
+      additionalType: addOns.map((addOn: { name: any; image: any; description: any; price: any }) => ({
         "@type": "Product",
-        "name": addOn.name,
-        "image": addOn.image,
-        "description": addOn.description,
-        "price": addOn.price
-      }))
+        name: addOn.name,
+        image: addOn.image,
+        description: addOn.description,
+        price: addOn.price,
+      })),
     };
     setJsonLdData(jsonLd);
   };
@@ -88,7 +96,7 @@ export default function ProductDetailPage() {
   return (
     <>
       <Head>
-        <title>{cakeData ? `${cakeData.name} | Lou Patisserie & Gelato` : 'Product Not Found | Lou Patisserie & Gelato'}</title>
+        <title>{cakeData ? `${cakeData.name} | Lou Patisserie & Gelato` : "Product Not Found | Lou Patisserie & Gelato"}</title>
         <meta name="description" content={cakeDetails ? cakeDetails.desc : "Product details not available."} />
         <meta property="og:title" content={cakeData ? cakeData.name : "Product Not Found"} />
         <meta property="og:description" content={cakeDetails ? cakeDetails.desc : "Product details not available."} />
@@ -112,7 +120,15 @@ export default function ProductDetailPage() {
         </div>
         <div className="flex flex-col w-full max-w-lg border lg:border-none lg:shadow-none lg:py-0 lg:mx-0 border-luoBiege shadow-md rounded-lg py-4 mx-4">
           <Suspense fallback={<div></div>}>
-            <ProductOrder cakeId={cakeData?.ID} cakeName={cakeData?.name} mainImgSrc={cakeData?.main_image} variants={cakeVariant} addOns={addOns} loading={loading} />
+            <ProductOrder
+              cakeId={cakeData?.ID}
+              cakeName={cakeData?.name}
+              mainImgSrc={cakeData?.main_image}
+              variants={cakeVariant}
+              addOns={addOns}
+              addOnsNull={addOnsFetchError}
+              loading={loading}
+            />
           </Suspense>
         </div>
       </div>

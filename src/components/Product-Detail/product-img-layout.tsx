@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useState } from "react";
 import ProductImageView from "./product-img-view";
 import { Eye } from "lucide-react";
-import { validateImageUrl } from "@/lib/imgUtils";
 import { Skeleton } from "../UI/skeleton";
 import ShareLinks from "../UI/Link/share-link";
 
@@ -49,12 +48,11 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
           ) : (
             <Skeleton className="aspect-square w-full" />
           )}
+          <div onClick={(e) => e.stopPropagation()}>
+            <ShareLinks className="bg-luoDarkBiege drop-shadow absolute top-2 right-2 text-white rounded-full p-1.5" />
+          </div>
           {isHovered && mainImg && (
             <>
-              <div onClick={(e) => e.stopPropagation()}>
-                <ShareLinks className="text-white drop-shadow absolute top-2 right-2 hover:text-luoDarkBiege" />
-              </div>
-
               <Eye size={35} className="text-white absolute bottom-2 right-2" />
             </>
           )}

@@ -112,7 +112,7 @@ export default function ProductDetailPage() {
       <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Product Details" />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 w-full max-w-lg">
           <ProductDetailImgs mainImg={cakeData?.main_image} subImg1={cakeData?.sub_image1} subImg2={cakeData?.sub_image2} />
           <div className="">
             <ProductTabs aboutCakeData={cakeDetails} />

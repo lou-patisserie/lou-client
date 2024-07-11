@@ -1,4 +1,4 @@
-import { Medal, ShoppingBasket, Trophy, Truck } from "lucide-react";
+import { Medal, ShoppingBasket, Trophy, ChefHat } from "lucide-react";
 import classes from "./second-banner.module.scss";
 
 export default function SecondBanner() {
@@ -7,25 +7,20 @@ export default function SecondBanner() {
       <span className="text-xs font-medium">SINCE 2019</span>
       <h1 className="font-medium">Revolutionising experiences and occasions, one cake at a time</h1>
       <div className={classes.items}>
-        <div className="" >
-          <Truck size={45} strokeWidth={1.5} className="" />
-          <p>Free Delivery</p>
-          <span>with minimum purchase</span>
-        </div>
         <div>
           <ShoppingBasket size={45} strokeWidth={1.5} />
           <p>Crafted To Order</p>
-          <span>freshly made within 1 hour from purchase</span>
+          <span>Freshly made within 1 hour from purchase</span>
         </div>
         <div>
           <Medal size={42} strokeWidth={1.5} />
           <p>The Finest Quality</p>
-          <span>5 Stars on Google from over 1000 reviews</span>
+          <span>Made with the finest premium ingredients</span>
         </div>
         <div>
-          <Trophy size={42} strokeWidth={1.5} />
-          <p>Award-Winning Chef</p>
-          <span>champion of the 2017 Asian Pastry Cup</span>
+          <ChefHat size={42} strokeWidth={1.5} />
+          <p>Envisioned With Precision</p>
+          <span>By Chef Audrey, a Le Cordon Bleu Alumni</span>
         </div>
       </div>
     </div>

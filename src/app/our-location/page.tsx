@@ -69,7 +69,7 @@ export default function OurLocationPage() {
   return (
     <>
       <JSONLD data={locationData} />
-      <SubHeroBanner title="Our Location" />
+      <SubHeroBanner title="Our Location" image="/assets/img/Location.png" />
       <OurLocation />
     </>
   );

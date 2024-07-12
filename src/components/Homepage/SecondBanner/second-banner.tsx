@@ -4,8 +4,7 @@ import classes from "./second-banner.module.scss";
 export default function SecondBanner() {
   return (
     <div className={`${classes.container} text-luoDarkBiege`}>
-      <span className="text-xs font-medium">SINCE 2019</span>
-      <h1 className="font-medium">Revolutionising experiences and occasions, one cake at a time</h1>
+      <span className="text-md font-medium">SINCE 2023</span>
       <div className={classes.items}>
         <div>
           <ShoppingBasket size={45} strokeWidth={1.5} />
@@ -23,6 +22,6 @@ export default function SecondBanner() {
           <span>By Chef Audrey, a Le Cordon Bleu Alumni</span>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

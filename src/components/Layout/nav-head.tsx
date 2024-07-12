@@ -58,8 +58,8 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       if (showNav === true) {
         content = (
           <AnimatePresence>
-            <motion.div className={`${classes.navHeadPopup} flex justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
-              <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
+            <motion.div className={`${classes.navHeadPopup} flex text-luoDarkBiege justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
+              <div className="hidden md:flex items-center text-center ">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
               <div className="block md:hidden">
                 <MobileNavigationMenu typeList={productTypes} showNav={showNav} />
               </div>
@@ -82,7 +82,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       }
       if (showNav === false) {
         content = (
-          <div className={`flex justify-between items-center px-10  ${pyNotScrolled} ${marginTopNotScrolled} ${bgColorNotScrolled}  `}>
+          <div className={`flex justify-between items-center px-10 text-white font-semibold drop-shadow-md ${pyNotScrolled} ${marginTopNotScrolled} ${bgColorNotScrolled}`}>
             <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
             <div className="flex md:hidden">
               <MobileNavigationMenu typeList={productTypes} showNav={showNav} />

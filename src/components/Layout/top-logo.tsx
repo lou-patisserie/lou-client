@@ -4,7 +4,7 @@ import Link from "next/link";
 export function TopLogo() {
   return (
     <Link href="/">
-      <Image src="/assets/img/Lou-transparent-light.png" width={50} height={50} alt="Luo-Logo" priority />
+      <Image src="/assets/img/Lou-transparent.png" width={50} height={50} alt="Luo-Logo" priority />
     </Link>
   );
 }

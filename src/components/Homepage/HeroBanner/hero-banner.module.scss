@@ -1,6 +1,7 @@
 .heroBanner {
   height: 100vh;
-  background-image: url("/assets/img/Lou_F&B-11.jpg");
+  // background-image: url("/assets/img/Homepage.png");
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent), url("/assets/img/Homepage.png");
   background-position: center;
   background-size: cover;
 }

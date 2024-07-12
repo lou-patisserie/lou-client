@@ -55,7 +55,7 @@ export default function AboutLouPage() {
   return (
     <>
       <JSONLD data={aboutUsData} />
-      <SubHeroBanner title="About Us" />
+      <SubHeroBanner title="About Us" image="/assets/img/Location.png" />
       <AboutLou />
     </>
   );

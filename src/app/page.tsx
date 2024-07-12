@@ -7,6 +7,7 @@ import SecondBanner from "@/components/Homepage/SecondBanner/second-banner";
 import Testimonials from "@/components/Homepage/Testimony/testimonials";
 import { Suspense } from "react";
 import { Metadata } from "next";
+import JSONLD from "@/components/JSONLD";
 
 export const metadata: Metadata = {
   title: "Lou Patisserie & Gelato | Celebration of Sweet Moments",
@@ -42,9 +43,22 @@ export const metadata: Metadata = {
   },
 };
 
+const HomepageJSONLD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  url: "https://www.loupatisserie.com",
+  name: "Lou Patisserie & Gelato | Celebration of Sweet Moments",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://www.loupatisserie.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
+
 export default function Home() {
   return (
     <>
+      <JSONLD data={HomepageJSONLD} />
       <HeroBanner />
       <SecondBanner />
       <Suspense fallback={<div></div>}>

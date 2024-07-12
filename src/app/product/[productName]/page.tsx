@@ -110,7 +110,7 @@ export default function ProductDetailPage() {
         <link rel="canonical" href={`https://www.loupatisserie.com/products/${normalizeCakeName}`} />
       </Head>
       <JSONLD data={jsonLdData} />
-      <SubHeroBanner title="Product Details" />
+      <SubHeroBanner title="Product Details" image="/assets/img/Product-Detail.png"/>
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit">
         <div className="flex flex-col gap-6 w-full max-w-lg">
           <ProductDetailImgs mainImg={cakeData?.main_image} subImg1={cakeData?.sub_image1} subImg2={cakeData?.sub_image2} />

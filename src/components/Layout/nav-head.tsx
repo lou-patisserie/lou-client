@@ -10,15 +10,17 @@ import { getAllProductTypes } from "@/api/product-type-api";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { fetchProductTypes } from "@/recoils/selectors/product-types";
 import { ProductTypes } from "@/types/data-types";
+import { cn } from "@/lib/utils";
 
 type Props = {
   marginTopNotScrolled?: string;
   bgColorNotScrolled?: string;
   pyNotScrolled?: string;
+  textColor?: string;
   logoSwitch?: boolean;
 };
 
-export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScrolled = "bg-transparent", pyNotScrolled = "py-0", logoSwitch = false }: Props) {
+export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScrolled = "bg-transparent", pyNotScrolled = "py-0", textColor = "text-white", logoSwitch = false }: Props) {
   const [showNav, setShowNav] = useState(false);
   const productTypesLoadable = useRecoilValueLoadable(fetchProductTypes);
   const [isClient, setIsClient] = useState(false);
@@ -58,7 +60,14 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       if (showNav === true) {
         content = (
           <AnimatePresence>
-            <motion.div className={`${classes.navHeadPopup} flex text-luoDarkBiege justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2`} initial="hidden" animate="visible" exit="hidden" variants={navVariants} transition={{ duration: 0.3 }}>
+            <motion.div
+              className={cn(classes.navHeadPopup, "flex text-luoDarkBiege justify-between items-center px-10 fixed z-20 top-0 w-full mt-0 py-2")}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={navVariants}
+              transition={{ duration: 0.3 }}
+            >
               <div className="hidden md:flex items-center text-center ">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
               <div className="block md:hidden">
                 <MobileNavigationMenu typeList={productTypes} showNav={showNav} />
@@ -82,7 +91,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       }
       if (showNav === false) {
         content = (
-          <div className={`flex justify-between items-center px-10 text-white font-semibold drop-shadow-md ${pyNotScrolled} ${marginTopNotScrolled} ${bgColorNotScrolled}`}>
+          <div className={cn("flex justify-between items-center px-10 font-semibold", pyNotScrolled, marginTopNotScrolled, bgColorNotScrolled, textColor)}>
             <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
             <div className="flex md:hidden">
               <MobileNavigationMenu typeList={productTypes} showNav={showNav} />
@@ -112,7 +121,6 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
 
   return content;
 }
-
 // return (
 //   <div
 //     className={`flex justify-between items-center px-10  transition ease-in-out  ${

@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
-      <body id="portal" className={`${cn(GeistSans.variable)} `}>
+      <body id="portal" className={`${cn(GeistSans.variable)} relative`}>
         <Providers>
           <TopLayoutProvider />
           <main className="min-h-screen">{children}<Analytics /> <SpeedInsights /></main>

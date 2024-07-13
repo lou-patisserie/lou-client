@@ -10,6 +10,7 @@ import { getCakesByFlexQueries } from "@/api/cakes-api";
 import { CakeQueryParams } from "@/types/api-types";
 import { validateImageUrl } from "@/lib/imgUtils";
 import { Skeleton } from "@/components/UI/skeleton";
+import ImageWithFallback from "@/hooks/fallback-img";
 
 type Variant = {
   ID: string;
@@ -88,12 +89,20 @@ export default function Products() {
               : currentCakes.map((cake) => (
                   <CarouselItem key={cake.ID} className="md:basis-1/2 lg:basis-1/4 flex flex-col items-center text-center justify-center p-4">
                     <Link href={`/product/${cake.name.replace(/\s+/g, "-")}`} className="">
-                      <Image
+                      {/* <Image
                         src={validateImageUrl(cake.main_image)}
                         alt={cake.name}
                         width={550}
                         height={550}
                         className={`aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege opacity-100`}
+                      /> */}
+                        <ImageWithFallback
+                        src={validateImageUrl(cake.main_image)}
+                        fallbackSrc="/assets/img/image_not_found.jpeg"
+                        alt={cake.name}
+                        width={550}
+                        height={550}
+                        className="aspect-square object-cover rounded-none shadow-sm cursor-pointer transition ease-in-out duration-200 hover:opacity-60 hover:border-2 hover:border-luoDarkBiege opacity-100"
                       />
                     </Link>
                     <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default capitalize">{cake.name}</h3>
@@ -108,3 +117,4 @@ export default function Products() {
     </section>
   );
 }
+

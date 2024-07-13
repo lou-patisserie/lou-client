@@ -16,9 +16,9 @@ export default function TopLayoutProvider() {
             <NavHeader />
           </div>
         ) : (
-          <div className="">
+          <div className="z-50">
             <TopSubscribe />
-            <NavHeader marginTopNotScrolled="mt-0" bgColorNotScrolled="bg-luoBiege" pyNotScrolled="py-2" logoSwitch={true} />
+            <NavHeader marginTopNotScrolled="mt-0" bgColorNotScrolled="bg-luoBiege" pyNotScrolled="py-2" logoSwitch={true} textColor="text-luoDarkBiege" />
           </div>
         )}
       </Suspense>

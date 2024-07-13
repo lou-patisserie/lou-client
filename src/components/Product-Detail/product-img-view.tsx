@@ -3,10 +3,11 @@
 import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { X } from "lucide-react";
 import classes from "./scss/product-img-view.module.scss";
 import { validateImageUrl } from "@/lib/imgUtils";
+import ImageWithFallback from "@/hooks/fallback-img";
 
 type Props = {
   isOpen: boolean;
@@ -51,9 +52,10 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
       </button>
       <motion.div initial={{ y: 100, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()} className={classes.modalCard}>
         <Image src={validateImageUrl(currentImg) || "/assets/img/image_not_found.jpeg"} alt="product-img-select" width={1080} height={1080} style={{ width: "100%", height: "100%" }} priority />
+
         <div className={classes.imgTabLayout}>
           <div>
-            <Image
+            {/* <Image
               src={validateImageUrl(img1)}
               alt="product-img1"
               width={1080}
@@ -63,10 +65,21 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
               onClick={() => imageClickHandler(img1)}
               onError={handleImgError}
               priority
+            /> */}
+            <ImageWithFallback
+              src={validateImageUrl(img1)}
+              fallbackSrc="/assets/img/image_not_found.jpeg"
+              alt="product-img1"
+              width={1080}
+              height={1080}
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
+              style={{ width: "100%", height: "100%" }}
+              onClick={() => imageClickHandler(img1)}
+              priority
             />
           </div>
           <div>
-            <Image
+            {/* <Image
               src={validateImageUrl(img2)}
               alt="product-img2"
               width={1080}
@@ -75,10 +88,21 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler(img2)}
               onError={handleImgError}
+            /> */}
+            <ImageWithFallback
+              src={validateImageUrl(img2)}
+              fallbackSrc="/assets/img/image_not_found.jpeg"
+              alt="product-img2"
+              width={1080}
+              height={1080}
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
+              style={{ width: "100%", height: "100%" }}
+              onClick={() => imageClickHandler(img2)}
+              priority
             />
           </div>
           <div>
-            <Image
+            {/* <Image
               src={validateImageUrl(img3)}
               alt="product-img3"
               width={1080}
@@ -87,6 +111,17 @@ export default function ProductImageView({ isOpen, setIsOpen, selectedImg, img1 
               style={{ width: "100%", height: "100%" }}
               onClick={() => imageClickHandler(img3)}
               onError={handleImgError}
+            /> */}
+            <ImageWithFallback
+              src={validateImageUrl(img3)}
+              fallbackSrc="/assets/img/image_not_found.jpeg"
+              alt="product-img3"
+              width={1080}
+              height={1080}
+              className={`aspect-square object-cover hover:opacity-60 hover:border-2 hover:border-luoDarkBiege transition ease-in-out duration-200 rounded-lg ${currentImg === img1 ? "border-2 border-luoDarkBiege" : ""}`}
+              style={{ width: "100%", height: "100%" }}
+              onClick={() => imageClickHandler(img3)}
+              priority
             />
           </div>
         </div>

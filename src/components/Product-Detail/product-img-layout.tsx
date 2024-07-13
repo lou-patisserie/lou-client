@@ -5,6 +5,7 @@ import ProductImageView from "./product-img-view";
 import { Eye } from "lucide-react";
 import { Skeleton } from "../UI/skeleton";
 import ShareLinks from "../UI/Link/share-link";
+import ImageWithFallback from "@/hooks/fallback-img";
 
 type Props = {
   mainImg?: string;
@@ -24,10 +25,6 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
     setIsOpen(true);
   };
 
-  const handleImgError = (e: any) => {
-    // e.target.src = "/assets/img/image_not_found.jpeg";
-  };
-
   return (
     <>
       <div className="max-w-lg h-full mx-4 md:mx-0 flex flex-col gap-2 cursor-pointer">
@@ -35,16 +32,18 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           onClick={() => mainImg && handleImageClick(mainImg)}
-          className="flex h-fit relative items-start justify-center transition ease-in duration-150 hover:opacity-70">
+          className="flex h-fit relative items-start justify-center transition ease-in duration-150 hover:opacity-70"
+        >
           {mainImg ? (
-            <Image
-              src={mainImg}
-              width={900}
-              height={900}
-              alt="Luo Croissant"
-              className="object-cover aspect-square shadow-lg w-full"
-              onError={handleImgError}
-            />
+            // <Image
+            //   src={mainImg}
+            //   width={900}
+            //   height={900}
+            //   alt="Luo Croissant"
+            //   className="object-cover aspect-square shadow-lg w-full"
+            //   onError={handleImgError}
+            // />
+            <ImageWithFallback src={mainImg} fallbackSrc="/assets/img/image_not_found.jpeg" alt="Lou-product-Img" width={900} height={900} className="object-cover aspect-square shadow-lg w-full" />
           ) : (
             <Skeleton className="aspect-square w-full" />
           )}
@@ -62,16 +61,18 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
             onMouseEnter={() => setIsHovered2(true)}
             onMouseLeave={() => setIsHovered2(false)}
             onClick={() => subImg1 && handleImageClick(subImg1)}
-            className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 w-full">
+            className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 w-full"
+          >
             {subImg1 ? (
-              <Image
-                src={subImg1}
-                width={900}
-                height={900}
-                alt="Luo Croissant"
-                className="object-cover aspect-square shadow-lg w-full"
-                onError={handleImgError}
-              />
+              // <Image
+              //   src={subImg1}
+              //   width={900}
+              //   height={900}
+              //   alt="Luo Croissant"
+              //   className="object-cover aspect-square shadow-lg w-full"
+              //   onError={handleImgError}
+              // />
+              <ImageWithFallback src={subImg1} fallbackSrc="/assets/img/image_not_found.jpeg" width={900} height={900} alt="lou-product-img" className="object-cover aspect-square shadow-lg w-full" />
             ) : (
               <Skeleton className="aspect-square w-full " />
             )}
@@ -81,16 +82,18 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
             onMouseEnter={() => setIsHovered3(true)}
             onMouseLeave={() => setIsHovered3(false)}
             onClick={() => subImg2 && handleImageClick(subImg2)}
-            className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 w-full">
+            className="flex relative h-fit items-start justify-center transition ease-in duration-150 hover:opacity-70 w-full"
+          >
             {subImg2 ? (
-              <Image
-                src={subImg2}
-                width={900}
-                height={900}
-                alt="Luo Croissant"
-                className="object-cover aspect-square shadow-lg w-full"
-                onError={handleImgError}
-              />
+              // <Image
+              //   src={subImg2}
+              //   width={900}
+              //   height={900}
+              //   alt="Luo Croissant"
+              //   className="object-cover aspect-square shadow-lg w-full"
+              //   onError={handleImgError}
+              // />
+              <ImageWithFallback src={subImg2} fallbackSrc="/assets/img/image_not_found.jpeg" width={900} height={900} alt="lou-product-img" className="object-cover aspect-square shadow-lg w-full" />
             ) : (
               <Skeleton className="aspect-square w-full" />
             )}

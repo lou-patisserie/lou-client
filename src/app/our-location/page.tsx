@@ -47,6 +47,14 @@ const locationData = {
   "image": [
     "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2FLou_Interior%2016.jpg?alt=media&token=e14edff7-d088-492e-af2a-23462c7dd573",
   ],
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.loupatisserie.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
   "telephone": "+6281110019906",
   "address": {
     "@type": "PostalAddress",
@@ -64,12 +72,11 @@ const locationData = {
   "openingHours": "Tu,We,Th,Fr,Sa,Su 9:00-22:00",
 };
 
-
 export default function OurLocationPage() {
   return (
     <>
       <JSONLD data={locationData} />
-      <SubHeroBanner title="Our Location" />
+      <SubHeroBanner title="Our Location" image="/assets/img/Location.png" />
       <OurLocation />
     </>
   );

@@ -7,15 +7,13 @@ import { cn } from "@/lib/utils";
 import { normalizeText } from "@/lib/formatters";
 import { ProductTypes } from "@/types/data-types";
 
-
-
 type Props = {
   typeList: ProductTypes[];
 };
 
 export function TopNavigationMenu({ typeList }: Props) {
   return (
-    <NavigationMenu className="text-luoDarkBiege">
+    <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Delivery</NavigationMenuTrigger>

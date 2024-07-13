@@ -39,10 +39,15 @@ export const metadata: Metadata = {
 
 const aboutUsData = {
   "@context": "https://schema.org",
-  "@type": "AboutPage",
+  "@type": "WebSite",
   "name": "About Us",
   "url": "https://www.loupatisserie.com/about-us",
   "logo": "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/logo%2FLOU%20L%20Symbol%20BG-02.png?alt=media&token=d50eea79-30b8-4622-86e8-ae0023d9c6b1",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.loupatisserie.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+6281110019906",
@@ -50,12 +55,14 @@ const aboutUsData = {
   },
 }
 
+
+
 export default function AboutLouPage() {
 
   return (
     <>
       <JSONLD data={aboutUsData} />
-      <SubHeroBanner title="About Us" />
+      <SubHeroBanner title="About Us" image="/assets/img/Location.png" />
       <AboutLou />
     </>
   );

@@ -25,7 +25,7 @@ export default function ProductDetailImgs({ mainImg, subImg1, subImg2 }: Props) 
   };
 
   const handleImgError = (e: any) => {
-    e.target.src = "/assets/img/image_not_found.jpeg";
+    // e.target.src = "/assets/img/image_not_found.jpeg";
   };
 
   return (

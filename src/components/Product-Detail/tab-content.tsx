@@ -68,7 +68,7 @@ export function StorageServing({ storageServing }: ServingProps) {
       <div className="p-4 text-luoDarkBiege space-y-2">
         <div className="flex flex-row gap-1 items-center">
           <CircleChevronRight size={18} strokeWidth={1.5} />
-          <h3 className="text-lg font-semibold tracking-wide">Storage Serving</h3>
+          <h3 className="text-lg font-semibold tracking-wide">Storage & Serving</h3>
         </div>
         <div className={`px-6 ${classes.renderedJoditHtml}`}>{parsedContent}</div>
       </div>

@@ -83,7 +83,7 @@ export default function AddOnsPage() {
         <link rel="canonical" href={`https://www.loupatisserie.com/add-ons/${normalizeAddOnsName}`} />
       </Head>
       <JSONLD data={jsonLdData} />
-      <SubHeroBanner title="Add Ons Details" />
+      <SubHeroBanner title="Add Ons Details" image="/assets/img/Product-Detail.png" />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit ">
         <div className="flex flex-col gap-6">
           <ProductDetailImgs mainImg={addOnData?.main_image} subImg1={addOnData?.sub_image1} subImg2={addOnData?.sub_image2} />

@@ -86,7 +86,7 @@ export default function ProductsPage() {
   if (!selectedType || loading) {
     return (
       <>
-        <SubHeroBanner title="Our Products" />
+        <SubHeroBanner title="Our Products" image="/assets/img/Product.png"/>
         <div className="w-full flex flex-col justify-center mt-8 px-4">
           <div className="flex justify-center">
             <Skeleton className="w-full max-w-xl h-9 mt-8 mb-6" />
@@ -131,7 +131,7 @@ export default function ProductsPage() {
         <meta property="twitter:description" content={productTypes[0].desc} />
       </Head>
       <JSONLD data={jsonLdData} />
-      <SubHeroBanner title="Our Products" />
+      <SubHeroBanner title="Our Products" image="/assets/img/Product.png" />
       <AllProducts cakeType={selectedType} />
       <div className="flex flex-wrap mt-10 md:mt-20 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">
         <FAQs maxWidth="max-w-[90rem]" />

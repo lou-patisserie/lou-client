@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 export default function CheckOutPage() {
   return (
     <>
-      <SubHeroBanner height="h-60" title="Checkout" />
+      <SubHeroBanner height="h-60" title="Checkout" image="/assets/img/Checkout.png" />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center">
         <Checkout />
       </div>

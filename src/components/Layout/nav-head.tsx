@@ -91,7 +91,7 @@ export default function NavHeader({ marginTopNotScrolled = "mt-4", bgColorNotScr
       }
       if (showNav === false) {
         content = (
-          <div className={cn("flex justify-between items-center px-10 font-semibold", pyNotScrolled, marginTopNotScrolled, bgColorNotScrolled, textColor)}>
+          <div className={cn("flex justify-between items-center px-10 ", pyNotScrolled, marginTopNotScrolled, bgColorNotScrolled, textColor)}>
             <div className="hidden md:flex items-center text-center">{showNav || logoSwitch ? <TopScrolledLogo /> : <TopLogo />}</div>
             <div className="flex md:hidden">
               <MobileNavigationMenu typeList={productTypes} showNav={showNav} />

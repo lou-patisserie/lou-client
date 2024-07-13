@@ -46,14 +46,17 @@ export const metadata: Metadata = {
 const HomepageJSONLD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  url: "https://www.loupatisserie.com",
-  name: "Lou Patisserie & Gelato | Celebration of Sweet Moments",
-  potentialAction: {
+  "url": "https://www.loupatisserie.com/",
+  "name": "Lou Patisserie & Gelato | Celebration of Sweet Moments",
+  "potentialAction": {
     "@type": "SearchAction",
-    target: "https://www.loupatisserie.com/search?q={search_term_string}",
-    "query-input": "required name=search_term_string",
-  },
-};
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.loupatisserie.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
 
 export default function Home() {
   return (

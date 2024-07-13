@@ -4,6 +4,7 @@ import { Skeleton } from "../UI/skeleton";
 import ProductsItem from "./products-item";
 import classes from "./scss/product-logistics.module.scss";
 import SearchProducts from "./search-products";
+import { AnimatePresence } from "framer-motion";
 
 type Variant = {
   ID: string;
@@ -41,14 +42,16 @@ export default function ProductLogistics({ items, selectedCategory, choosenType 
       </div>
       <div className={classes.products}>
         {searchPerformed ? (
-          <div className="w-full text-start items-start gap-2 text-luoDarkBiege flex justify-center h-[22vh]">
-            <Frown size={40} color="#8B7158" strokeWidth={1.5} /> <span>Your search did not find any products.</span>
+          <div className="w-full text-start items-start gap-2 text-luoDarkBiege flex justify-start h-[22vh]">
+            <Frown size={40} color="#8B7158" strokeWidth={1.5} /> <span className="mt-2">Your search did not find any products.</span>
           </div>
         ) : (
           <>
-            {items.map((item) => (
-              <ProductsItem key={item.ID} {...item} />
-            ))}
+            <AnimatePresence>
+              {items.map((item) => (
+                <ProductsItem key={item.ID} {...item} />
+              ))}
+            </AnimatePresence>
             {loading && page > 1 && (
               <div className="flex flex-col">
                 <Skeleton className="w-full h-60 md:h-72 rounded-none" />

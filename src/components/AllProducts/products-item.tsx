@@ -1,7 +1,7 @@
 import ImageWithFallback from "@/hooks/fallback-img";
 import { formatPrice } from "@/lib/formatters";
 import { validateImageUrl } from "@/lib/imgUtils";
-import Image from "next/image";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 type Props = {
@@ -20,7 +20,7 @@ type Variant = {
 
 export default function ProductsItem({ name, main_image, variants }: Props) {
   return (
-    <div className="text-center">
+    <motion.div className="text-center" animate={{ opacity: 1 }} initial={{ opacity: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }} layout>
       <div className="">
         <Link href={`/product/${name.replace(/\s+/g, "-")}`}>
           {/* <Image
@@ -44,6 +44,6 @@ export default function ProductsItem({ name, main_image, variants }: Props) {
       </div>
       <h3 className="text-lg font-semibold mt-2 text-slate-700 cursor-default capitalize">{name}</h3>
       <p className="text-sm mt-1 text-luoDarkBiege cursor-default">{formatPrice(variants[0].price)}</p>
-    </div>
+    </motion.div>
   );
 }

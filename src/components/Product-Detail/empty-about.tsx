@@ -10,7 +10,7 @@ export default function EmptyAboutCake() {
           Description
         </TabsTrigger>
         <TabsTrigger className="rounded-none" value="storageServing">
-          Storage Serving
+          Storage & Serving
         </TabsTrigger>
         <TabsTrigger className="rounded-none" value="allergenAndIngredients">
           Allergen & Ingredients
@@ -34,10 +34,10 @@ export default function EmptyAboutCake() {
           <div className="p-4 text-luoDarkBiege space-y-2">
             <div className="flex flex-row gap-1 items-center">
               <CircleChevronRight size={18} strokeWidth={1.5} />
-              <h3 className="text-lg font-semibold tracking-wide">Storage Serving</h3>
+              <h3 className="text-lg font-semibold tracking-wide">Storage & Serving</h3>
             </div>
             <div>
-              <p className="text-base">No information about storage serving on this cake</p>
+              <p className="text-base">No information about storage & serving on this cake</p>
             </div>
           </div>
         </Card>

@@ -18,7 +18,7 @@ export default function ProductTabs({ aboutCakeData }: Props) {
           Description
         </TabsTrigger>
         <TabsTrigger className="rounded-none" value="storageServing">
-          Storage Serving
+          Storage & Serving
         </TabsTrigger>
         <TabsTrigger className="rounded-none" value="allergenAndIngredients">
           Allergen & Ingredients

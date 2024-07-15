@@ -11,30 +11,32 @@ type ProductTypes = {
     created_date: string;
 };
 
-export async function generateMetadata(): Promise<Metadata> {
-    const { data: productTypes } = await getAllProductTypes();
+export async function generateMetadata({ params }: { params: { type: string } }): Promise<Metadata> {
+    const typeNameParam = decodeURIComponent(params.type);
 
-    if (!productTypes || productTypes.length === 0) {
-        notFound();
+    try {
+        const { data: productTypes } = await getAllProductTypes();
+        const selectedProductType = productTypes.find((type: ProductTypes) => normalizeText(type.name) === typeNameParam);
+
+        return {
+            title: `${selectedProductType.name} | Lou Patisserie & Gelato`,
+            description: selectedProductType.desc,
+            openGraph: {
+                title: selectedProductType.name,
+                description: selectedProductType.desc,
+                url: `https://www.loupatisserie.com/collection/${normalizeText(selectedProductType.name)}`,
+                type: "website",
+            },
+            twitter: {
+                card: "summary_large_image",
+                title: selectedProductType.name,
+                description: selectedProductType.desc,
+            },
+        };
+    } catch (error) {
+        console.error("Failed to fetch product types", error);
+        throw error;
     }
-
-    const firstProductType = productTypes[0];
-
-    return {
-        title: `${firstProductType.name} | Lou Patisserie & Gelato`,
-        description: firstProductType.desc,
-        openGraph: {
-            title: firstProductType.name,
-            description: firstProductType.desc,
-            url: `https://www.loupatisserie.com/collection/${normalizeText(firstProductType.name)}`,
-            type: "website",
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: firstProductType.name,
-            description: firstProductType.desc,
-        },
-    };
 }
 
 const generateJsonLd = (productTypes: ProductTypes[]) => {

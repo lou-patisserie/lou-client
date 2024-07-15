@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getAllProductTypes } from "@/api/product-type-api";
 import { getAddOnByName } from "@/api/add-ons-api";
-import { deSlugify } from "@/lib/formatters";
+import { deSlugify, normalizeText } from "@/lib/formatters";
 import JSONLD from "@/components/JSONLD";
 import { notFound } from "next/navigation";
 import { AddOnDetail } from "@/types/data-types";
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: { addOnsName: strin
 
 const generateJsonLd = (addOnDetail: AddOnDetail) => {
 
-    const normalizeAddOnsName = deSlugify(addOnDetail.name);
+    const normalizeAddOnsName = normalizeText(addOnDetail.name);
     return {
         "@context": "https://schema.org",
         "@type": "Product",

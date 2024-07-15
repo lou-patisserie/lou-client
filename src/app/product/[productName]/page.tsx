@@ -58,8 +58,6 @@ export default function ProductDetailPage() {
     return notFound();
   }
 
-  console.log("cakeData", cakeData);
-
   return (
     <>
       <SubHeroBanner title="Product Details" image="/assets/img/Product-Detail.png" />

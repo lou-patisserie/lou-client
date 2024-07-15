@@ -8,15 +8,12 @@ import { deSlugify } from "@/lib/formatters";
 import { AddOnDetail } from "@/types/data-types";
 import { notFound, usePathname } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
-import JSONLD from "@/components/JSONLD";
-import Head from "next/head";
 
 export default function AddOnsPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [triggerNotFound, setTriggerNotFound] = useState(false);
   const [addOnData, setAddOnData] = useState<AddOnDetail>();
-  const [jsonLdData, setJsonLdData] = useState({});
   const pathSegments = pathname.split("/");
   const addOnsNameParam = decodeURIComponent(pathSegments[pathSegments.length - 1]);
   const normalizeAddOnsName = deSlugify(addOnsNameParam);
@@ -26,7 +23,6 @@ export default function AddOnsPage() {
     try {
       const response = await getAddOnByName(normalizeAddOnsName);
       setAddOnData(response.data);
-      generateJsonLd(response.data);
     } catch (error) {
       console.error("Failed to fetch add-on detail by name", error);
       setTriggerNotFound(true);
@@ -34,29 +30,6 @@ export default function AddOnsPage() {
       setLoading(false);
     }
   }, [normalizeAddOnsName]);
-
-  const generateJsonLd = (addOnDetail: AddOnDetail) => {
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": addOnDetail.name,
-      "image": [
-        addOnDetail.main_image,
-        addOnDetail.sub_image1,
-        addOnDetail.sub_image2,
-      ].filter(Boolean),
-      "description": addOnDetail.desc,
-      "sku": addOnDetail.ID,
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "IDR",
-        "price": addOnDetail.price,
-        "url": `https://www.loupatisserie.com/add-ons/${normalizeAddOnsName}`,
-        "availability": "http://schema.org/InStock",
-      }
-    };
-    setJsonLdData(jsonLd);
-  };
 
   useEffect(() => {
     fetchAddOnDetailByName();
@@ -68,21 +41,6 @@ export default function AddOnsPage() {
 
   return (
     <>
-      <Head>
-        <title>{addOnData ? `${addOnData.name} | Lou Patisserie & Gelato` : 'Add-On Not Found | Lou Patisserie & Gelato'}</title>
-        <meta name="description" content={addOnData ? addOnData.desc : "Add-on details not available."} />
-        <meta property="og:title" content={addOnData ? addOnData.name : "Add-On Not Found"} />
-        <meta property="og:description" content={addOnData ? addOnData.desc : "Add-on details not available."} />
-        <meta property="og:image" content={addOnData ? addOnData.main_image : "/default-image.png"} />
-        <meta property="og:url" content={`https://www.loupatisserie.com/add-ons/${normalizeAddOnsName}`} />
-        <meta property="og:type" content="product" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={addOnData ? addOnData.name : "Add-On Not Found"} />
-        <meta name="twitter:description" content={addOnData ? addOnData.desc : "Add-on details not available."} />
-        <meta name="twitter:image" content={addOnData ? addOnData.main_image : "/default-image.png"} />
-        <link rel="canonical" href={`https://www.loupatisserie.com/add-ons/${normalizeAddOnsName}`} />
-      </Head>
-      <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Add Ons Details" image="/assets/img/Product-Detail.png" />
       <div className="flex flex-wrap my-10 md:my-16 mx-auto justify-center gap-4 lg:gap-10 h-fit ">
         <div className="flex flex-col gap-6">

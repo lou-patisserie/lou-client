@@ -55,8 +55,6 @@ const aboutUsData = {
   },
 }
 
-
-
 export default function AboutLouPage() {
 
   return (

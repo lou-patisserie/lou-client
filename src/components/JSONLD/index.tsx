@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 
 interface JSONLDProps {
     data: object;
@@ -7,12 +8,10 @@ interface JSONLDProps {
 
 const JSONLD: React.FC<JSONLDProps> = ({ data }) => {
     return (
-        <Head>
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-            />
-        </Head>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
     );
 };
 

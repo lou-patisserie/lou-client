@@ -8,8 +8,6 @@ import { Skeleton } from "@/components/UI/skeleton";
 import { normalizeText } from "@/lib/formatters";
 import { notFound, usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import Head from "next/head";
-import JSONLD from "@/components/JSONLD";
 
 type productTypes = {
   ID: string;
@@ -22,7 +20,6 @@ export default function ProductsPage() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [productTypes, setProductTypes] = useState<productTypes[]>([]);
-  const [jsonLdData, setJsonLdData] = useState({});
 
   const fetchProductTypes = useCallback(async () => {
     setLoading(true);
@@ -32,11 +29,9 @@ export default function ProductsPage() {
       if (cachedData) {
         const parsedData = JSON.parse(cachedData);
         setProductTypes(parsedData);
-        generateJsonLd(parsedData);
       } else {
         const { data } = await getAllProductTypes();
         setProductTypes(data);
-        generateJsonLd(data);
       }
     } catch (error) {
       console.error("Failed to fetch product types", error);
@@ -44,27 +39,6 @@ export default function ProductsPage() {
       setLoading(false);
     }
   }, []);
-
-  const generateJsonLd = (productTypes: productTypes[]) => {
-    const jsonLd = {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "All Products",
-      "url": "https://www.loupatisserie.com/collection/all-product",
-      "logo": "https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2FLou_Interior%2016.jpg?alt=media&token=e14edff7-d088-492e-af2a-23462c7dd573",
-      "image": productTypes.map((type) => ({
-        "@type": "ImageObject",
-        "name": type.name,
-        "url": `https://firebasestorage.googleapis.com/v0/b/lou-patisserie.appspot.com/o/interior%2F${type.ID}.jpg?alt=media`, // Replace with actual URLs
-      })),
-      "hasPart": productTypes.map((type) => ({
-        "@type": "Product",
-        "name": type.name,
-        "url": `https://www.loupatisserie.com/collection/${normalizeText(type.name)}`,
-      }))
-    };
-    setJsonLdData(jsonLd);
-  };
 
   useEffect(() => {
     fetchProductTypes();
@@ -114,23 +88,6 @@ export default function ProductsPage() {
 
   return (
     <>
-      <Head>
-        <title>{productTypes[0].name}</title>
-        <meta name="description" content={productTypes[0].desc} />
-        <meta name="keywords" content={productTypes[0].name} />
-        <meta name="author" content="Lou Patisserie & Grivo.id" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.loupatisserie.com/collection/${normalizeText(productTypes[0].name)}`} />
-        <meta property="og:title" content={productTypes[0].name} />
-        <meta property="og:description" content={productTypes[0].desc} />
-        <meta property="og:site_name" content="Lou Patisserie & Gelato" />
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={`https://www.loupatisserie.com/collection/${normalizeText(productTypes[0].name)}`} />
-        <meta property="twitter:title" content={productTypes[0].name} />
-        <meta property="twitter:description" content={productTypes[0].desc} />
-      </Head>
-      <JSONLD data={jsonLdData} />
       <SubHeroBanner title="Our Products" image="/assets/img/Product.png" />
       <AllProducts cakeType={selectedType} />
       <div className="flex flex-wrap mt-10 md:mt-20 mx-auto justify-center gap-4 lg:gap-10 h-fit bg-luoBiege py-10">

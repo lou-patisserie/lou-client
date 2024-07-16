@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: { params: { productName: stri
     return {
         title: `${cakeData.name} | Lou Patisserie & Gelato`,
         description: cakeDetails.description,
+        robots: "index, follow",
         openGraph: {
             title: cakeData.name,
             description: cakeDetails.description,
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: { params: { productName: stri
                 cakeData.sub_image1,
                 cakeData.sub_image2,
             ].filter(Boolean),
-            url: `https://www.loupatisserie.com/products/${normalizeText(params.productName)}`,
+            url: `https://www.loupatisserie.com/product/${normalizeText(params.productName)}`,
         },
         twitter: {
             card: "summary_large_image",
@@ -51,7 +52,7 @@ const generateJsonLd = (cake: Cake, details: CakeDetails, variants: Variants | a
             priceCurrency: "IDR",
             lowPrice: Math.min(...variants.map((variant: Variants) => variant.price)),
             highPrice: Math.max(...variants.map((variant: Variants) => variant.price)),
-            url: `https://www.loupatisserie.com/products/${normalizeCakeName}`,
+            url: `https://www.loupatisserie.com/product/${normalizeCakeName}`,
             availability: "http://schema.org/InStock",
         },
     };

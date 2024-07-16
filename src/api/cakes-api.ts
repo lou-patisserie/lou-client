@@ -30,3 +30,13 @@ export const getCakeByName = async (cakeName: string) => {
     throw error;
   }
 };
+
+export const getAllCakes = async () => {
+  try {
+    const response = await api.get("/cakes?sort=desc");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}

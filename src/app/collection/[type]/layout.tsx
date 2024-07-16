@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: { type: string } })
         return {
             title: `${selectedProductType.name} | Lou Patisserie & Gelato`,
             description: selectedProductType.desc,
+            robots: "index, follow",
             openGraph: {
                 title: selectedProductType.name,
                 description: selectedProductType.desc,
@@ -59,11 +60,6 @@ const generateJsonLd = (productTypes: ProductTypes[]) => {
             },
             "query-input": "required name=search_term_string"
         },
-        hasPart: productTypes.map((type) => ({
-            "@type": "Product",
-            name: type.name,
-            url: `https://www.loupatisserie.com/collection/${normalizeText(type.name)}`,
-        })),
     };
 };
 

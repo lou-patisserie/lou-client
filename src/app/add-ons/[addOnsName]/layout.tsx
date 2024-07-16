@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: { params: { addOnsName: strin
     return {
         title: `${addOnsData.name} | Lou Patisserie & Gelato`,
         description: addOnsData.description,
+        robots: "index, follow",
         openGraph: {
             title: addOnsData.name,
             description: addOnsData.description,

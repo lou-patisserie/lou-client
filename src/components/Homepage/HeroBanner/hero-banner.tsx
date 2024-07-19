@@ -11,7 +11,7 @@ export default function HeroBanner() {
   }
 
   return (
-    <header id="hero-section">
+    <header className="relative" id="hero-section">
       <div className={classes.heroBanner}>
         <div className="absolute inset-x-0 bottom-0">
           <div className="max-w-full w-full flex flex-col gap-2 text-center justify-center mb-16">

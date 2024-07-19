@@ -24,7 +24,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   } catch (error) {
-    console.error("Failed to fetch cakes", error);
+    console.error("Failed to fetch cakes on sitemap", error);
   }
 
   try {
@@ -40,7 +40,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   } catch (error) {
-    console.error("Failed to fetch collections", error);
+    console.error("Failed to fetch collections on sitemap", error);
   }
 
   try {
@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
   } catch (error) {
-    console.error("Failed to fetch add-ons", error);
+    console.error("Failed to fetch add-ons on sitemap", error);
   }
 
   return [

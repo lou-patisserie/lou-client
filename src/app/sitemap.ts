@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const collectionsData = collectionResponse.data;
 
     collectionsData.forEach((collection: { name: string }) => {
-      const normalizeCollectionName = collection.name.replace(/\s+/g, "-");
+      const normalizeCollectionName = normalizeText(collection.name);
       collectionEntries.push({
         url: `https://www.loupatisserie.com/collection/${normalizeCollectionName}`,
         lastModified: new Date(),

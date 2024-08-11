@@ -4,16 +4,14 @@ import classes from "./product-nav.module.scss";
 import { useRecoilValue, useRecoilValueLoadable } from "recoil";
 import { fetchProductTypes } from "@/recoils/selectors/product-types";
 import { useEffect, useState } from "react";
+import { normalizeText } from "@/lib/formatters";
+import { ProductTypes } from "@/types/data-types";
 
-type ProductTypes = {
-  ID: string;
-  name: string;
-  created_date: string;
-};
+
 
 export default function ProductNav() {
   const [isClient, setIsClient] = useState(false);
-  const productTypesLoadable = useRecoilValueLoadable<ProductTypes[]>(fetchProductTypes);
+  const productTypesLoadable = useRecoilValueLoadable(fetchProductTypes);
 
   useEffect(() => {
     setIsClient(true);
@@ -25,12 +23,12 @@ export default function ProductNav() {
 
   switch (productTypesLoadable.state) {
     case "hasValue":
-      const productTypes = productTypesLoadable.contents;
+      const productTypes = productTypesLoadable.contents  as ProductTypes[];
       return (
         <div className={classes.container}>
           <div className={`${classes.navItems} text-luoBiege text-lg font-medium`}>
             {productTypes.map((type) => (
-              <Link href={`/collection/${type.name.toLowerCase().replace(/\s+/g, "-")}`} key={type.ID} className={`${classes.link}`}>
+              <Link href={`/collection/${normalizeText(type.name)}`} key={type.ID} className={`${classes.link}`}>
                 {type.name}
               </Link>
             ))}

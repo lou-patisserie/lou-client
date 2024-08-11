@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="flex items-center text-center gap-1 text-xs text-luoBiege">
           <Copyright size={15} />
           <span className="flex gap-1">
-            Copyright {new Date().getFullYear()}, Lou Patisserie & Gelato. <span className="hidden md:block">All Rights Reserved. Powered by Grivo.id</span>
+            Copyright {new Date().getFullYear()}, Lou Patisserie. <span className="hidden md:block">All Rights Reserved. Powered by Grivo.id</span>
           </span>
         </div>
         <span className="text-xs text-luoBiege block md:hidden">All Rights Reserved. Powered by Grivo.id</span>

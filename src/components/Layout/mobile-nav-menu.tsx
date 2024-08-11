@@ -5,6 +5,7 @@ import { ArrowDownNarrowWide, Dot, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { ProductTypes } from "@/types/data-types";
+import { normalizeText } from "@/lib/formatters";
 
 
 type Props = {
@@ -114,7 +115,7 @@ export default function MobileNavigationMenu({ showNav, typeList }: Props) {
                     </li>
                   </Link> */}
                   {typeList.map((type) => (
-                    <Link key={type.ID} href={`/collection/${type.name.toLowerCase().replace(/\s+/g, "-")}`}>
+                    <Link key={type.ID} href={`/collection/${normalizeText(type.name)}`}>
                       <li className="flex items-center p-2 rounded-lg text-luoDarkBiege hover:bg-luoDarkBiege hover:text-white transition ease-in-out duration-200 group">
                         <Dot />
                         {type.name}

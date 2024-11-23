@@ -11,7 +11,7 @@ export default function TopLayoutProvider() {
     <>
       <Suspense fallback={<div></div>}>
         {pathname === "/" ? (
-          <div className="absolute inset-x-0 top-0 z-10">
+          <div className="absolute inset-x-0 top-0 z-50">
             <TopSubscribe />
             <NavHeader />
           </div>
